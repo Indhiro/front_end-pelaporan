@@ -189,7 +189,7 @@
             <div class="page-title">
                 <div class="row align-items-center justify-content-between">
                     <div class="col-6">
-                        <div class="page-title-content">
+                        <div class="page-title-content" id="myList">
                             <h3>Profile</h3>
                             <p class="mb-2">Welcome ENFTX Profile page</p>
                         </div>
@@ -393,7 +393,40 @@
 
 </div>
 
+<script type="text/javascript">
 
+        initGetData() // call function
+
+        function initGetData() {
+            var apiUrl = 'http://localhost:3000/user/login';
+            var cardContainer = document.getElementById("myList");
+            fetch(apiUrl)
+            .then(async (response) => {
+                console.log(response);
+                let data = await response.json()
+                console.log("data",data);
+                if (data.length == 0) {
+                    var card = document.createElement("div");
+                    card.innerHTML += `<h4>-- No User --</h4>`
+                    cardContainer.appendChild(card);
+                }
+                data.forEach(item => { // loop masing2 data
+                    var card = document.createElement("div");
+                    card.className = "promotion d-flex justify-content-between align-items-center";
+                    let text = `<h3>Profile</h3>
+                                <p class="mb-2">Welcome ENFTX Profile page</p>`
+                    card.innerHTML += text
+                    cardContainer.appendChild(card);
+                    console.log("testitem",item);
+                });
+            }).catch(err => {
+                var card = document.createElement("div");
+                card.innerHTML += `<h4>-- ${err.message} --</h4>`
+                cardContainer.appendChild(card);
+                console.log("ini error", err.message);
+            });
+        }
+</script>
 
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

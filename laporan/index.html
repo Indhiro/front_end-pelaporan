@@ -239,7 +239,8 @@
                                     </div>
                                     <div style="margin-top: 10px;">
                                         <label for="exampleFormControlTextarea1">Foto</label>
-                                        <input type="file" id="foto" style="margin-left: 100px;">
+                                        <input type="file" id="foto" style="margin-left: 100px;"
+                                            accept="application/pdf,image/jpeg">
                                     </div>
                                     <div style="margin-top: 10px;">
                                         <button type="button" class="btn btn-primary" style="float: right;"
@@ -1002,56 +1003,104 @@
 
         function initGetData() {
             var apiUrl = 'http://localhost:3000/laporan/get-laporan';
-            var likeDislikeUrl = 'http://localhost:3000/like-dislike/get-like-dislike';
-            fetch(apiUrl).then(response => {
-                return response.json();
-            }).then(data => {
-                console.log("testsini");
+            var cardContainer = document.getElementById("myList");
+            fetch(apiUrl)
+                .then(async (response) => {
+                    let data = await response.json()
+                    console.log("data", data);
+                    // Mendapatkan elemen container
+                    var likeDislikeButton = document.getElementById("get");
 
-                // Mendapatkan elemen container
-                var cardContainer = document.getElementById("myList");
-                var likeDislikeButton = document.getElementById("get");
-
-                if (data.length == 0) {
+                    if (data.length == 0) {
+                        var card = document.createElement("div");
+                        card.innerHTML += `<h4>-- No Post --</h4>`
+                        cardContainer.appendChild(card);
+                    }
+                    data.forEach(item => { // loop masing2 data
+                        var card = document.createElement("div");
+                        card.className = "promotion d-flex justify-content-between align-items-center";
+                        card.innerHTML += cardFormater(card, item)
+                        cardContainer.appendChild(card);
+                        console.log("testitem", item);
+                    });
+                }).catch(err => {
                     var card = document.createElement("div");
-                    card.innerHTML += `<h4>-- No Post --</h4>`
+                    card.innerHTML += `<h4>-- ${err.message} --</h4>`
                     cardContainer.appendChild(card);
-                }
-                data.forEach(item => { // loop masing2 data
-                    var card = document.createElement("div");
-                    card.className = "promotion d-flex justify-content-between align-items-center";
-                    card.innerHTML += cardFormater(card, item)
-                    cardContainer.appendChild(card);
+                    console.log("ini error", err.message);
                 });
-                console.log(data);
-            }).catch(err => {
-                console.log(err);
-            });
         }
 
         function cardFormater(card, item) { // add card each data
-            // card.innerHTML = `<div>
-            //             <div id=like class="col "><button style="color: blue" class="bi bi-hand-thumbs-up"></button></div>
-            //             <p>${item.countLike}</p>
-            //             <div id=like class="col"><button style="color: red" class="bi bi-hand-thumbs-down"></button></div>
-            //         </div>`
-            let text = `<div class="card-group">
-                <div class="card" style="width: fit-content; block-size: fit-content;">
-                    <div class="card-body" style="padding: 0px">
-                        <button id="like" style="color: blue" class="bi bi-hand-thumbs-up btn-sm"></button>
-                        <h6 style="margin-right: 0px;">${item.countLike ? item.countLike : 0}</h6>
-                        <button id="dislike" style="color: red" class="bi bi-hand-thumbs-down btn-sm"></button>
+            // var apiUrl = 'http://localhost:3000/laporan/get-laporan';
+            // fetch(apiUrl).then(response => {
+            //     return response.json();
+            // }).then(data => {
+
+            //     // Mendapatkan elemen container
+            //     var cardContainer = document.getElementById("myList");
+            //     if (data.length == 0) {
+            //         var card = document.createElement("div");
+            //         card.innerHTML += `<h4>-- No Post --</h4>`
+            //         cardContainer.appendChild(card);
+            //     }
+            //     data.forEach(item => { // loop masing2 data
+            //         var card = document.createElement("div");
+            //         card.className = "promotion d-flex justify-content-between align-items-center";
+            //         card.innerHTML += cardFormater(card, item)
+            //         cardContainer.appendChild(card);
+            //     });
+            //     console.log(data);
+            // }).catch(err => {
+            //     console.log(err);
+            // });
+            let text = `<div class="card top-bid">
+                        <div class="col-md-6" style="padding: 0px">
+                            <button id="like" style="color: blue; width: 32px" class="bi bi-hand-thumbs-up btn-sm"></button>
+                            <h6 style="margin-left: 12px; margin-top: 9px">${item.countLike ? item.countLike : 0}</h6>
+                            <button id="dislike" style="color: red; width: 32px" class="bi bi-hand-thumbs-down btn-sm"></button>
+                        </div>
+                        <div style="margin-top: 100px">
+                            <i style="margin-right: 20px" class="bi bi-chat"></i>
+                            <i class="bi bi-flag"></i>  
+                        </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-body" style="padding: 10px">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">TEST</p>
-                    </div>
-                    <div class="card-footer">
-                    </div>
-                </div>
-            </div>`
+                    <div class="col-md-6" style="padding: 10px;">
+                        <h5 class="card-text">${item.id_user_pelapor}</h5>
+                        <h5 class="card-text">${item.id_user_penerima}</h5>
+                        <p class="card-text">${item.status_laporan}</p>
+                        <p class="card-text">${item.category}</p>
+                        <p class="card-text">${item.created_at}</p>
+                        <h5 class="card-title">${item.title}</h5>
+                        <p class="card-text">${item.text}</p>
+                    </div>`
+
+            // `<div class="card-group">
+            //     <div class="card" style="width: fit-content; block-size: fit-content;">
+            //         <div class="card-body" style="padding: 0px">
+            //             <button id="like" style="color: blue" class="bi bi-hand-thumbs-up btn-sm"></button>
+            //             <h6 style="margin-right: 0px;">${item.countLike ? item.countLike : 0}</h6>
+            //             <button id="dislike" style="color: red" class="bi bi-hand-thumbs-down btn-sm"></button>
+            //         </div>
+            //     </div>
+            //     <div class="card">
+            //         <div class="card-body" style="padding: 10px">
+            //             <h5 class="card-text">${item.id_user_pelapor}</h5>
+            //             <h5 class="card-text">${item.id_user_penerima}</h5>
+            //             <p class="card-text">${item.status_laporan}</p>
+            //             <p class="card-text">${item.category}</p>
+            //             <p class="card-text">${item.created_at}</p>
+            //             <h5 class="card-title">${item.title}</h5>
+            //             <p class="card-text">${item.text}</p>
+            //         </div>
+            //     </div>
+            //     <div class="card">
+            //         <div class="card-body" style="padding: 10px">
+            //             <i class="bi bi-chat"></i>
+            //             <i class="bi bi-flag"></i>  
+            //         </div>
+            //     </div>                    
+            // </div>`
             return text
         }
 
@@ -1066,6 +1115,7 @@
             let judul = document.getElementById("judul").value
             let kategori = document.getElementById("kategori").value
             let selectUser = document.getElementById("selectUser").value
+            let foto = document.getElementById("foto").files[0]
             // id_user_penerima: req.body.id_user_penerima,
             // id_user_petugas: req.body.id_user_petugas,
             // status_laporan: req.body.status_laporan,
@@ -1075,14 +1125,15 @@
             // lokasi_longitude: req.body.lokasi_longitude,
             // lokasi_latitude: req.body.lokasi_latitude,
             // image: req.body.image
-            console.log(keterangan, 'keterangan', judul);
+            // return console.log(foto);
             // API INSERT
             let insertData = {
                 category: kategori,
                 text: keterangan,
                 title: judul,
                 id_user_pelapor: userIdLogin,
-                id_user_penerima: selectUser
+                id_user_penerima: selectUser,
+                image: convertFileToJson(foto)
             }
             console.log(insertData);
             var insertApi = 'http://localhost:3000/laporan/upload-laporan';
@@ -1092,29 +1143,19 @@
                 cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
                 credentials: "same-origin", // include, *same-origin, omit
                 headers: {
-                    "Content-Type": "application/json",
+                    // "Content-Type": "application/json",
+                    "Content-Type": "multipart/form-data",
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 redirect: "follow", // manual, *follow, error
                 referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify(insertData), // body data type must match "Content-Type" header
+                // body: JSON.stringify(insertData), // body data type must match "Content-Type" header
+                body: insertData
             }).then(response => {
                 return response.json();
             }).then(data => {
                 console.log(data);
-                // // Mendapatkan elemen container
-                // var cardContainer = document.getElementById("myList");
-                // var likeDislikeButton = document.getElementById("get");
-                // data.forEach(item => {
-                //     var card = document.createElement("div");
-
-                //     card.innerHTML += cardFormater(card, item)
-                //     cardContainer.appendChild(card);
-                //     // console.log("TEST" + cardContainer);
-                // });
-                // // Work with JSON data here
-                // console.log(data);
-                // // console.log(cardFormater);
+                // SUCCESS MESSAGE
             }).catch(err => {
                 console.log(err);
                 // Do something for an error here
@@ -1132,13 +1173,24 @@
             }).then(data => {
                 let html = ''
                 for (var i = 0; i < data.length; i++) {
-                    html += "<option value=" + data[i].id_user + ">" + data[i].nama + " -- " +  data[i].role + " -- " + "</option>"
+                    html += "<option value=" + data[i].id_user + ">" + data[i].nama + " -- " + data[i].role + " -- " + "</option>"
                 }
                 document.getElementById("selectUser").innerHTML = html;
                 console.log('getuser', data);
             }).catch(err => {
                 console.log('getusererr', err);
             });
+        }
+
+        function convertFileToJson(foto) {
+            var fr = new FileReader();
+            fr.onload = function (e) {
+                console.log(e);
+                var result = JSON.parse(e.target.result);
+                var formatted = JSON.stringify(result, null, 2);
+                document.getElementById('result').value = formatted;
+            }
+            return foto
         }
 
     </script>
