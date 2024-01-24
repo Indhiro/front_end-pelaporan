@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!---- Website Information ---->
-    <title>ENFTXxx - NFT Dashboard HTML Template</title>
+    <title>Laporan</title>
     <meta name="description"
         content="ENFTX is the complete UX & UI dashboard for NFT. Here included bids, collection, wallet, and all user setting pages including profile, application, activity, payment method, api, sign in & sign up etc.">
 
@@ -25,6 +25,7 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body class="@@dashboard">
@@ -204,7 +205,7 @@
         <div class="content-body">
             <div class="container">
                 <div class="row">
-
+                    <h5 id="userLoginHeader">user login</h5>
                     <div style="margin-top: 10px;">
                         <button onclick="showHidePostForm()"><i class="bi bi-plus-circle-fill"
                                 style="color: black;">Post Activity</i></button>
@@ -229,12 +230,13 @@
                                         <textarea class="form-control" id="keterangan" rows="3"></textarea>
                                     </div>
                                     <div class="form-group">
+                                        <label for="selectUserfor">Pengawas</label>
+                                        <select id="selectPengawas" class="form-select" aria-label="Default select example">
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="selectUserfor">Kepada</label>
-                                        <select id="selectUser" class="form-select" aria-label="Default select example">
-                                            <!-- <option selected>-- Pilih user --</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option> -->
+                                        <select id="selectKepada" class="form-select" aria-label="Default select example">
                                         </select>
                                     </div>
                                     <div style="margin-top: 10px;">
@@ -255,7 +257,7 @@
                     </div>
 
 
-                    <div class="col-xxl-6" style="margin-top: 20px;">
+                    <div class="col-xxl-8" style="margin-top: 20px;">
                         <div id="myList">
                             <!-- <form>
                                 <input id=like type="text" id="input" />
@@ -268,6 +270,18 @@
                             </div> -->
                         </div>
                     </div>
+
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+
+                    <!-- BATAS PROJECT  -->
                     <div class="col-xxl-6">
                         <!-- <div class="card top-bid">
                         <div class="card-body">
@@ -301,664 +315,9 @@
                         </div>
                     </div> -->
                     </div>
-                    <div class="col-12">
-                        <div class="card filter-tab m-0">
-                            <div class="card-header">
-                                <h4 class="card-title">Trending Bids</h4>
-                                <div class="filter-nav"><a href="#" class="active">All</a><a href="#">Games</a><a
-                                        href="#">Artwork</a></div>
-                            </div>
-                            <div class="card-body bs-0 p-0 bg-transparent">
-                                <div class="row">
-                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="card items">
-                                            <div class="card-body">
-                                                <div class="items-img position-relative"><img src="images/items/1.jpg"
-                                                        class="img-fluid rounded mb-3" alt=""><img
-                                                        src="images/avatar/1.jpg" class="creator" width="50" alt="">
-                                                </div>
-                                                <h4 class="card-title">Liguid Wave</h4>
-                                                <p></p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="text-start">
-                                                        <p class="mb-2">Auction Time</p>
-                                                        <h5 class="text-muted">3h 1m 50s</h5>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <p class="mb-2">Current Bid : <strong class="text-primary">0.15
-                                                                <!-- --> ETH
-                                                            </strong></p>
-                                                        <h5 class="text-muted">0.15
-                                                            <!-- --> ETH
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center mt-3"><a href="#"
-                                                        class="btn btn-primary">Place a Bid</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="card items">
-                                            <div class="card-body">
-                                                <div class="items-img position-relative"><img src="images/items/2.jpg"
-                                                        class="img-fluid rounded mb-3" alt=""><img
-                                                        src="images/avatar/2.jpg" class="creator" width="50" alt="">
-                                                </div>
-                                                <h4 class="card-title">Liguid Wave</h4>
-                                                <p></p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="text-start">
-                                                        <p class="mb-2">Auction Time</p>
-                                                        <h5 class="text-muted">3h 1m 50s</h5>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <p class="mb-2">Current Bid : <strong class="text-primary">0.15
-                                                                <!-- --> ETH
-                                                            </strong></p>
-                                                        <h5 class="text-muted">0.15
-                                                            <!-- --> ETH
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center mt-3"><a href="#"
-                                                        class="btn btn-primary">Place a Bid</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="card items">
-                                            <div class="card-body">
-                                                <div class="items-img position-relative"><img src="images/items/3.jpg"
-                                                        class="img-fluid rounded mb-3" alt=""><img
-                                                        src="images/avatar/3.jpg" class="creator" width="50" alt="">
-                                                </div>
-                                                <h4 class="card-title">Liguid Wave</h4>
-                                                <p></p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="text-start">
-                                                        <p class="mb-2">Auction Time</p>
-                                                        <h5 class="text-muted">3h 1m 50s</h5>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <p class="mb-2">Current Bid : <strong class="text-primary">0.15
-                                                                <!-- --> ETH
-                                                            </strong></p>
-                                                        <h5 class="text-muted">0.15
-                                                            <!-- --> ETH
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center mt-3"><a href="#"
-                                                        class="btn btn-primary">Place a Bid</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="card items">
-                                            <div class="card-body">
-                                                <div class="items-img position-relative"><img src="images/items/4.jpg"
-                                                        class="img-fluid rounded mb-3" alt=""><img
-                                                        src="images/avatar/4.jpg" class="creator" width="50" alt="">
-                                                </div>
-                                                <h4 class="card-title">Liguid Wave</h4>
-                                                <p></p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="text-start">
-                                                        <p class="mb-2">Auction Time</p>
-                                                        <h5 class="text-muted">3h 1m 50s</h5>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <p class="mb-2">Current Bid : <strong class="text-primary">0.15
-                                                                <!-- --> ETH
-                                                            </strong></p>
-                                                        <h5 class="text-muted">0.15
-                                                            <!-- --> ETH
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center mt-3"><a href="#"
-                                                        class="btn btn-primary">Place a Bid</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="card items">
-                                            <div class="card-body">
-                                                <div class="items-img position-relative"><img src="images/items/5.jpg"
-                                                        class="img-fluid rounded mb-3" alt=""><img
-                                                        src="images/avatar/5.jpg" class="creator" width="50" alt="">
-                                                </div>
-                                                <h4 class="card-title">Liguid Wave</h4>
-                                                <p></p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="text-start">
-                                                        <p class="mb-2">Auction Time</p>
-                                                        <h5 class="text-muted">3h 1m 50s</h5>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <p class="mb-2">Current Bid : <strong class="text-primary">0.55
-                                                                <!-- --> ETH
-                                                            </strong></p>
-                                                        <h5 class="text-muted">0.55
-                                                            <!-- --> ETH
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center mt-3"><a href="#"
-                                                        class="btn btn-primary">Place a Bid</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="card items">
-                                            <div class="card-body">
-                                                <div class="items-img position-relative"><img src="images/items/6.jpg"
-                                                        class="img-fluid rounded mb-3" alt=""><img
-                                                        src="images/avatar/6.jpg" class="creator" width="50" alt="">
-                                                </div>
-                                                <h4 class="card-title">Liguid Wave</h4>
-                                                <p></p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="text-start">
-                                                        <p class="mb-2">Auction Time</p>
-                                                        <h5 class="text-muted">3h 1m 50s</h5>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <p class="mb-2">Current Bid : <strong class="text-primary">0.15
-                                                                <!-- --> ETH
-                                                            </strong></p>
-                                                        <h5 class="text-muted">0.15
-                                                            <!-- --> ETH
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center mt-3"><a href="#"
-                                                        class="btn btn-primary">Place a Bid</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="card items">
-                                            <div class="card-body">
-                                                <div class="items-img position-relative"><img src="images/items/7.jpg"
-                                                        class="img-fluid rounded mb-3" alt=""><img
-                                                        src="images/avatar/7.jpg" class="creator" width="50" alt="">
-                                                </div>
-                                                <h4 class="card-title">Liguid Wave</h4>
-                                                <p></p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="text-start">
-                                                        <p class="mb-2">Auction Time</p>
-                                                        <h5 class="text-muted">3h 1m 50s</h5>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <p class="mb-2">Current Bid : <strong class="text-primary">0.15
-                                                                <!-- --> ETH
-                                                            </strong></p>
-                                                        <h5 class="text-muted">0.15
-                                                            <!-- --> ETH
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center mt-3"><a href="#"
-                                                        class="btn btn-primary">Place a Bid</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="card items">
-                                            <div class="card-body">
-                                                <div class="items-img position-relative"><img src="images/items/8.jpg"
-                                                        class="img-fluid rounded mb-3" alt=""><img
-                                                        src="images/avatar/8.jpg" class="creator" width="50" alt="">
-                                                </div>
-                                                <h4 class="card-title">Liguid Wave</h4>
-                                                <p></p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="text-start">
-                                                        <p class="mb-2">Auction Time</p>
-                                                        <h5 class="text-muted">3h 1m 50s</h5>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <p class="mb-2">Current Bid : <strong class="text-primary">0.15
-                                                                <!-- --> ETH
-                                                            </strong></p>
-                                                        <h5 class="text-muted">0.15
-                                                            <!-- --> ETH
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center mt-3"><a href="#"
-                                                        class="btn btn-primary">Place a Bid</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-3 col-xl-12">
-                        <div class="card m-0">
-                            <div class="card-header">
-                                <h4 class="card-title">Trending Bids</h4>
-                            </div>
-                            <div class="card-body bs-0 bg-transparent p-0">
-                                <div class="row">
-                                    <div class="col-xxl-12 col-xl-4 col-md-4 col-sm-6">
-                                        <div class="stat-widget d-flex align-items-center">
-                                            <div class="widget-icon me-3 bg-primary"><span><i
-                                                        class="ri-wallet-line"></i></span></div>
-                                            <div class="widget-content">
-                                                <h3>24K</h3>
-                                                <p>Artworks</p>
-                                            </div>
-                                            <div class="widget-arrow">
-                                                <p class="text-success mb-0">+168.001%
-                                                    <!-- --> <span><i class="bi bi-arrow-up"></i></span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-12 col-xl-4 col-md-4 col-sm-6">
-                                        <div class="stat-widget d-flex align-items-center">
-                                            <div class="widget-icon me-3 bg-secondary"><span><i
-                                                        class="ri-wallet-2-line"></i></span></div>
-                                            <div class="widget-content">
-                                                <h3>82K</h3>
-                                                <p>Auction</p>
-                                            </div>
-                                            <div class="widget-arrow">
-                                                <p class="text-danger mb-0">+168.001%
-                                                    <!-- --> <span><i class="bi bi-arrow-down"></i></span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-12 col-xl-4 col-md-4 col-sm-6">
-                                        <div class="stat-widget d-flex align-items-center">
-                                            <div class="widget-icon me-3 bg-success"><span><i
-                                                        class="ri-wallet-3-line"></i></span></div>
-                                            <div class="widget-content">
-                                                <h3>1K</h3>
-                                                <p>Creators</p>
-                                            </div>
-                                            <div class="widget-arrow">
-                                                <p class="text-success mb-0">+168.001%
-                                                    <!-- --> <span><i class="bi bi-arrow-up"></i></span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-6 col-xl-8 col-lg-6">
-                        <div id="user-activity" class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">ETH Priceeee</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="chartjs-size-monitor">
-                                    <div class="chartjs-size-monitor-expand">
-                                        <div class=""></div>
-                                    </div>
-                                    <div class="chartjs-size-monitor-shrink">
-                                        <div class=""></div>
-                                    </div>
-                                </div><canvas height="280" width="670" id="activity"
-                                    style="display: block; width: 670px; height: 280px;"
-                                    class="chartjs-render-monitor"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" col-xxl-3 col-xl-4 col-lg-6">
-                        <div class="card">
-                            <div class="card-header justify-content-center">
-                                <h4 class="card-title">Statistics</h4>
-                            </div>
-                            <div class="card-body bs-0">
-                                <div class="chartjs-size-monitor">
-                                    <div class="chartjs-size-monitor-expand">
-                                        <div class=""></div>
-                                    </div>
-                                    <div class="chartjs-size-monitor-shrink">
-                                        <div class=""></div>
-                                    </div>
-                                </div><canvas height="280" width="295" id="most-selling-items"
-                                    class="chartjs-render-monitor"
-                                    style="display: block; width: 295px; height: 280px;"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-4 col-xl-12">
-                        <div class="card m-0">
-                            <div class="card-header">
-                                <h4 class="card-title">Recent Activity</h4><a href="#">See more</a>
-                            </div>
-                            <div class="card-body p-0">
-                                <div class="activity-content">
-                                    <div class="scrollbar-container ps">
-                                        <ul>
-                                            <li class="d-flex justify-content-between align-items-center active">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="activity-user-img me-3"><img src="images/avatar/1.jpg"
-                                                            alt="" width="50"></div>
-                                                    <div class="activity-info">
-                                                        <h5 class="mb-0">Papaya</h5>
-                                                        <p>Purchase by you for 0.05 ETH</p>
-                                                    </div>
-                                                </div>
-                                                <div class="text-end"><span class=" text-muted">12 min ago</span></div>
-                                            </li>
-                                            <li class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="activity-user-img me-3"><img src="images/avatar/2.jpg"
-                                                            alt="" width="50"></div>
-                                                    <div class="activity-info">
-                                                        <h5 class="mb-0">ETH Received</h5>
-                                                        <p>0.06 ETH Received</p>
-                                                    </div>
-                                                </div>
-                                                <div class="text-end"><span class=" text-muted">12 min ago</span></div>
-                                            </li>
-                                            <li class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="activity-user-img me-3"><img src="images/avatar/3.jpg"
-                                                            alt="" width="50"></div>
-                                                    <div class="activity-info">
-                                                        <h5 class="mb-0">John Adams</h5>
-                                                        <p>Started Following you</p>
-                                                    </div>
-                                                </div>
-                                                <div class="text-end"><span class=" text-muted">12 min ago</span></div>
-                                            </li>
-                                            <li class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="activity-user-img me-3"><img src="images/avatar/4.jpg"
-                                                            alt="" width="50"></div>
-                                                    <div class="activity-info">
-                                                        <h5 class="mb-0">Nature with Beauty</h5>
-                                                        <p>Has been sold by 12.05 ETH</p>
-                                                    </div>
-                                                </div>
-                                                <div class="text-end"><span class=" text-muted">12 min ago</span></div>
-                                            </li>
-                                            <li class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="activity-user-img me-3"><img src="images/avatar/5.jpg"
-                                                            alt="" width="50"></div>
-                                                    <div class="activity-info">
-                                                        <h5 class="mb-0">Nature with Beauty</h5>
-                                                        <p>Has been sold by 12.05 ETH</p>
-                                                    </div>
-                                                </div>
-                                                <div class="text-end"><span class=" text-muted">12 min ago</span></div>
-                                            </li>
-                                        </ul>
-                                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-                                            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-                                        </div>
-                                        <div class="ps__rail-y" style="top: 0px; right: 0px;">
-                                            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-8 col-xl-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Top Creators</h4><a href="#">See more</a>
-                            </div>
-                            <div class="card-body bs-0 p-0 top-creators-content  bg-transparent">
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <div
-                                            class="d-flex justify-content-between creator-widget active  align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <div class="top-creators-user-img me-3"><img src="images/avatar/1.jpg"
-                                                        alt="" width="60"></div>
-                                                <div class="top-creators-info">
-                                                    <h5 class="mb-0">Terry Camacho</h5>
-                                                    <p class="mb-2">60 Items</p>
-                                                </div>
-                                            </div>
-                                            <div class="text-end"><a class="btn btn-outline-primary">Follow</a></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div
-                                            class="d-flex justify-content-between creator-widget active  align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <div class="top-creators-user-img me-3"><img src="images/avatar/2.jpg"
-                                                        alt="" width="60"></div>
-                                                <div class="top-creators-info">
-                                                    <h5 class="mb-0">Terry Camacho</h5>
-                                                    <p class="mb-2">60 Items</p>
-                                                </div>
-                                            </div>
-                                            <div class="text-end"><a class="btn btn-secondary">Following</a></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div
-                                            class="d-flex justify-content-between creator-widget active  align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <div class="top-creators-user-img me-3"><img src="images/avatar/3.jpg"
-                                                        alt="" width="60"></div>
-                                                <div class="top-creators-info">
-                                                    <h5 class="mb-0">Terry Camacho</h5>
-                                                    <p class="mb-2">60 Items</p>
-                                                </div>
-                                            </div>
-                                            <div class="text-end"><a class="btn btn-outline-primary">Follow</a></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div
-                                            class="d-flex justify-content-between creator-widget active  align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <div class="top-creators-user-img me-3"><img src="images/avatar/4.jpg"
-                                                        alt="" width="60"></div>
-                                                <div class="top-creators-info">
-                                                    <h5 class="mb-0">Terry Camacho</h5>
-                                                    <p class="mb-2">60 Items</p>
-                                                </div>
-                                            </div>
-                                            <div class="text-end"><a class="btn btn-outline-primary">Follow</a></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div
-                                            class="d-flex justify-content-between creator-widget active  align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <div class="top-creators-user-img me-3"><img src="images/avatar/5.jpg"
-                                                        alt="" width="60"></div>
-                                                <div class="top-creators-info">
-                                                    <h5 class="mb-0">Terry Camacho</h5>
-                                                    <p class="mb-2">60 Items</p>
-                                                </div>
-                                            </div>
-                                            <div class="text-end"><a class="btn btn-outline-primary">Follow</a></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div
-                                            class="d-flex justify-content-between creator-widget active  align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <div class="top-creators-user-img me-3"><img src="images/avatar/6.jpg"
-                                                        alt="" width="60"></div>
-                                                <div class="top-creators-info">
-                                                    <h5 class="mb-0">Terry Camacho</h5>
-                                                    <p class="mb-2">60 Items</p>
-                                                </div>
-                                            </div>
-                                            <div class="text-end"><a class="btn btn-outline-primary">Follow</a></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div
-                                            class="d-flex justify-content-between creator-widget active  align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <div class="top-creators-user-img me-3"><img src="images/avatar/7.jpg"
-                                                        alt="" width="60"></div>
-                                                <div class="top-creators-info">
-                                                    <h5 class="mb-0">Terry Camacho</h5>
-                                                    <p class="mb-2">60 Items</p>
-                                                </div>
-                                            </div>
-                                            <div class="text-end"><a class="btn btn-outline-primary">Follow</a></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div
-                                            class="d-flex justify-content-between creator-widget active  align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <div class="top-creators-user-img me-3"><img src="images/avatar/8.jpg"
-                                                        alt="" width="60"></div>
-                                                <div class="top-creators-info">
-                                                    <h5 class="mb-0">Terry Camacho</h5>
-                                                    <p class="mb-2">60 Items</p>
-                                                </div>
-                                            </div>
-                                            <div class="text-end"><a class="btn btn-outline-primary">Follow</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-header flex-row">
-                                <h4 class="card-title">Recent Bid </h4>
-                            </div>
-                            <div class="card-body bs-0 bg-transparent p-0">
-                                <div class="bid-table">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>
-                                                        <div class="form-check"><input type="checkbox"
-                                                                class="form-check-input" value="" id="flexCheckDefault">
-                                                        </div>
-                                                    </th>
-                                                    <th>Item List</th>
-                                                    <th>Open Price</th>
-                                                    <th>Your Offer</th>
-                                                    <th>Recent Offer</th>
-                                                    <th>Time Left</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check"><input type="checkbox"
-                                                                class="form-check-input" value="" id="flexCheckDefault">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center"><img
-                                                                src="images/items/15.jpg" alt="" width="60"
-                                                                class="me-3 rounded">
-                                                            <div class="flex-grow-1">
-                                                                <h6 class="mb-0">Cutes Cube Cool</h6>
-                                                                <p class="mb-0">John Abraham</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>0.0025 ETH</td>
-                                                    <td> 0.0025 ETH</td>
-                                                    <td><img src="images/avatar/1.jpg" alt="" width="40"
-                                                            class="me-2 rounded-circle">0.0025 ETH</td>
-                                                    <td>2 Hours 1 min 30s</td>
-                                                    <td><span><i class="ri-close-line me-3"></i></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check"><input type="checkbox"
-                                                                class="form-check-input" value="" id="flexCheckDefault">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center"><img
-                                                                src="images/items/16.jpg" alt="" width="60"
-                                                                class="me-3 rounded">
-                                                            <div class="flex-grow-1">
-                                                                <h6 class="mb-0">Cutes Cube Cool</h6>
-                                                                <p class="mb-0">John Abraham</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>0.0025 ETH</td>
-                                                    <td> 0.0025 ETH</td>
-                                                    <td><img src="images/avatar/2.jpg" alt="" width="40"
-                                                            class="me-2 rounded-circle">0.0025 ETH</td>
-                                                    <td>2 Hours 1 min 30s</td>
-                                                    <td><span><i class="ri-close-line me-3"></i></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check"><input type="checkbox"
-                                                                class="form-check-input" value="" id="flexCheckDefault">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center"><img
-                                                                src="images/items/17.jpg" alt="" width="60"
-                                                                class="me-3 rounded">
-                                                            <div class="flex-grow-1">
-                                                                <h6 class="mb-0">Cutes Cube Cool</h6>
-                                                                <p class="mb-0">John Abraham</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>0.0025 ETH</td>
-                                                    <td> 0.0025 ETH</td>
-                                                    <td><img src="images/avatar/3.jpg" alt="" width="40"
-                                                            class="me-2 rounded-circle">0.0025 ETH</td>
-                                                    <td>2 Hours 1 min 30s</td>
-                                                    <td><span><i class="ri-close-line me-3"></i></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check"><input type="checkbox"
-                                                                class="form-check-input" value="" id="flexCheckDefault">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center"><img
-                                                                src="images/items/18.jpg" alt="" width="60"
-                                                                class="me-3 rounded">
-                                                            <div class="flex-grow-1">
-                                                                <h6 class="mb-0">Cutes Cube Cool</h6>
-                                                                <p class="mb-0">John Abraham</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>0.0025 ETH</td>
-                                                    <td> 0.0025 ETH</td>
-                                                    <td><img src="images/avatar/4.jpg" alt="" width="40"
-                                                            class="me-2 rounded-circle">0.0025 ETH</td>
-                                                    <td>2 Hours 1 min 30s</td>
-                                                    <td><span><i class="ri-close-line me-3"></i></span></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-
     </div>
     <!-- explore -->
     <!-- <script>
@@ -994,15 +353,30 @@
 </script> -->
 
     <script type="text/javascript">
-        localStorage.setItem("userId", 1) // set manually
+        window.scrollTo(0, 0);
+        localStorage.setItem("userId", 3) // set manually ke browser localstorage (nanti kau ambil dari userId mereka/kampus)
         let userIdLogin = localStorage.getItem("userId") // SAMPLE FOR LOGIN (userId = 1)
-
+        let currentLocation = {}
+        document.getElementById('userLoginHeader').innerHTML= `userLogin id nya ini ${userIdLogin}`
         validationLogin() // call function
         initGetData() // call function
+        getLocation()
         getUsers()
 
+        function getAllByStatus() {
+
+            var apiUrl = `http://localhost:3000/laporan/get-all-user?userId=${userIdLogin}`;
+            fetch(apiUrl)
+                .then(async (response) => {
+                    if (userIdLogin ) return asd
+
+                }).catch(err => {
+
+                });
+        }
+
         function initGetData() {
-            var apiUrl = 'http://localhost:3000/laporan/get-laporan';
+            var apiUrl = `http://localhost:3000/laporan/get-laporan?userId=${userIdLogin}`;
             var cardContainer = document.getElementById("myList");
             fetch(apiUrl)
                 .then(async (response) => {
@@ -1019,6 +393,7 @@
                     data.forEach(item => { // loop masing2 data
                         var card = document.createElement("div");
                         card.className = "promotion d-flex justify-content-between align-items-center";
+                        card.style = ""
                         card.innerHTML += cardFormater(card, item)
                         cardContainer.appendChild(card);
                         console.log("testitem", item);
@@ -1054,53 +429,65 @@
             // }).catch(err => {
             //     console.log(err);
             // });
-            let text = `<div class="card top-bid">
-                        <div class="col-md-6" style="padding: 0px">
-                            <button id="like" style="color: blue; width: 32px" class="bi bi-hand-thumbs-up btn-sm"></button>
-                            <h6 style="margin-left: 12px; margin-top: 9px">${item.countLike ? item.countLike : 0}</h6>
-                            <button id="dislike" style="color: red; width: 32px" class="bi bi-hand-thumbs-down btn-sm"></button>
-                        </div>
-                        <div style="margin-top: 100px">
-                            <i style="margin-right: 20px" class="bi bi-chat"></i>
-                            <i class="bi bi-flag"></i>  
+            let sample = `
+                <div class="col-md-6 col-sm-6">
+                    <div class="card items">
+                        <div>
+                            <div class="d-flex justify-content-between">
+                                <div class="text-start">
+                                    <h5 class="card-tex">${item.nama} ${item.point_rank}</h5>
+                                    <p class="card-tex">Kepada: ${item.nama_penerima} --${item.role}--</p>
+                                </div>
+                                <div class="text-end">
+                                    <p class="card-tex">Status: ${item.status_laporan}</p>
+                                    <p class="card-tex">Posted ${item.created_at.slice(0,10)}</p>
+                                </div>
+                            </div>
+                            <div style="text-align: center;" class="items-img position-relative"><img src="images/items/1.jpg"
+                                class="img-fluid rounded mb-3" alt="" style="width: 50%; ">
+                            </div>
+                            
+                            <div class="col-md-6" style="padding: 10px;">
+                                <h5 class="card-title">${item.title}</h5>
+                                <p class="card-text">Kategori: ${item.category}</p>
+                                <p class="card-text">${item.text}</p>
+                            </div
+
+                            <div>
+                                <!-- Button trigger modal -->
+                                <button id="buttonApprove" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalApprove${item.id_laporan}">
+                                    Approve
+                                </button>
+                                <button id="buttonReject" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalReject${item.id_laporan}">
+                                    Reject
+                                </button>
+                            </div>
+                            ${returnDialog(item.id_laporan,'approve')}
+                            ${returnDialog(item.id_laporan,'reject')}
+
+                            <div class="d-flex" style="margin-top: 20px">
+                                <i onclick="buttonLike(${item.id_laporan}, 'up')" id="buttonlike${item.id_laporan}" class="fa fa-thumbs-o-up" style="font-size:24px"></i>
+                                <h6 title="false" id="like${item.id_laporan}" style="margin-left: 12px">${item.countLike ? item.countLike : 0}</h6>
+                                <i onclick="buttonLike(${item.id_laporan}, 'down')" id="dislike${item.id_laporan}" class="fa fa-thumbs-o-down" style="font-size:24px; margin-left: 15px"></i>
+                                <div class="col-md-6" style="padding: 0px; margin-top: -10px">
+                                    <div class="d-flex">
+                                        <div class="d-flex">
+                                        <i style="margin-left: 30px; font-size:24px" class="bi bi-chat"></i>
+                                        <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Comments</p>
+                                        </div>
+                                        <div class="d-flex">
+                                        <i style="margin-left: 20px; font-size:24px" class="bi bi-flag"></i>
+                                        <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Report</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6" style="padding: 10px;">
-                        <h5 class="card-text">${item.id_user_pelapor}</h5>
-                        <h5 class="card-text">${item.id_user_penerima}</h5>
-                        <p class="card-text">${item.status_laporan}</p>
-                        <p class="card-text">${item.category}</p>
-                        <p class="card-text">${item.created_at}</p>
-                        <h5 class="card-title">${item.title}</h5>
-                        <p class="card-text">${item.text}</p>
-                    </div>`
-
-            // `<div class="card-group">
-            //     <div class="card" style="width: fit-content; block-size: fit-content;">
-            //         <div class="card-body" style="padding: 0px">
-            //             <button id="like" style="color: blue" class="bi bi-hand-thumbs-up btn-sm"></button>
-            //             <h6 style="margin-right: 0px;">${item.countLike ? item.countLike : 0}</h6>
-            //             <button id="dislike" style="color: red" class="bi bi-hand-thumbs-down btn-sm"></button>
-            //         </div>
-            //     </div>
-            //     <div class="card">
-            //         <div class="card-body" style="padding: 10px">
-            //             <h5 class="card-text">${item.id_user_pelapor}</h5>
-            //             <h5 class="card-text">${item.id_user_penerima}</h5>
-            //             <p class="card-text">${item.status_laporan}</p>
-            //             <p class="card-text">${item.category}</p>
-            //             <p class="card-text">${item.created_at}</p>
-            //             <h5 class="card-title">${item.title}</h5>
-            //             <p class="card-text">${item.text}</p>
-            //         </div>
-            //     </div>
-            //     <div class="card">
-            //         <div class="card-body" style="padding: 10px">
-            //             <i class="bi bi-chat"></i>
-            //             <i class="bi bi-flag"></i>  
-            //         </div>
-            //     </div>                    
-            // </div>`
+                </div>`
+            
+            let text = `${sample}`
+            
             return text
         }
 
@@ -1111,29 +498,29 @@
         }
 
         function postSubmit() {
+            // console.log(currentLocation); // mau cek lokasi lan/lon
             let keterangan = document.getElementById("keterangan").value
             let judul = document.getElementById("judul").value
             let kategori = document.getElementById("kategori").value
-            let selectUser = document.getElementById("selectUser").value
-            let foto = document.getElementById("foto").files[0]
-            // id_user_penerima: req.body.id_user_penerima,
-            // id_user_petugas: req.body.id_user_petugas,
-            // status_laporan: req.body.status_laporan,
-            // category: req.body.category,
-            // title: req.body.title,
-            // text: req.body.text,
-            // lokasi_longitude: req.body.lokasi_longitude,
-            // lokasi_latitude: req.body.lokasi_latitude,
-            // image: req.body.image
-            // return console.log(foto);
-            // API INSERT
+            // let foto = document.getElementById("foto").files[0]
+            let selectPengawas = document.getElementById("selectPengawas").value
+            let selectKepada = document.getElementById("selectKepada").value
+            let layer = 0
+
+            if(selectKepada == 'kepala prodi') layer = 2
+            if(selectKepada == 'wakil dekan 2') layer = 3
+            if(selectKepada == 'wakil rektor 2') layer = 4
+
             let insertData = {
+                id_user_pelapor: userIdLogin,
+                id_user_approver1: selectPengawas,
                 category: kategori,
                 text: keterangan,
                 title: judul,
-                id_user_pelapor: userIdLogin,
-                id_user_penerima: selectUser,
-                image: convertFileToJson(foto)
+                layer: layer,
+                // image: convertFileToJson(foto),
+                // lokasi_latitude: currentLocation.latitude,
+                // lokasi_longitude: currentLocation.longitude
             }
             console.log(insertData);
             var insertApi = 'http://localhost:3000/laporan/upload-laporan';
@@ -1143,14 +530,14 @@
                 cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
                 credentials: "same-origin", // include, *same-origin, omit
                 headers: {
-                    // "Content-Type": "application/json",
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/json",
+                    // "Content-Type": "multipart/form-data",
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 redirect: "follow", // manual, *follow, error
                 referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 // body: JSON.stringify(insertData), // body data type must match "Content-Type" header
-                body: insertData
+                body: JSON.stringify(insertData)
             }).then(response => {
                 return response.json();
             }).then(data => {
@@ -1166,16 +553,25 @@
             if (!userIdLogin) return window.location.replace('https://www.w3schools.com/')
         }
 
-        function getUsers() {
-            var apiUrl = 'http://localhost:3000/user/get-user';
+        function getUsers(userId) {
+            var apiUrl = `http://localhost:3000/user/get-user${userId ? `?userId=${userId}` : ''}`;
             fetch(apiUrl).then(response => {
                 return response.json();
             }).then(data => {
-                let html = ''
+                let pengawas = ''
+                let kepada = ''
                 for (var i = 0; i < data.length; i++) {
-                    html += "<option value=" + data[i].id_user + ">" + data[i].nama + " -- " + data[i].role + " -- " + "</option>"
+                    let user = data[i]
+                    if (user.role == 'pengawas') {
+                        pengawas += "<option value=" + user.id_user + ">" + user.nama + " (" + user.role + ") " + "</option>"
+                    } else {
+                        if (user.role != 'dosen') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
+                        // console.log("user", kepada);
+                    }
                 }
-                document.getElementById("selectUser").innerHTML = html;
+                if (userId) return data // KALO MAU RESULTNYA 1 USER AJA
+                document.getElementById("selectPengawas").innerHTML = pengawas;
+                document.getElementById("selectKepada").innerHTML = kepada;
                 console.log('getuser', data);
             }).catch(err => {
                 console.log('getusererr', err);
@@ -1191,6 +587,162 @@
                 document.getElementById('result').value = formatted;
             }
             return foto
+        }
+
+        function buttonLike(laporanId, status) {
+            let titleTag = document.getElementById(`like${laporanId}`).title;
+            let totalLikes = document.getElementById(`like${laporanId}`).innerHTML;
+            totalLikes = Number(totalLikes)
+            console.log(    titleTag, status);
+            if (status == 'up') {
+                if (titleTag == 'onUp') {
+                    document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-o-up"
+                    document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 1
+                    document.getElementById(`like${laporanId}`).title = 'offUp'
+                }
+                if (titleTag == 'offUp' || titleTag == 'false' || titleTag == 'offDown') {
+                    document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-up"
+                    document.getElementById(`like${laporanId}`).title = 'onUp'
+                    return document.getElementById(`like${laporanId}`).innerHTML = totalLikes + 1
+                }
+                if (titleTag == 'onDown') {
+                    document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-up"
+                    document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-o-down"
+                    document.getElementById(`like${laporanId}`).title = 'onUp'
+                    return document.getElementById(`like${laporanId}`).innerHTML = totalLikes + 2
+                }
+            }
+            // if (status == 'down') return document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 1 // CASE 0
+            if (status == 'down') {
+                if (titleTag == 'onDown') {
+                    document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-o-down"
+                    document.getElementById(`like${laporanId}`).innerHTML = totalLikes + 1
+                    document.getElementById(`like${laporanId}`).title = 'offDown'
+                }
+                if (titleTag == 'offDown' || titleTag == 'false' || titleTag == 'offUp') {
+                    document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-down"
+                    document.getElementById(`like${laporanId}`).title = 'onDown'
+                    return document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 1
+                }
+                if (titleTag == 'onUp') {
+                    document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-down"
+                    document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-o-up"
+                    document.getElementById(`like${laporanId}`).title = 'onDown'
+                    return document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 2
+                }
+            }
+        }
+
+        function returnDialog(lapId,type) {
+            let buttonLabel = ''
+            let idModal = ''
+            let words = ''
+            let buttonApprove = ''
+            if (!type) return false;
+            if (type == 'approve') {
+                buttonLabel = 'Approve(Setujui)'
+                idModal = `exampleModalApprove${lapId}`
+                words = 'approve'
+                buttonApprove = `approveButton(${lapId})`
+            } else if (type == 'reject') {
+                buttonLabel = 'Reject(Tolak)'
+                idModal = `exampleModalReject${lapId}`
+                words = 'tolak'
+                buttonApprove = `rejectButton(${lapId})`
+            }
+            return `
+            <div class="modal fade" id="${idModal}" aria-labelledby="exampleModalLabel" >
+                <div class="modal-dialog" style="margin-top: 100px">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Approval</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan ${words}?</h5>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="${words == 'approve' ? buttonApprove : buttonApprove}">${buttonLabel}</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>`
+        }
+
+        function approveButton(lapId) {
+            let updateData = {
+                id_laporan: lapId,
+                userlogin: userIdLogin
+            }
+            console.log(updateData);
+            var insertApi = 'http://localhost:3000/laporan/approve';
+            fetch(insertApi, {
+                method: "PUT", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(updateData), // body data type must match "Content-Type" header
+            }).then( async (response) => {
+                console.log('success approve',response);
+                location.reload();
+                // await initGetData()
+            }).catch(err => {
+                console.log(err);
+                // Do something for an error here
+            });
+        }
+
+        function rejectButton(lapId) {
+            // console.log(currentLocation); // mau cek lokasi lan/lon
+            console.log('reject');
+            let updateData = {
+                id_laporan: lapId,
+                userlogin: userIdLogin
+            }
+            console.log(updateData);
+            var insertApi = 'http://localhost:3000/laporan/rejected';
+            fetch(insertApi, {
+                method: "PUT", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(updateData), // body data type must match "Content-Type" header
+            }).then( async (response) => {
+                console.log('succes rejected',response);
+                // location.reload();
+                // await initGetData()
+            }).catch(err => {
+                console.log(err);
+                // Do something for an error here
+            });
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                console.log('browser no support location');
+            }
+        }
+
+        function showPosition(position) {
+            currentLocation = {
+                latitude : position.coords.latitude,
+                longitude : position.coords.longitude
+            }
+            return true
         }
 
     </script>
