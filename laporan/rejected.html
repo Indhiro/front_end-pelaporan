@@ -266,6 +266,39 @@
                     </nav>
 
                     <!-- BATAS PROJECT  -->
+                    <div class="col-xxl-6">
+                        <!-- <div class="card top-bid">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-6"><img src="images/items/11.jpg" class="img-fluid rounded"
+                                        alt="..."></div>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-3"><img src="images/avatar/1.jpg" alt=""
+                                            class="me-3 avatar-img">
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-0">John Abraham<span class="circle bg-success"></span></h6>
+                                        </div>
+                                    </div>
+                                    <h4 class="card-title">Brighten LQ</h4>
+                                    <div class="d-flex justify-content-between mt-3 mb-3">
+                                        <div class="text-start">
+                                            <p class="mb-2">Auction Time</p>
+                                            <h5 class="text-muted">3h 1m 50s</h5>
+                                        </div>
+                                        <div class="text-end">
+                                            <p class="mb-2">Current Bid :
+                                                <strong class="text-primary">0.05 ETH</strong>
+                                            </p>
+                                            <h5 class="text-muted">0.15 ETH</h5>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center"><a href="#" class="btn btn-primary">Place
+                                            a Bid</a><a href="#" class="btn btn-secondary">Details</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -328,7 +361,7 @@
         }
 
         function initGetData() {
-            var apiUrl = `http://localhost:3000/laporan/get-laporan-dashboard?userId=${userIdLogin}`;
+            var apiUrl = `http://localhost:3000/laporan/get-laporan-rejected?userId=${userIdLogin}`;
             var cardContainer = document.getElementById("myList");
             fetch(apiUrl)
                 .then(async (response) => {
@@ -404,18 +437,6 @@
                                 <p class="card-text">Kategori: ${item.category}</p>
                                 <p class="card-text">${item.text}</p>
                             </div>
-
-                            <div>
-                                <!-- Button trigger modal -->
-                                <button hidden id="buttonApprove" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalApprove${item.id_laporan}">
-                                    Approve
-                                </button>
-                                <button hidden id="buttonReject" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalReject${item.id_laporan}">
-                                    Reject
-                                </button>
-                            </div>
-                            ${returnDialog(item.id_laporan,'approve')}
-                            ${returnDialog(item.id_laporan,'reject')}
 
                             <div class="d-flex" style="margin-top: 20px">
                                 <i onclick="buttonLike(${item.id_laporan}, 'up')" id="buttonlike${item.id_laporan}" class="fa fa-thumbs-o-up" style="font-size:24px"></i>
@@ -493,7 +514,6 @@
             }).then(response => {
                 return response.json();
             }).then(data => {
-                window.location.assign("index.html")
                 console.log(data);
                 // SUCCESS MESSAGE
             }).catch(err => {
