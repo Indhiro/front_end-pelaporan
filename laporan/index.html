@@ -307,11 +307,11 @@
         getLocation()
         getUsers()
 
-        function getAllByStatus() {
+        function getAllByStatus() { // INI BUAT APA?
             var apiUrl = `http://localhost:3000/laporan/get-all-user?userId=${userIdLogin}`;
             fetch(apiUrl)
             .then(async (response) => {
-                if (userIdLogin ) return asd
+                if (userIdLogin ) return true
             }).catch(err => {
 
             });
