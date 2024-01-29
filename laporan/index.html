@@ -12,9 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!---- Website Information ---->
     <title>Pelaporan</title>
-    <meta name="description"
-        content="Pelaporan Teknologi Informasi Universitas Udayana">
-
+    <meta name="description" content="Pelaporan Teknologi Informasi Universitas Udayana">
 
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
@@ -29,11 +27,7 @@
 </head>
 
 <body class="@@dashboard">
-
-    <div id="preloader"><i>.</i><i>.</i><i>.</i></div>
-
     <div id="main-wrapper">
-
         <div class="header">
             <div class="container">
                 <div class="row">
@@ -45,17 +39,17 @@
                                             src="images/logoi.png" alt="" width="40"></a></div>
                                 <div class="search">
                                     <form action="#"><span><i class="ri-search-line"></i></span><input type="text"
-                                            placeholder="Search Here"></form>
+                                        placeholder="Search Here" onchange="getLaporan(this.value)"></form>
                                 </div>
+                                <h1 style="position: absolute; margin-top: 50px; left: 50%; margin-left: -50px; width: 100px; height: 100px;
+                            font-style: italic; font-family: Monospace; color: gray">Pelaporan</h1>
                             </div>
                             <div class="header-right">
                                 <!-- <div class="theme-switch"><i class="ri-sun-line"></i></div> -->
-
                                 <div class="dark-light-toggle theme-switch" onclick="themeToggle()">
                                     <span class="dark"><i class="ri-moon-line"></i></span>
                                     <span class="light"><i class="ri-sun-line"></i></span>
                                 </div>
-
 
                                 <div class="nav-item dropdown notification dropdown">
                                     <div data-bs-toggle="dropdown" aria-haspopup="true" class="" aria-expanded="false">
@@ -109,7 +103,7 @@
                                 <div class="dropdown profile_log dropdown">
                                     <div data-bs-toggle="dropdown" aria-haspopup="true" class="" aria-expanded="false">
                                         <div class="user icon-menu active"><span><img src="images/avatar/9.jpg"
-                                                    alt=""></span>
+                                            alt=""><span id="nameUser" style="margin-left: 20px;"></span></span>
                                         </div>
                                     </div>
                                     <div tabindex="-1" role="menu" aria-hidden="true"
@@ -151,6 +145,7 @@
                 </div>
             </div>
         </div>
+        <!-- SIDE BAR DISEBELAH KIRI -->
         <div class="sidebar">
             <!-- <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt="" width="30"></a></div> -->
             <div class="menu">
@@ -176,7 +171,8 @@
                             <span><i style="font-size: 30px;" class="ri-settings-3-line"></i></span>
                             <span class="nav-text">Settings</span></a>
                     </li>
-                    <li class="logout" style="margin-top: -20px;"><a href="signin.html">
+                    <li class="logout" style="margin-top: -20px;">
+                        <a href="signin.html">
                             <span><i style="font-size: 30px;" class="ri-logout-circle-line"></i></span>
                             <span class="nav-text">Signout</span>
                         </a>
@@ -185,74 +181,72 @@
             </div>
         </div>
 
-
         <div class="content-body">
             <div class="container">
                 <div class="row">
-                    <h5 id="userLoginHeader">user login</h5>
                     <div style="margin-top: 10px;">
-                        <button onclick="showHidePostForm()"><i class="bi bi-plus-circle-fill"
-                                style="color: black;">Post Activity</i></button>
+                        <!-- Post Activity -->  
+                        <i type="button" onclick="showHidePostForm()" class="btn btn-secondary bi bi-plus-circle-fill" style="color: black;"
+                        data-bs-toggle="modal" data-bs-target="#modalPostActivity">  Post Activity</i>
                         <div class="card-group">
                             <div class="card">
-                                <form id="postForm" style="display: none; margin-top: 10px;">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Kategori</label>
-                                        <select class="form-control" id="kategori">
-                                            <option>Infrastruktur</option>
-                                            <option>Pendidikan</option>
-                                            <option>Organisasi</option>
-                                            <option>Lainnya</option>
-                                        </select>
+                                
+                                <div class="modal fade" id="modalPostActivity" aria-labelledby="modalPostActivity" >
+                                    <div class="modal-dialog" style="margin-top: 100px;">
+                                        <div class="modal-content" style="width: 120%">
+                                            <div class="modal-body">
+                                                <form id="formPostLaporan" style="margin-top: 10px;">
+                                                    <h3 style="margin-top: -10px;">Post Laporan</h3>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect1">Kategori</label>
+                                                        <select class="form-control" id="kategori">
+                                                            <option>Infrastruktur</option>
+                                                            <option>Pendidikan</option>
+                                                            <option>Organisasi</option>
+                                                            <option>Lainnya</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlInput1">Judul</label>
+                                                        <input type="text" class="form-control" id="judul">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Keterangan</label>
+                                                        <textarea class="form-control" id="keterangan" rows="3"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="selectUserfor">Pengawas</label>
+                                                        <select id="selectPengawas" class="form-select" aria-label="Default select example">
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="selectUserfor">Kepada</label>
+                                                        <select id="selectKepada" class="form-select" aria-label="Default select example">
+                                                        </select>
+                                                    </div>
+                                                    <div style="margin-top: 10px;">
+                                                        <label for="exampleFormControlTextarea1">Foto</label>
+                                                        <input type="file" id="foto" style="margin-left: 100px;"
+                                                            accept="application/pdf,image/jpeg">
+                                                    </div>
+                                                    <div style="margin-top: 10px;">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary" style="float: right;"
+                                                            onclick="postSubmit()">Post</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1">Judul</label>
-                                        <input type="text" class="form-control" id="judul">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Keterangan</label>
-                                        <textarea class="form-control" id="keterangan" rows="3"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="selectUserfor">Pengawas</label>
-                                        <select id="selectPengawas" class="form-select" aria-label="Default select example">
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="selectUserfor">Kepada</label>
-                                        <select id="selectKepada" class="form-select" aria-label="Default select example">
-                                        </select>
-                                    </div>
-                                    <div style="margin-top: 10px;">
-                                        <label for="exampleFormControlTextarea1">Foto</label>
-                                        <input type="file" id="foto" style="margin-left: 100px;"
-                                            accept="application/pdf,image/jpeg">
-                                    </div>
-                                    <div style="margin-top: 10px;">
-                                        <button type="button" class="btn btn-primary" style="float: right;"
-                                            onclick="postSubmit()">Post</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="card">
+                                </div>
 
                             </div>
                         </div>
                     </div>
 
-
+                    <!-- LIST LAPORAN -->
                     <div class="col-xxl-8" style="margin-top: 20px;">
-                        <div id="myList">
-                            <!-- <form>
-                                <input id=like type="text" id="input" />
-                                <button>GET</button>
-                                <button>POST</button>
-                            </form> -->
-                            <!-- explore -->
-                            <!-- <div class="promotion-detail">
-
-                            </div> -->
-                        </div>
+                        <div id="myList"></div>
                     </div>
 
                     <nav aria-label="Page navigation example">
@@ -264,7 +258,6 @@
                           <li class="page-item"><a class="page-link" href="#">Next</a></li>
                         </ul>
                     </nav>
-
                     <!-- BATAS PROJECT  -->
                 </div>
             </div>
@@ -307,37 +300,36 @@
         window.scrollTo(0, 0);
         // localStorage.setItem("userId", 3) // set manually ke browser localstorage (nanti kau ambil dari userId mereka/kampus)
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
+        let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
         let currentLocation = {}
-        document.getElementById('userLoginHeader').innerHTML= `id_user: ${userIdLogin}`
-        console.log(userIdLogin);
         validationLogin() // call function
-        initGetData() // call function
+        getLaporan() // call function
         getLocation()
         getUsers()
 
         function getAllByStatus() {
-
             var apiUrl = `http://localhost:3000/laporan/get-all-user?userId=${userIdLogin}`;
             fetch(apiUrl)
-                .then(async (response) => {
-                    if (userIdLogin ) return asd
+            .then(async (response) => {
+                if (userIdLogin ) return asd
+            }).catch(err => {
 
-                }).catch(err => {
-
-                });
+            });
         }
 
-        function initGetData() {
+        function getLaporan(param) {
             var apiUrl = `http://localhost:3000/laporan/get-laporan-dashboard?userId=${userIdLogin}`;
+            if (param) apiUrl += `&search=${param}`
             var cardContainer = document.getElementById("myList");
+            cardContainer.innerHTML = ''
             fetch(apiUrl)
                 .then(async (response) => {
                     let data = await response.json()
-                    console.log("data", data);
+                    console.log("data laporan", data);
                     // Mendapatkan elemen container
                     var likeDislikeButton = document.getElementById("get");
 
-                    if (data.length == 0) {
+                    if (data && data.length == 0) {
                         var card = document.createElement("div");
                         card.innerHTML += `<h4>-- No Post --</h4>`
                         cardContainer.appendChild(card);
@@ -359,28 +351,6 @@
         }
 
         function cardFormater(card, item) { // add card each data
-            // var apiUrl = 'http://localhost:3000/laporan/get-laporan';
-            // fetch(apiUrl).then(response => {
-            //     return response.json();
-            // }).then(data => {
-
-            //     // Mendapatkan elemen container
-            //     var cardContainer = document.getElementById("myList");
-            //     if (data.length == 0) {
-            //         var card = document.createElement("div");
-            //         card.innerHTML += `<h4>-- No Post --</h4>`
-            //         cardContainer.appendChild(card);
-            //     }
-            //     data.forEach(item => { // loop masing2 data
-            //         var card = document.createElement("div");
-            //         card.className = "promotion d-flex justify-content-between align-items-center";
-            //         card.innerHTML += cardFormater(card, item)
-            //         cardContainer.appendChild(card);
-            //     });
-            //     console.log(data);
-            // }).catch(err => {
-            //     console.log(err);
-            // });
             let sample = `
                 <div class="col-md-6 col-sm-6">
                     <div class="card items">
@@ -391,7 +361,7 @@
                                     <p class="card-tex">Kepada: ${item.nama_penerima} --${item.role}--</p>
                                 </div>
                                 <div class="text-end">
-                                    <p class="card-tex">Status: ${item.status_laporan}</p>
+                                    <p class="card-tex">Status: ${statusColor(item.status_laporan)}</p>
                                     <p class="card-tex">Posted ${item.created_at.slice(0,10)}</p>
                                 </div>
                             </div>
@@ -437,10 +407,7 @@
                         </div>
                     </div>
                 </div>`
-            
-            let text = `${sample}`
-            
-            return text
+            return sample
         }
 
         function showHidePostForm() {
@@ -503,6 +470,8 @@
         }
 
         function validationLogin() {
+            console.log(nameUser,'nameUser');
+            document.getElementById('nameUser').innerHTML = nameUser ? nameUser : 'not login yet'
             if (!userIdLogin) return window.location.replace('signIn.html')
         }
 
@@ -629,7 +598,6 @@
                 id_laporan: lapId,
                 userlogin: userIdLogin
             }
-            console.log(updateData);
             var insertApi = 'http://localhost:3000/laporan/approve';
             fetch(insertApi, {
                 method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -645,7 +613,6 @@
             }).then( async (response) => {
                 console.log('success approve',response);
                 location.reload();
-                // await initGetData()
             }).catch(err => {
                 console.log(err);
                 // Do something for an error here
@@ -675,7 +642,6 @@
             }).then( async (response) => {
                 console.log('succes rejected',response);
                 // location.reload();
-                // await initGetData()
             }).catch(err => {
                 console.log(err);
                 // Do something for an error here
@@ -701,6 +667,17 @@
         function logOut() {
             localStorage.removeItem("id_user")
             localStorage.removeItem("role")
+        }
+
+        function statusColor(status) {
+            if (status == 'submitted') return `<span class="badge bg-secondary">${status}</span>`;
+            if (status == 'approve1') return `<span class="badge bg-info">${status}</span>`;
+            if (status == 'approve2') return `<span class="badge bg-success">${status}</span>`;
+            if (status == 'approve3') return `<span class="badge bg-danger">${status}</span>`;
+            if (status == 'approve4') return `<span class="badge bg-dark">${status}</span>`;
+            if (status == 'progress') return `<span class="badge bg-warning">${status}</span>`;
+            if (status == 'check') return `<span class="badge bg-light text-dark">${status}</span>`;
+            if (status == 'done') return `<span class="badge bg-primary">${status}</span>`;
         }
 
     </script>
