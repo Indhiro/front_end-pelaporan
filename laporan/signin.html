@@ -89,6 +89,7 @@
                 console.log(data);
                 localStorage.setItem("id_user", data[0].id_user)
                 localStorage.setItem("role", data[0].role)
+                localStorage.setItem("nameUser", data[0].nama)
                 // localStorage.removeItem("role", data[0].role)
                 return window.location.assign("index.html");
             }
