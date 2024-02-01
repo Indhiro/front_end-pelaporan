@@ -134,7 +134,7 @@
                                         <a class="dropdown-item" href="lock.html">
                                             <span><i class="ri-lock-line"></i></span>Lock
                                         </a>
-                                        <a class="dropdown-item logout" href="signin.html">
+                                        <a onclick="logout()" class="dropdown-item logout" href="signin.html">
                                             <i class="ri-logout-circle-line"></i>Logout
                                         </a>
                                     </div>
@@ -172,7 +172,7 @@
                             <span class="nav-text">Settings</span></a>
                     </li>
                     <li class="logout" style="margin-top: -20px;">
-                        <a href="signin.html">
+                        <a onclick="logOut()" href="signin.html">
                             <span><i style="font-size: 30px;" class="ri-logout-circle-line"></i></span>
                             <span class="nav-text">Signout</span>
                         </a>
@@ -208,11 +208,17 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Judul</label>
-                                                        <input type="text" class="form-control" id="judul">
+                                                        <input type="text" class="form-control" id="judul" required>
+                                                        <div class="invalid-feedback">
+                                                            Kolom Judul tidak boleh kosong!
+                                                        </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleFormControlTextarea1">Keterangan</label>
-                                                        <textarea class="form-control" id="keterangan" rows="3"></textarea>
+                                                        <textarea class="form-control" id="keterangan" rows="3" required></textarea>
+                                                        <div class="invalid-feedback">
+                                                            Kolom Keterangan tidak boleh kosong!
+                                                        </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="selectUserfor">Pengawas</label>
@@ -232,7 +238,7 @@
                                                     <div style="margin-top: 10px;">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                         <button type="button" class="btn btn-primary" style="float: right;"
-                                                            onclick="postSubmit()">Post</button>
+                                                            onclick="checkInputLaporan()">Post</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -335,6 +341,7 @@
                         cardContainer.appendChild(card);
                     }
                     data.forEach(item => { // loop masing2 data
+                        console.log("item", item);
                         var card = document.createElement("div");
                         card.className = "promotion d-flex justify-content-between align-items-center";
                         card.style = ""
@@ -361,7 +368,7 @@
                                     <p class="card-tex">Kepada: ${item.nama_penerima} --${item.role}--</p>
                                 </div>
                                 <div class="text-end">
-                                    <p class="card-tex">Status: ${statusColor(item.status_laporan)}</p>
+                                    <p class="card-tex">Status: ${statusColor(item.status_laporan, item.nama_petugas)}</p>
                                     <p class="card-tex">Posted ${item.created_at.slice(0,10)}</p>
                                 </div>
                             </div>
@@ -397,9 +404,13 @@
                                         <i style="margin-left: 30px; font-size:24px" class="bi bi-chat"></i>
                                         <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Comments</p>
                                         </div>
+                                        
                                         <div class="d-flex">
                                         <i style="margin-left: 20px; font-size:24px" class="bi bi-flag"></i>
                                         <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Report</p>
+                                        <div class="d-flex" style=" margin-left: 450px;">
+                                        <i style="margin-left: 30px; font-size:24px;" class="bi bi-list-ul"></i>
+                                        <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Show Details</p>
                                         </div>
                                     </div>
                                 </div>
@@ -667,19 +678,32 @@
         function logOut() {
             localStorage.removeItem("id_user")
             localStorage.removeItem("role")
+            localStorage.removeItem("nameUser")
         }
 
-        function statusColor(status) {
+        function statusColor(status, nama_petugas) {
             if (status == 'submitted') return `<span class="badge bg-secondary">${status}</span>`;
-            if (status == 'approve1') return `<span class="badge bg-info">${status}</span>`;
-            if (status == 'approve2') return `<span class="badge bg-success">${status}</span>`;
-            if (status == 'approve3') return `<span class="badge bg-danger">${status}</span>`;
-            if (status == 'approve4') return `<span class="badge bg-dark">${status}</span>`;
-            if (status == 'progress') return `<span class="badge bg-warning">${status}</span>`;
-            if (status == 'check') return `<span class="badge bg-light text-dark">${status}</span>`;
-            if (status == 'done') return `<span class="badge bg-primary">${status}</span>`;
+            if (status == 'approve1') return `<span style="background: #2E86C1" class="badge">${status}</span>`;
+            if (status == 'approve2') return `<span style="background: #17A589" class="badge">${status}</span>`;
+            if (status == 'approve3') return `<span style="background: #F39C12" class="badge">${status}</span>`;
+            if (status == 'approve4') return `<span style="background: #884EA0" class="badge">${status}</span>`;
+            if (status == 'progress') return `<span style="background: #F1C40F" class="badge">${status}</span>`;
+            if (status == 'check') return `<span style="background: #A6ACAF" class="badge">${status}</span>`;
+            if (status == 'done') return `<span class="badge bg-primary">${status} by ${nama_petugas}</span>` 
+            if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${status}</span>`;
         }
 
+        function checkInputLaporan() {
+            let keterangan = document.getElementById("keterangan").value
+            let judul = document.getElementById("judul").value
+            if (judul && keterangan) {
+                postSubmit()
+            } else {
+                document.getElementById(`judul`).className = "form-control is-invalid"
+                document.getElementById(`keterangan`).className = "form-control is-invalid"
+            }
+        }
+ 
     </script>
 
     <script src="vendor/jquery/jquery.min.js"></script>
