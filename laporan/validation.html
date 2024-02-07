@@ -213,7 +213,6 @@
         let currentLocation = {}
         validationLogin() // call function
         getLaporan() // call function
-        getLocation()
         getUsers()
 
         function getAllByStatus() { // INI BUAT APA?
@@ -395,17 +394,20 @@
         }
 
         function returnDialog(lapId,type) {
+            let buttonTittle = ''
             let buttonLabel = ''
             let idModal = ''
             let words = ''
             let buttonApprove = ''
             if (!type) return false;
             if (type == 'approve') {
+                buttonTittle = 'Approve'
                 buttonLabel = 'Approve(Setujui)'
                 idModal = `exampleModalApprove${lapId}`
                 words = 'approve'
                 buttonApprove = `approveButton(${lapId})`
             } else if (type == 'reject') {
+                buttonTittle = 'Reject'
                 buttonLabel = 'Reject(Tolak)'
                 idModal = `exampleModalReject${lapId}`
                 words = 'tolak'
@@ -416,18 +418,15 @@
                 <div class="modal-dialog" style="margin-top: 100px">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Approval</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">${buttonTittle}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan ${words}?</h5>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Catatan</label>
-                        <input type="text" class="form-control" id="catatan" required>
-                        <div class="invalid-feedback">
-                            Kolom Judul tidak boleh kosong!
-                        </div>
+                    <div class="modal-body">
+                        <label for="exampleFormControlTextarea1">Catatan</label>
+                        <textarea class="form-control" id="catatan" rows="3" required></textarea>
                     </div>
 
                     <div class="modal-footer">
@@ -440,9 +439,11 @@
         }
 
         function approveButton(lapId) {
+            let getCatatan = document.getElementById('catatan').value
             let updateData = {
                 id_laporan: lapId,
-                userlogin: userIdLogin
+                userlogin: userIdLogin,
+                catatan: getCatatan
             }
             var insertApi = 'http://localhost:3000/laporan/approve';
             fetch(insertApi, {
