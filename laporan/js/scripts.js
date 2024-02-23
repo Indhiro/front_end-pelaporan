@@ -5,36 +5,24 @@ jQuery(window).on("load", function () {
 
 
 jQuery(document).ready(function () {
-
     $(function () {
         for (var nk = window.location,
             o = $(".menu a, .settings-menu a").filter(function () {
                 return this.href == nk;
-            })
-                .addClass("active")
-                .parent()
-                .addClass("active"); ;) {
+            }).addClass("active").parent().addClass("active"); ;) {
             // console.log(o)
             if (!o.is("li")) break;
-            o = o.parent()
-                .addClass("show")
-                .parent()
-                .addClass("active");
+            o = o.parent().addClass("show").parent().addClass("active");
         }
-
     });
-
-
-
 });
 
 
 (function () {
     let onpageLoad = localStorage.getItem("theme") || "";
-    let element = document.body;
-    element.classList.add(onpageLoad);
-    document.getElementById("theme").textContent =
-        localStorage.getItem("theme") || "light";
+    // let element = document.body;
+    // element.classList.add(onpageLoad);
+    if (document.getElementById("theme")) document.getElementById("theme").textContent = localStorage.getItem("theme") || "light";
 })();
 
 function themeToggle() {
@@ -49,17 +37,8 @@ function themeToggle() {
     }
 }
 
-
-
-
-
-
-
-
-
-
-//ripple effect on button
-Waves.init();
-Waves.attach('.wave-effect');
-Waves.attach('.btn');
-Waves.attach('button');
+// //ripple effect on button
+// Waves.init();
+// Waves.attach('.wave-effect');
+// Waves.attach('.btn');
+// Waves.attach('button');

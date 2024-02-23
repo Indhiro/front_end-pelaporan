@@ -24,6 +24,7 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="./component/navbar.js" type="text/javascript" defer></script>
 </head>
 
 <body class="@@dashboard">
@@ -146,40 +147,8 @@
             </div>
         </div>
         <!-- SIDE BAR DISEBELAH KIRI -->
-        <div class="sidebar">
-            <!-- <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt="" width="30"></a></div> -->
-            <div class="menu">
-                <ul>
-                    <li style="margin-top: -20px;">
-                        <a href="index.html">
-                            <span><i style="font-size: 30px;" class="ri-layout-grid-fill"></i></span>
-                            <span class="nav-text">Dashboard</span>
-                        </a>
-                    </li>
-                    <li style="margin-top: -5px;">
-                        <a href="validation.html">
-                            <span><i style="font-size: 30px;" class="bi bi-check2-square"></i></span>
-                            <span class="nav-text">Validation</span></a>
-                    </li>
-                    <li style="margin-top: -10px;">
-                        <a href="rejected.html">
-                            <span><i style="font-size: 30px;" class="bi bi-file-earmark-excel"></i></span>
-                            <span class="nav-text">Rejected</span></a>
-                    </li>
-                    <li style="margin-top: 0px;">
-                        <a href="settings-profile.html">
-                            <span><i style="font-size: 30px;" class="ri-settings-3-line"></i></span>
-                            <span class="nav-text">Settings</span></a>
-                    </li>
-                    <li class="logout" style="margin-top: -20px;">
-                        <a onclick="logOut()" href="signin.html">
-                            <span><i style="font-size: 30px;" class="ri-logout-circle-line"></i></span>
-                            <span class="nav-text">Signout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <navbar-component></navbar-component>
+        <!-- <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt="" width="30"></a></div> -->
 
         <div class="content-body">
             <div class="container">
@@ -195,7 +164,7 @@
                                     <div class="modal-dialog" style="margin-top: 100px;">
                                         <div class="modal-content" style="width: 120%">
                                             <div class="modal-body">
-                                                <form id="formPostLaporan" style="margin-top: 10px;">
+                                                <form id="formPostLaporan" style="margin-top: 10px;" enctype="multipart/form-data">
                                                     <h3 style="margin-top: -10px;">Post Laporan</h3>
                                                     <div class="form-group">
                                                         <label for="exampleFormControlSelect1">Kategori</label>
@@ -357,6 +326,7 @@
         }
 
         function cardFormater(card, item) { // add card each data
+            // images/items/1.jpg
             let sample = `
                 <div class="col-md-6 col-sm-6">
                     <div class="card items">
@@ -371,7 +341,7 @@
                                     <p class="card-tex">Posted ${item.created_at.slice(0,10)}</p>
                                 </div>
                             </div>
-                            <div style="text-align: center;" class="items-img position-relative"><img src="images/items/1.jpg"
+                            <div style="text-align: center;" class="items-img position-relative"><img src="data:image/png;base64,${item.image}"
                                 class="img-fluid rounded mb-3" alt="" style="width: 50%; ">
                             </div>
                             
@@ -439,63 +409,74 @@
         }
 
         function showHidePostForm() {
-            let getStatusForm = document.getElementById("postForm").style.display
-            if (getStatusForm == 'none') document.getElementById("postForm").style.display = 'block'
-            if (getStatusForm == 'block') document.getElementById("postForm").style.display = 'none'
+            // let getStatusForm = document.getElementById("postForm").style.display
+            // if (getStatusForm == 'none') document.getElementById("postForm").style.display = 'block'
+            // if (getStatusForm == 'block') document.getElementById("postForm").style.display = 'none'
         }
 
-        function postSubmit() {
-            // console.log(currentLocation); // mau cek lokasi lan/lon
-            let keterangan = document.getElementById("keterangan").value
-            let judul = document.getElementById("judul").value
-            let kategori = document.getElementById("kategori").value
-            // let foto = document.getElementById("foto").files[0]
-            let selectPengawas = document.getElementById("selectPengawas").value
-            let selectKepada = document.getElementById("selectKepada").value
-            let layer = 0
+//         function postSubmit() {
+//             // console.log(currentLocation); // mau cek lokasi lan/lon
+//             let keterangan = document.getElementById("keterangan").value
+//             let judul = document.getElementById("judul").value
+//             let kategori = document.getElementById("kategori").value
+//             let foto = document.getElementById("foto").files[0]
+//             let selectPengawas = document.getElementById("selectPengawas").value
+//             let selectKepada = document.getElementById("selectKepada").value
+//             let layer = 0
 
-            if(selectKepada == 'kepala prodi') layer = 2
-            if(selectKepada == 'wakil dekan 2') layer = 3
-            if(selectKepada == 'wakil rektor 2') layer = 4
+//             if(selectKepada == 'kepala prodi') layer = 2
+//             if(selectKepada == 'wakil dekan 2') layer = 3
+//             if(selectKepada == 'wakil rektor 2') layer = 4
+// // DEV
+// const form = new FormData()
+// form.append('name', "test")
+// form.append('image', foto)
+// let reader = new FileReader();
+// reader.onload = function() {
+//     // send_off_to_other_clients(reader.result);
+//     let insertData = {
+//                 id_user_pelapor: userIdLogin,
+//                 id_user_approver1: selectPengawas,
+//                 category: kategori,
+//                 text: keterangan,
+//                 title: judul,
+//                 layer: layer,
+//                 image: form
+//                 // image: convertFileToJson(foto),
+//                 // lokasi_latitude: currentLocation.latitude,
+//                 // lokasi_longitude: currentLocation.longitude
+//             }
+//             console.log(insertData);
+//     console.log(reader.result,'asda');
+//     var insertApi = 'http://localhost:3000/laporan/upload-laporan';
+//             fetch(insertApi, {
+//                 method: "POST", // *GET, POST, PUT, DELETE, etc.
+//                 mode: "cors", // no-cors, *cors, same-origin
+//                 cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+//                 credentials: "same-origin", // include, *same-origin, omit
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                     // "Content-Type": "multipart/form-data",
+//                     // 'Content-Type': 'application/x-www-form-urlencoded',
+//                 },
+//                 redirect: "follow", // manual, *follow, error
+//                 referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+//                 // body: JSON.stringify(insertData), // body data type must match "Content-Type" header
+//                 body: JSON.stringify(insertData)
+//             }).then(response => {
+//                 return response.json();
+//             }).then(data => {
+//                 window.location.assign("index.html")
+//                 console.log(data);
+//                 // SUCCESS MESSAGE
+//             }).catch(err => {
+//                 console.log(err);
+//                 // Do something for an error here
+//             });
+// }
+// reader.readAsArrayBuffer(foto);
 
-            let insertData = {
-                id_user_pelapor: userIdLogin,
-                id_user_approver1: selectPengawas,
-                category: kategori,
-                text: keterangan,
-                title: judul,
-                layer: layer,
-                // image: convertFileToJson(foto),
-                // lokasi_latitude: currentLocation.latitude,
-                // lokasi_longitude: currentLocation.longitude
-            }
-            console.log(insertData);
-            var insertApi = 'http://localhost:3000/laporan/upload-laporan';
-            fetch(insertApi, {
-                method: "POST", // *GET, POST, PUT, DELETE, etc.
-                mode: "cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
-                headers: {
-                    "Content-Type": "application/json",
-                    // "Content-Type": "multipart/form-data",
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                // body: JSON.stringify(insertData), // body data type must match "Content-Type" header
-                body: JSON.stringify(insertData)
-            }).then(response => {
-                return response.json();
-            }).then(data => {
-                window.location.assign("index.html")
-                console.log(data);
-                // SUCCESS MESSAGE
-            }).catch(err => {
-                console.log(err);
-                // Do something for an error here
-            });
-        }
+//         }
 
         function validationLogin() {
             console.log(nameUser,'nameUser');
@@ -602,7 +583,6 @@
                             `
                             inputHtml.appendChild(detailSementara);
                         }
-                        
                     })
                     
                     // console.log(inputHtml);
@@ -742,6 +722,7 @@
         }
 
         function checkInputLaporan() {
+            console.log('button post laporan');
             let keterangan = document.getElementById("keterangan").value
             let judul = document.getElementById("judul").value
             if (judul && keterangan) {
@@ -752,6 +733,34 @@
             }
         }
  
+        function postSubmit() {
+            const files = document.getElementById("foto");
+            let file = files.files[0];
+            const formData = new FormData();
+            formData.append("file", file); // BIND KE formData
+            formData.append("kategori", document.getElementById("kategori").value); // BIND KE formData
+            formData.append("judul", document.getElementById("judul").value); // BIND KE formData
+            formData.append("keterangan", document.getElementById("keterangan").value); // BIND KE formData
+            formData.append("selectKepada", document.getElementById("selectKepada").value); // BIND KE formData
+            formData.append("selectPengawas", document.getElementById("selectPengawas").value); // BIND KE formData
+            // UNTUK LIHAT ISI FORMDATA (HARUS BEGINI)
+            // for (var key of formData.entries()) {
+            //     console.log(key[0] + ', ' + key[1]);
+            // }
+            fetch("http://localhost:3000/laporan/upload-laporan", {
+                method: 'POST',
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, 
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer,
+                body: formData,
+                data: formData
+            })
+                .then((res) => console.log(res))
+                .catch((err) => ("Error occured", err));
+        }
+
     </script>
 
     <script src="vendor/jquery/jquery.min.js"></script>
