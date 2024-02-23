@@ -23,7 +23,8 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <script src="./component/navbar.js" type="text/javascript" defer></script>
+
 </head>
 
 <body class="@@dashboard">
@@ -146,40 +147,7 @@
             </div>
         </div>
         <!-- SIDE BAR DISEBELAH KIRI -->
-        <div class="sidebar">
-            <!-- <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt="" width="30"></a></div> -->
-            <div class="menu">
-                <ul>
-                    <li style="margin-top: -20px;">
-                        <a href="index.html">
-                            <span><i style="font-size: 30px;" class="ri-layout-grid-fill"></i></span>
-                            <span class="nav-text">Dashboard</span>
-                        </a>
-                    </li>
-                    <li style="margin-top: -5px;">
-                        <a href="validation.html">
-                            <span><i style="font-size: 30px;" class="bi bi-check2-square"></i></span>
-                            <span class="nav-text">Validation</span></a>
-                    </li>
-                    <li style="margin-top: -10px;">
-                        <a href="rejected.html">
-                            <span><i style="font-size: 30px;" class="bi bi-file-earmark-excel"></i></span>
-                            <span class="nav-text">Rejected</span></a>
-                    </li>
-                    <li style="margin-top: 0px;">
-                        <a href="settings-profile.html">
-                            <span><i style="font-size: 30px;" class="ri-settings-3-line"></i></span>
-                            <span class="nav-text">Settings</span></a>
-                    </li>
-                    <li class="logout" style="margin-top: -20px;">
-                        <a onclick="logOut()" href="signin.html">
-                            <span><i style="font-size: 30px;" class="ri-logout-circle-line"></i></span>
-                            <span class="nav-text">Signout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <navbar-component></navbar-component>
 
         <div class="content-body">
             <div class="container">
