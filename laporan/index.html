@@ -220,12 +220,12 @@
                                                             Kolom Keterangan tidak boleh kosong!
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <div hidden class="form-group">
                                                         <label for="selectUserfor">Pengawas</label>
                                                         <select id="selectPengawas" class="form-select" aria-label="Default select example">
                                                         </select>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <div hidden class="form-group">
                                                         <label for="selectUserfor">Kepada</label>
                                                         <select id="selectKepada" class="form-select" aria-label="Default select example">
                                                         </select>
@@ -592,6 +592,12 @@
                     console.log("MASUK KESINI", data);
                     data.forEach(item => {
                         console.log(item, "item");
+                        if (item == 0) {
+                        var detailSementara = document.createElement("div");
+                        detailSementara.innerHTML += `<h4>-- No Post --</h4>`
+                        inputHtml.appendChild(detailSementara);
+                        }
+
                         if (item) {
                             let detailSementara = document.createElement("div");
                             detailSementara.innerHTML += `
@@ -730,15 +736,24 @@
         }
 
         function statusColor(status, nama_petugas) {
-            if (status == 'submitted') return `<span class="badge bg-secondary">${status}</span>`;
-            if (status == 'approve_pengawas') return `<span style="background: #2E86C1" class="badge">${status}</span>`;
-            if (status == 'approve_kepala_prodi') return `<span style="background: #17A589" class="badge">${status}</span>`;
-            if (status == 'approve_wakil_dekan_2') return `<span style="background: #F39C12" class="badge">${status}</span>`;
-            if (status == 'final_approve') return `<span style="background: #884EA0" class="badge">${status}</span>`;
-            if (status == 'progress') return `<span style="background: #F1C40F" class="badge">${status}</span>`;
-            if (status == 'check') return `<span style="background: #A6ACAF" class="badge">${status}</span>`;
-            if (status == 'done') return `<span class="badge bg-primary">${status} by ${nama_petugas}</span>` 
-            if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${status}</span>`;
+            let submitted = 'Submitted'
+            let approve_pengawas_rename = 'Approve Pengawas'
+            let approve_kepala_prodi_rename = 'Approve Kepala Prodi'
+            let approve_wakil_dekan_2_rename = 'Approve Wakil Dekan 2'
+            let final_approve_rename = 'Approve Wakil Rektor 2'
+            let progress = 'Progress'
+            let check = 'Check'
+            let done = 'Done'
+            let rejected = 'Rejected'
+            if (status == 'submitted') return `<span class="badge bg-secondary">${submitted}</span>`;
+            if (status == 'approve_pengawas') return `<span style="background: #2E86C1" class="badge">${approve_pengawas_rename}</span>`;
+            if (status == 'approve_kepala_prodi') return `<span style="background: #17A589" class="badge">${approve_kepala_prodi_rename}</span>`;
+            if (status == 'approve_wakil_dekan_2') return `<span style="background: #F39C12" class="badge">${approve_wakil_dekan_2_rename}</span>`;
+            if (status == 'final_approve') return `<span style="background: #884EA0" class="badge">${final_approve_rename}</span>`;
+            if (status == 'progress') return `<span style="background: #F1C40F" class="badge">${progress}</span>`;
+            if (status == 'check') return `<span style="background: #A6ACAF" class="badge">${check}</span>`;
+            if (status == 'done') return `<span class="badge bg-primary">${done} by ${nama_petugas}</span>` 
+            if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${rejected}</span>`;
         }
 
         function checkInputLaporan() {

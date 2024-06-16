@@ -269,7 +269,7 @@
                                     <p class="card-tex">Kepada: ${item.nama_penerima} --${item.role}--</p>
                                 </div>
                                 <div class="text-end">
-                                    <p class="card-tex">Status: ${statusColor(item.status_laporan)}</p>
+                                    <p class="card-tex">Status: ${statusColor(item.status_laporan, item.nama_petugas)}</p>
                                     <p class="card-tex">Posted ${item.created_at.slice(0,10)}</p>
                                 </div>
                             </div>
@@ -502,16 +502,25 @@
             localStorage.removeItem("nameUser")
         }
 
-        function statusColor(status) {
-            if (status == 'submitted') return `<span class="badge bg-secondary">${status}</span>`;
-            if (status == 'approve1') return `<span style="background: #2E86C1" class="badge">${status}</span>`;
-            if (status == 'approve2') return `<span style="background: #17A589" class="badge">${status}</span>`;
-            if (status == 'approve3') return `<span style="background: #F39C12" class="badge">${status}</span>`;
-            if (status == 'approve4') return `<span style="background: #884EA0" class="badge">${status}</span>`;
-            if (status == 'progress') return `<span style="background: #F1C40F" class="badge">${status}</span>`;
-            if (status == 'check') return `<span style="background: #A6ACAF" class="badge">${status}</span>`;
-            if (status == 'done') return `<span class="badge bg-primary">${status}</span>`;
-            if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${status}</span>`;
+        function statusColor(status, nama_petugas) {
+            let submitted = 'Submitted'
+            let approve_pengawas_rename = 'Approve Pengawas'
+            let approve_kepala_prodi_rename = 'Approve Kepala Prodi'
+            let approve_wakil_dekan_2_rename = 'Approve Wakil Dekan 2'
+            let final_approve_rename = 'Approve Wakil Rektor 2'
+            let progress = 'Progress'
+            let check = 'Check'
+            let done = 'Done'
+            let rejected = 'Rejected'
+            if (status == 'submitted') return `<span class="badge bg-secondary">${submitted}</span>`;
+            if (status == 'approve_pengawas') return `<span style="background: #2E86C1" class="badge">${approve_pengawas_rename}</span>`;
+            if (status == 'approve_kepala_prodi') return `<span style="background: #17A589" class="badge">${approve_kepala_prodi_rename}</span>`;
+            if (status == 'approve_wakil_dekan_2') return `<span style="background: #F39C12" class="badge">${approve_wakil_dekan_2_rename}</span>`;
+            if (status == 'final_approve') return `<span style="background: #884EA0" class="badge">${final_approve_rename}</span>`;
+            if (status == 'progress') return `<span style="background: #F1C40F" class="badge">${progress}</span>`;
+            if (status == 'check') return `<span style="background: #A6ACAF" class="badge">${check}</span>`;
+            if (status == 'done') return `<span class="badge bg-primary">${done} by ${nama_petugas}</span>` 
+            if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${rejected}</span>`;
         }
  
     </script>
