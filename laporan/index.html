@@ -752,7 +752,9 @@
             const files = document.getElementById("foto");
             let file = files.files[0];
             const formData = new FormData();
-            formData.append("file", file); // BIND KE formData
+            // formData.append("file", file); // BIND KE formData
+            let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
+            formData.append("id_user_pelapor", userIdLogin); // BIND KE formData
             formData.append("kategori", document.getElementById("kategori").value); // BIND KE formData
             formData.append("judul", document.getElementById("judul").value); // BIND KE formData
             formData.append("keterangan", document.getElementById("keterangan").value); // BIND KE formData
