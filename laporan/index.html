@@ -291,7 +291,7 @@
             .then(async (response) => {
                 if (userIdLogin ) return true
             }).catch(err => {
-
+                console.log("ini error baru", err.message);
             });
         }
 
@@ -576,6 +576,12 @@
                     console.log("MASUK KESINI", data);
                     data.forEach(item => {
                         console.log(item, "item");
+                        if (item == 0) {
+                        var detailSementara = document.createElement("div");
+                        detailSementara.innerHTML += `<h4>-- No Post --</h4>`
+                        inputHtml.appendChild(detailSementara);
+                        }
+
                         if (item) {
                             let detailSementara = document.createElement("div");
                             detailSementara.innerHTML += `
@@ -591,27 +597,30 @@
                     // console.log(inputHtml);
                     // location.reload();
                 }).catch(err => {
-                    console.log(err);
+                    console.log("ini error", err);
                     // Do something for an error here
                 });
                 return ''
         }
 
         function returnDialog(lapId,type) {
+            let buttonTittle = ''
             let buttonLabel = ''
             let idModal = ''
             let words = ''
             let buttonApprove = ''
             if (!type) return false;
             if (type == 'approve') {
+                buttonTittle = 'Approve'
                 buttonLabel = 'Approve(Setujui)'
                 idModal = `exampleModalApprove${lapId}`
                 words = 'approve'
                 buttonApprove = `approveButton(${lapId})`
             } else if (type == 'reject') {
+                buttonTittle = 'Reject'
                 buttonLabel = 'Reject(Tolak)'
                 idModal = `exampleModalReject${lapId}`
-                words = 'tolak'
+                words = 'reject' //SEBELUMNYA 'tolak'
                 buttonApprove = `rejectButton(${lapId})`
             }
             return `
@@ -619,11 +628,15 @@
                 <div class="modal-dialog" style="margin-top: 100px">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Approval</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">${buttonTittle}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan ${words}?</h5>
+                    </div>
+                    <div class="modal-body">
+                        <label for="exampleFormControlTextarea1">Catatan</label>
+                        <textarea class="form-control" id="catatan" rows="3" required></textarea>
                     </div>
 
                     <div class="modal-footer">
@@ -636,9 +649,11 @@
         }
 
         function approveButton(lapId) {
+            let getCatatan = document.getElementById('catatan').value
             let updateData = {
                 id_laporan: lapId,
-                userlogin: userIdLogin
+                userlogin: userIdLogin,
+                catatan: getCatatan
             }
             var insertApi = 'http://localhost:3000/laporan/approve';
             fetch(insertApi, {
@@ -663,12 +678,14 @@
 
         function rejectButton(lapId) {
             // console.log(currentLocation); // mau cek lokasi lan/lon
-            console.log('reject');
+            // console.log('reject');
+            let getCatatan = document.getElementById('catatan').value
             let updateData = {
                 id_laporan: lapId,
-                userlogin: userIdLogin
+                userlogin: userIdLogin,
+                catatan: getCatatan
             }
-            console.log(updateData);
+            // console.log(updateData);
             var insertApi = 'http://localhost:3000/laporan/rejected';
             fetch(insertApi, {
                 method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -682,8 +699,8 @@
                 referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 body: JSON.stringify(updateData), // body data type must match "Content-Type" header
             }).then( async (response) => {
-                console.log('succes rejected',response);
-                // location.reload();
+                console.log('succes reject',response);
+                location.reload();
             }).catch(err => {
                 console.log(err);
                 // Do something for an error here
@@ -714,15 +731,24 @@
         }
 
         function statusColor(status, nama_petugas) {
-            if (status == 'submitted') return `<span class="badge bg-secondary">${status}</span>`;
-            if (status == 'approve_pengawas') return `<span style="background: #2E86C1" class="badge">${status}</span>`;
-            if (status == 'approve_kepala_prodi') return `<span style="background: #17A589" class="badge">${status}</span>`;
-            if (status == 'approve_wakil_dekan_2') return `<span style="background: #F39C12" class="badge">${status}</span>`;
-            if (status == 'final_approve') return `<span style="background: #884EA0" class="badge">${status}</span>`;
-            if (status == 'progress') return `<span style="background: #F1C40F" class="badge">${status}</span>`;
-            if (status == 'check') return `<span style="background: #A6ACAF" class="badge">${status}</span>`;
-            if (status == 'done') return `<span class="badge bg-primary">${status} by ${nama_petugas}</span>` 
-            if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${status}</span>`;
+            let submitted = 'Submitted'
+            let approve_pengawas_rename = 'Approve Pengawas'
+            let approve_kepala_prodi_rename = 'Approve Kepala Prodi'
+            let approve_wakil_dekan_2_rename = 'Approve Wakil Dekan 2'
+            let final_approve_rename = 'Approve Wakil Rektor 2'
+            let progress = 'Progress'
+            let check = 'Check'
+            let done = 'Done'
+            let rejected = 'Rejected'
+            if (status == 'submitted') return `<span class="badge bg-secondary">${submitted}</span>`;
+            if (status == 'approve_pengawas') return `<span style="background: #2E86C1" class="badge">${approve_pengawas_rename}</span>`;
+            if (status == 'approve_kepala_prodi') return `<span style="background: #17A589" class="badge">${approve_kepala_prodi_rename}</span>`;
+            if (status == 'approve_wakil_dekan_2') return `<span style="background: #F39C12" class="badge">${approve_wakil_dekan_2_rename}</span>`;
+            if (status == 'final_approve') return `<span style="background: #884EA0" class="badge">${final_approve_rename}</span>`;
+            if (status == 'progress') return `<span style="background: #F1C40F" class="badge">${progress}</span>`;
+            if (status == 'check') return `<span style="background: #A6ACAF" class="badge">${check}</span>`;
+            if (status == 'done') return `<span class="badge bg-primary">${done} by ${nama_petugas}</span>` 
+            if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${rejected}</span>`;
         }
 
         function checkInputLaporan() {
@@ -762,9 +788,12 @@
                 referrerPolicy: "no-referrer", // no-referrer,
                 body: formData,
                 data: formData
-            })
-                .then((res) => console.log(res))
-                .catch((err) => ("Error occured", err));
+            }).then((res) => { 
+                console.log("ini response post submit", res)
+                window.location.assign("index.html")
+            }).catch((err) => {
+                ("Error occured", err)
+            });
         }
 
     </script>

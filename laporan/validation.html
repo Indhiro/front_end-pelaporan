@@ -211,9 +211,9 @@
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
         let currentLocation = {}
+        getUsers()
         validationLogin() // call function
         getLaporan() // call function
-        getUsers()
 
         function getAllByStatus() { // INI BUAT APA?
             var apiUrl = `http://localhost:3000/laporan/get-all-user?userId=${userIdLogin}`;
@@ -269,7 +269,7 @@
                                     <p class="card-tex">Kepada: ${item.nama_penerima} --${item.role}--</p>
                                 </div>
                                 <div class="text-end">
-                                    <p class="card-tex">Status: ${statusColor(item.status_laporan)}</p>
+                                    <p class="card-tex">Status: ${statusColor(item.status_laporan, item.nama_petugas)}</p>
                                     <p class="card-tex">Posted ${item.created_at.slice(0,10)}</p>
                                 </div>
                             </div>
@@ -341,9 +341,9 @@
                     }
                 }
                 if (userId) return data // KALO MAU RESULTNYA 1 USER AJA
-                document.getElementById("selectPengawas").innerHTML = pengawas;
-                document.getElementById("selectKepada").innerHTML = kepada;
-                console.log('getuser', data);
+                // document.getElementById("selectPengawas").innerHTML = pengawas;
+                console.log('kepada', kepada);
+                document.getElementById("selectKepadaApprove").innerHTML = kepada;
             }).catch(err => {
                 console.log('getusererr', err);
             });
@@ -399,6 +399,7 @@
             let idModal = ''
             let words = ''
             let buttonApprove = ''
+            let buttonReject = ''
             if (!type) return false;
             if (type == 'approve') {
                 buttonTittle = 'Approve'
@@ -410,14 +411,16 @@
                 buttonTittle = 'Reject'
                 buttonLabel = 'Reject(Tolak)'
                 idModal = `exampleModalReject${lapId}`
-                words = 'tolak'
-                buttonApprove = `rejectButton(${lapId})`
+                words = 'reject' //SEBELUMNYA 'tolak'
+                buttonReject = `rejectButton(${lapId})`
             }
+            console.log("idModal",idModal, type);
             return `
             <div class="modal fade" id="${idModal}" aria-labelledby="exampleModalLabel" >
                 <div class="modal-dialog" style="margin-top: 100px">
                     <div class="modal-content">
                     <div class="modal-header">
+                        
                         <h5 class="modal-title" id="exampleModalLabel">${buttonTittle}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -425,21 +428,29 @@
                         <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan ${words}?</h5>
                     </div>
                     <div class="modal-body">
+                        <label for="selectUserfor">Kepada</label>
+                        <select id="selectKepadaApprove" class="form-select" aria-label="Default select example">
+                        </select>
+                    </div>
+                    <div class="modal-body">
                         <label for="exampleFormControlTextarea1">Catatan</label>
-                        <textarea class="form-control" id="catatan" rows="3" required></textarea>
+                        <textarea class="form-control" id="${words}" rows="3" required></textarea>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="${words == 'approve' ? buttonApprove : buttonApprove}">${buttonLabel}</button>
+                        <button type="button" class="btn btn-primary" onclick="${words == 'approve' ? buttonApprove : buttonReject}">${buttonLabel}</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                     </div>
                 </div>
-            </div>`
+            </div>
+            
+            
+            `
         }
 
         function approveButton(lapId) {
-            let getCatatan = document.getElementById('catatan').value
+            let getCatatan = document.getElementById('approve').value
             let updateData = {
                 id_laporan: lapId,
                 userlogin: userIdLogin,
@@ -459,7 +470,8 @@
                 body: JSON.stringify(updateData), // body data type must match "Content-Type" header
             }).then( async (response) => {
                 console.log('success approve',response);
-                location.reload();
+                // console.log('updateData',updateData);
+                // location.reload();
             }).catch(err => {
                 console.log(err);
                 // Do something for an error here
@@ -467,13 +479,13 @@
         }
 
         function rejectButton(lapId) {
-            // console.log(currentLocation); // mau cek lokasi lan/lon
-            // console.log('reject');
+            let getCatatan = document.getElementById('reject').value
             let updateData = {
                 id_laporan: lapId,
-                userlogin: userIdLogin
+                userlogin: userIdLogin,
+                catatan: getCatatan
             }
-            console.log(updateData);
+            console.log("updateData", updateData);
             var insertApi = 'http://localhost:3000/laporan/rejected';
             fetch(insertApi, {
                 method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -487,7 +499,7 @@
                 referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 body: JSON.stringify(updateData), // body data type must match "Content-Type" header
             }).then( async (response) => {
-                console.log('succes rejected',response);
+                console.log('succes reject',response);
                 // location.reload();
             }).catch(err => {
                 console.log(err);
@@ -502,16 +514,25 @@
             localStorage.removeItem("nameUser")
         }
 
-        function statusColor(status) {
-            if (status == 'submitted') return `<span class="badge bg-secondary">${status}</span>`;
-            if (status == 'approve1') return `<span style="background: #2E86C1" class="badge">${status}</span>`;
-            if (status == 'approve2') return `<span style="background: #17A589" class="badge">${status}</span>`;
-            if (status == 'approve3') return `<span style="background: #F39C12" class="badge">${status}</span>`;
-            if (status == 'approve4') return `<span style="background: #884EA0" class="badge">${status}</span>`;
-            if (status == 'progress') return `<span style="background: #F1C40F" class="badge">${status}</span>`;
-            if (status == 'check') return `<span style="background: #A6ACAF" class="badge">${status}</span>`;
-            if (status == 'done') return `<span class="badge bg-primary">${status}</span>`;
-            if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${status}</span>`;
+        function statusColor(status, nama_petugas) {
+            let submitted = 'Submitted'
+            let approve_pengawas_rename = 'Approve Pengawas'
+            let approve_kepala_prodi_rename = 'Approve Kepala Prodi'
+            let approve_wakil_dekan_2_rename = 'Approve Wakil Dekan 2'
+            let final_approve_rename = 'Approve Wakil Rektor 2'
+            let progress = 'Progress'
+            let check = 'Check'
+            let done = 'Done'
+            let rejected = 'Rejected'
+            if (status == 'submitted') return `<span class="badge bg-secondary">${submitted}</span>`;
+            if (status == 'approve_pengawas') return `<span style="background: #2E86C1" class="badge">${approve_pengawas_rename}</span>`;
+            if (status == 'approve_kepala_prodi') return `<span style="background: #17A589" class="badge">${approve_kepala_prodi_rename}</span>`;
+            if (status == 'approve_wakil_dekan_2') return `<span style="background: #F39C12" class="badge">${approve_wakil_dekan_2_rename}</span>`;
+            if (status == 'final_approve') return `<span style="background: #884EA0" class="badge">${final_approve_rename}</span>`;
+            if (status == 'progress') return `<span style="background: #F1C40F" class="badge">${progress}</span>`;
+            if (status == 'check') return `<span style="background: #A6ACAF" class="badge">${check}</span>`;
+            if (status == 'done') return `<span class="badge bg-primary">${done} by ${nama_petugas}</span>` 
+            if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${rejected}</span>`;
         }
  
     </script>
