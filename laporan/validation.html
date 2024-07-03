@@ -211,9 +211,9 @@
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
         let currentLocation = {}
+        getUsers()
         validationLogin() // call function
         getLaporan() // call function
-        getUsers()
 
         function getAllByStatus() { // INI BUAT APA?
             var apiUrl = `http://localhost:3000/laporan/get-all-user?userId=${userIdLogin}`;
@@ -341,9 +341,9 @@
                     }
                 }
                 if (userId) return data // KALO MAU RESULTNYA 1 USER AJA
-                document.getElementById("selectPengawas").innerHTML = pengawas;
-                document.getElementById("selectKepada").innerHTML = kepada;
-                console.log('getuser', data);
+                // document.getElementById("selectPengawas").innerHTML = pengawas;
+                console.log('kepada', kepada);
+                document.getElementById("selectKepadaApprove").innerHTML = kepada;
             }).catch(err => {
                 console.log('getusererr', err);
             });
@@ -399,6 +399,7 @@
             let idModal = ''
             let words = ''
             let buttonApprove = ''
+            let buttonReject = ''
             if (!type) return false;
             if (type == 'approve') {
                 buttonTittle = 'Approve'
@@ -410,14 +411,16 @@
                 buttonTittle = 'Reject'
                 buttonLabel = 'Reject(Tolak)'
                 idModal = `exampleModalReject${lapId}`
-                words = 'tolak'
-                buttonApprove = `rejectButton(${lapId})`
+                words = 'reject' //SEBELUMNYA 'tolak'
+                buttonReject = `rejectButton(${lapId})`
             }
+            console.log("idModal",idModal, type);
             return `
             <div class="modal fade" id="${idModal}" aria-labelledby="exampleModalLabel" >
                 <div class="modal-dialog" style="margin-top: 100px">
                     <div class="modal-content">
                     <div class="modal-header">
+                        
                         <h5 class="modal-title" id="exampleModalLabel">${buttonTittle}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -425,21 +428,29 @@
                         <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan ${words}?</h5>
                     </div>
                     <div class="modal-body">
+                        <label for="selectUserfor">Kepada</label>
+                        <select id="selectKepadaApprove" class="form-select" aria-label="Default select example">
+                        </select>
+                    </div>
+                    <div class="modal-body">
                         <label for="exampleFormControlTextarea1">Catatan</label>
-                        <textarea class="form-control" id="catatan" rows="3" required></textarea>
+                        <textarea class="form-control" id="${words}" rows="3" required></textarea>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="${words == 'approve' ? buttonApprove : buttonApprove}">${buttonLabel}</button>
+                        <button type="button" class="btn btn-primary" onclick="${words == 'approve' ? buttonApprove : buttonReject}">${buttonLabel}</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                     </div>
                 </div>
-            </div>`
+            </div>
+            
+            
+            `
         }
 
         function approveButton(lapId) {
-            let getCatatan = document.getElementById('catatan').value
+            let getCatatan = document.getElementById('approve').value
             let updateData = {
                 id_laporan: lapId,
                 userlogin: userIdLogin,
@@ -459,7 +470,8 @@
                 body: JSON.stringify(updateData), // body data type must match "Content-Type" header
             }).then( async (response) => {
                 console.log('success approve',response);
-                location.reload();
+                // console.log('updateData',updateData);
+                // location.reload();
             }).catch(err => {
                 console.log(err);
                 // Do something for an error here
@@ -467,13 +479,13 @@
         }
 
         function rejectButton(lapId) {
-            // console.log(currentLocation); // mau cek lokasi lan/lon
-            // console.log('reject');
+            let getCatatan = document.getElementById('reject').value
             let updateData = {
                 id_laporan: lapId,
-                userlogin: userIdLogin
+                userlogin: userIdLogin,
+                catatan: getCatatan
             }
-            console.log(updateData);
+            console.log("updateData", updateData);
             var insertApi = 'http://localhost:3000/laporan/rejected';
             fetch(insertApi, {
                 method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -487,7 +499,7 @@
                 referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 body: JSON.stringify(updateData), // body data type must match "Content-Type" header
             }).then( async (response) => {
-                console.log('succes rejected',response);
+                console.log('succes reject',response);
                 // location.reload();
             }).catch(err => {
                 console.log(err);

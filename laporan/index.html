@@ -52,7 +52,7 @@
                                     <span class="light"><i class="ri-sun-line"></i></span>
                                 </div>
 
-                                <div class="nav-item dropdown notification dropdown">
+                                <div class="nav-item dropdown notification">
                                     <div data-bs-toggle="dropdown" aria-haspopup="true" class="" aria-expanded="false">
                                         <div class="notify-bell icon-menu"><span><i
                                                     class="ri-notification-2-line"></i></span>
@@ -101,10 +101,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="dropdown profile_log dropdown">
+
+                                <div class="dropdown profile_log">
                                     <div data-bs-toggle="dropdown" aria-haspopup="true" class="" aria-expanded="false">
                                         <div class="user icon-menu active"><span><img src="images/avatar/9.jpg"
-                                            alt=""><span id="nameUser" style="margin-left: 20px;"></span></span>
+                                            alt=""><span id="nameUser" style="margin-left: 10px;"></span></span>
                                         </div>
                                     </div>
                                     <div tabindex="-1" role="menu" aria-hidden="true"
@@ -135,11 +136,13 @@
                                         <a class="dropdown-item" href="lock.html">
                                             <span><i class="ri-lock-line"></i></span>Lock
                                         </a>
-                                        <a onclick="logout()" class="dropdown-item logout" href="signin.html">
+                                        <a onclick="logoutButton()" class="dropdown-item logout" href="signin.html">
                                             <i class="ri-logout-circle-line"></i>Logout
                                         </a>
                                     </div>
                                 </div>
+
+                                <a onclick="logoutButton()" style="margin-top: -10px;"><i class="bi bi-box-arrow-right h3"></i></a>
                             </div>
                         </div>
                     </div>
@@ -194,7 +197,7 @@
                                                         <select id="selectPengawas" class="form-select" aria-label="Default select example">
                                                         </select>
                                                     </div>
-                                                    <div hidden class="form-group">
+                                                    <div class="form-group">
                                                         <label for="selectUserfor">Kepada</label>
                                                         <select id="selectKepada" class="form-select" aria-label="Default select example">
                                                         </select>
@@ -288,7 +291,7 @@
             .then(async (response) => {
                 if (userIdLogin ) return true
             }).catch(err => {
-
+                console.log("ini error baru", err.message);
             });
         }
 
@@ -493,7 +496,7 @@
                 let kepada = ''
                 for (var i = 0; i < data.length; i++) {
                     let user = data[i]
-                    if (user.role == 'pengawas') {
+                    if (user.role == 'petugas') {
                         pengawas += "<option value=" + user.id_user + ">" + user.nama + " (" + user.role + ") " + "</option>"
                     } else {
                         if (user.role != 'dosen') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
@@ -594,27 +597,30 @@
                     // console.log(inputHtml);
                     // location.reload();
                 }).catch(err => {
-                    console.log(err);
+                    console.log("ini error", err);
                     // Do something for an error here
                 });
                 return ''
         }
 
         function returnDialog(lapId,type) {
+            let buttonTittle = ''
             let buttonLabel = ''
             let idModal = ''
             let words = ''
             let buttonApprove = ''
             if (!type) return false;
             if (type == 'approve') {
+                buttonTittle = 'Approve'
                 buttonLabel = 'Approve(Setujui)'
                 idModal = `exampleModalApprove${lapId}`
                 words = 'approve'
                 buttonApprove = `approveButton(${lapId})`
             } else if (type == 'reject') {
+                buttonTittle = 'Reject'
                 buttonLabel = 'Reject(Tolak)'
                 idModal = `exampleModalReject${lapId}`
-                words = 'tolak'
+                words = 'reject' //SEBELUMNYA 'tolak'
                 buttonApprove = `rejectButton(${lapId})`
             }
             return `
@@ -622,11 +628,15 @@
                 <div class="modal-dialog" style="margin-top: 100px">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Approval</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">${buttonTittle}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan ${words}?</h5>
+                    </div>
+                    <div class="modal-body">
+                        <label for="exampleFormControlTextarea1">Catatan</label>
+                        <textarea class="form-control" id="catatan" rows="3" required></textarea>
                     </div>
 
                     <div class="modal-footer">
@@ -639,9 +649,11 @@
         }
 
         function approveButton(lapId) {
+            let getCatatan = document.getElementById('catatan').value
             let updateData = {
                 id_laporan: lapId,
-                userlogin: userIdLogin
+                userlogin: userIdLogin,
+                catatan: getCatatan
             }
             var insertApi = 'http://localhost:3000/laporan/approve';
             fetch(insertApi, {
@@ -666,12 +678,14 @@
 
         function rejectButton(lapId) {
             // console.log(currentLocation); // mau cek lokasi lan/lon
-            console.log('reject');
+            // console.log('reject');
+            let getCatatan = document.getElementById('catatan').value
             let updateData = {
                 id_laporan: lapId,
-                userlogin: userIdLogin
+                userlogin: userIdLogin,
+                catatan: getCatatan
             }
-            console.log(updateData);
+            // console.log(updateData);
             var insertApi = 'http://localhost:3000/laporan/rejected';
             fetch(insertApi, {
                 method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -685,8 +699,8 @@
                 referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 body: JSON.stringify(updateData), // body data type must match "Content-Type" header
             }).then( async (response) => {
-                console.log('succes rejected',response);
-                // location.reload();
+                console.log('succes reject',response);
+                location.reload();
             }).catch(err => {
                 console.log(err);
                 // Do something for an error here
@@ -709,10 +723,11 @@
             return true
         }
 
-        function logOut() {
+        function logoutButton() {
             localStorage.removeItem("id_user")
             localStorage.removeItem("role")
             localStorage.removeItem("nameUser")
+            window.location.replace("signin.html")
         }
 
         function statusColor(status, nama_petugas) {
@@ -752,14 +767,14 @@
             const files = document.getElementById("foto");
             let file = files.files[0];
             const formData = new FormData();
-            // formData.append("file", file); // BIND KE formData
-            let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
-            formData.append("id_user_pelapor", userIdLogin); // BIND KE formData
+            let userIdLogin = localStorage.getItem("id_user");
+            formData.append("file", file); // BIND KE formData
             formData.append("kategori", document.getElementById("kategori").value); // BIND KE formData
             formData.append("judul", document.getElementById("judul").value); // BIND KE formData
             formData.append("keterangan", document.getElementById("keterangan").value); // BIND KE formData
             formData.append("selectKepada", document.getElementById("selectKepada").value); // BIND KE formData
             formData.append("selectPengawas", document.getElementById("selectPengawas").value); // BIND KE formData
+            formData.append("userIdLogin", userIdLogin); // BIND KE formData
             // UNTUK LIHAT ISI FORMDATA (HARUS BEGINI)
             // for (var key of formData.entries()) {
             //     console.log(key[0] + ', ' + key[1]);
@@ -773,9 +788,12 @@
                 referrerPolicy: "no-referrer", // no-referrer,
                 body: formData,
                 data: formData
-            })
-                .then((res) => console.log(res))
-                .catch((err) => ("Error occured", err));
+            }).then((res) => { 
+                console.log("ini response post submit", res)
+                window.location.assign("index.html")
+            }).catch((err) => {
+                ("Error occured", err)
+            });
         }
 
     </script>
