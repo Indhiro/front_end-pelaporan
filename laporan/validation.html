@@ -210,7 +210,8 @@
         // localStorage.setItem("userId", 3) // set manually ke browser localstorage (nanti kau ambil dari userId mereka/kampus)
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
-        let currentLocation = {}
+        let currentLocation = {};
+        let userKepada = '';
         getUsers()
         validationLogin() // call function
         getLaporan() // call function
@@ -273,7 +274,7 @@
                                     <p class="card-tex">Posted ${item.created_at.slice(0,10)}</p>
                                 </div>
                             </div>
-                            <div style="text-align: center;" class="items-img position-relative"><img src="images/items/1.jpg"
+                            <div style="text-align: center;" class="items-img position-relative"><img src="data:image/png;base64,${item.image}"
                                 class="img-fluid rounded mb-3" alt="" style="width: 50%; ">
                             </div>
                             
@@ -329,21 +330,23 @@
             fetch(apiUrl).then(response => {
                 return response.json();
             }).then(data => {
-                let pengawas = ''
+                // let pengawas = ''
                 let kepada = ''
                 for (var i = 0; i < data.length; i++) {
                     let user = data[i]
-                    if (user.role == 'pengawas') {
-                        pengawas += "<option value=" + user.id_user + ">" + user.nama + " (" + user.role + ") " + "</option>"
-                    } else {
-                        if (user.role != 'dosen') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
-                        // console.log("user", kepada);
-                    }
+                    if (user.role != 'dosen') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
+                    // if (user.role == 'pengawas') {
+                    //     pengawas += "<option value=" + user.id_user + ">" + user.nama + " (" + user.role + ") " + "</option>"
+                    // } else {
+                    //     if (user.role != 'dosen') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
+                    //     // console.log("user", kepada);
+                    // }
                 }
                 if (userId) return data // KALO MAU RESULTNYA 1 USER AJA
                 // document.getElementById("selectPengawas").innerHTML = pengawas;
-                console.log('kepada', kepada);
-                document.getElementById("selectKepadaApprove").innerHTML = kepada;
+                // console.log('kepada', kepada);
+                // document.getElementById("selectKepadaApprove").innerHTML = kepada;
+                userKepada = kepada
             }).catch(err => {
                 console.log('getusererr', err);
             });
@@ -400,6 +403,7 @@
             let words = ''
             let buttonApprove = ''
             let buttonReject = ''
+            let kepadaCard = ''
             if (!type) return false;
             if (type == 'approve') {
                 buttonTittle = 'Approve'
@@ -407,6 +411,13 @@
                 idModal = `exampleModalApprove${lapId}`
                 words = 'approve'
                 buttonApprove = `approveButton(${lapId})`
+                kepadaCard = `
+                <div class="modal-body">
+                    <label for="selectUserfor">Kepada</label>
+                    <select id="selectKepadaApprove" class="form-select" aria-label="Default select example">
+                    ${userKepada}
+                    </select>
+                </div>`
             } else if (type == 'reject') {
                 buttonTittle = 'Reject'
                 buttonLabel = 'Reject(Tolak)'
@@ -414,7 +425,7 @@
                 words = 'reject' //SEBELUMNYA 'tolak'
                 buttonReject = `rejectButton(${lapId})`
             }
-            console.log("idModal",idModal, type);
+            // console.log("idModal",idModal, type);
             return `
             <div class="modal fade" id="${idModal}" aria-labelledby="exampleModalLabel" >
                 <div class="modal-dialog" style="margin-top: 100px">
@@ -427,11 +438,7 @@
                     <div class="modal-body">
                         <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan ${words}?</h5>
                     </div>
-                    <div class="modal-body">
-                        <label for="selectUserfor">Kepada</label>
-                        <select id="selectKepadaApprove" class="form-select" aria-label="Default select example">
-                        </select>
-                    </div>
+                    ${kepadaCard}
                     <div class="modal-body">
                         <label for="exampleFormControlTextarea1">Catatan</label>
                         <textarea class="form-control" id="${words}" rows="3" required></textarea>
@@ -444,8 +451,6 @@
                     </div>
                 </div>
             </div>
-            
-            
             `
         }
 

@@ -753,13 +753,17 @@
 
         function checkInputLaporan() {
             console.log('button post laporan');
-            let keterangan = document.getElementById("keterangan").value
-            let judul = document.getElementById("judul").value
-            if (judul && keterangan) {
-                postSubmit()
-            } else {
-                document.getElementById(`judul`).className = "form-control is-invalid"
-                document.getElementById(`keterangan`).className = "form-control is-invalid"
+            try {
+                let keterangan = document.getElementById("keterangan").value
+                let judul = document.getElementById("judul").value
+                if (judul && keterangan) {
+                    postSubmit()
+                } else {
+                    document.getElementById(`judul`).className = "form-control is-invalid"
+                    document.getElementById(`keterangan`).className = "form-control is-invalid"
+                }
+            } catch (error) {
+                console.log(error);
             }
         }
  
@@ -773,7 +777,7 @@
             formData.append("judul", document.getElementById("judul").value); // BIND KE formData
             formData.append("keterangan", document.getElementById("keterangan").value); // BIND KE formData
             formData.append("selectKepada", document.getElementById("selectKepada").value); // BIND KE formData
-            formData.append("selectPengawas", document.getElementById("selectPengawas").value); // BIND KE formData
+            // formData.append("selectPengawas", document.getElementById("selectPengawas").value); // BIND KE formData
             formData.append("userIdLogin", userIdLogin); // BIND KE formData
             // UNTUK LIHAT ISI FORMDATA (HARUS BEGINI)
             // for (var key of formData.entries()) {

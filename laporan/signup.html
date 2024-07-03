@@ -47,7 +47,7 @@
                                     <select class="form-select" aria-label="Default select example" id="role">
                                         <option selected>Pilih jabatan</option>
                                         <option value="mahasiswa">Mahasiswa</option>
-                                        <option value="PIC">PIC</option>
+                                        <option value="pengawas">Pengawas</option>
                                         <option value="dosen">Dosen</option>
                                         <option value="petugas">Petugas</option>
                                         <option value="kepala prodi">Kepala Prodi</option>
@@ -110,9 +110,9 @@
             return response.json();
         }).then(data => {
             if (data) {
-                console.log('register',data);
-                if (data) return window.location.assign("signin.html");
-                window.location.reload();
+                // if (data) return window.location.assign("signin.html");
+                // window.location.reload();
+                window.location.assign("signin.html");
             }
         }).catch(err => {
             console.log(err);
