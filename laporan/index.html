@@ -192,11 +192,11 @@
                                                             Kolom Keterangan tidak boleh kosong!
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <!-- <div class="form-group">
                                                         <label for="selectUserfor">Pengawas</label>
                                                         <select id="selectPengawas" class="form-select" aria-label="Default select example">
                                                         </select>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="form-group">
                                                         <label for="selectUserfor">Kepada</label>
                                                         <select id="selectKepada" class="form-select" aria-label="Default select example">
@@ -496,15 +496,15 @@
                 let kepada = ''
                 for (var i = 0; i < data.length; i++) {
                     let user = data[i]
-                    if (user.role == 'petugas') {
-                        pengawas += "<option value=" + user.id_user + ">" + user.nama + " (" + user.role + ") " + "</option>"
-                    } else {
-                        if (user.role != 'dosen') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
-                        // console.log("user", kepada);
-                    }
+                    if (user.role != 'dosen' && user.role != 'pengawas') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
+                    // if (user.role == 'pengawas') {
+                    //     pengawas += "<option value=" + user.id_user + ">" + user.nama + " (" + user.role + ") " + "</option>"
+                    // } else {
+                    //     if (user.role != 'dosen') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
+                    // }
                 }
                 if (userId) return data // KALO MAU RESULTNYA 1 USER AJA
-                document.getElementById("selectPengawas").innerHTML = pengawas;
+                // document.getElementById("selectPengawas").innerHTML = pengawas;
                 document.getElementById("selectKepada").innerHTML = kepada;
                 console.log('getuser', data);
             }).catch(err => {
