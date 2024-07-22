@@ -315,12 +315,7 @@
                                                 <div class="modal-content" style="width: 120%;">
                                                     <div class="modal-body">
                                                         <form id="formReportLaporan" style="margin-top: 10px;">
-                                                            <h3 style="margin-top: -10px;">Report</h3>
-                                                            <div id="returnDialogReport${item.id_laporan}"></div>
                                                             ${returnDialogReport(item.id_laporan)}
-                                                            <div style="margin-top: 10px; margin-left:-10px">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            </div>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -440,12 +435,9 @@
         }
 
         function returnDialogReport(LapId) {
-            console.log("MASUK SEKALI", LapId);
-            let inputHtmlReport = document.getElementById(`returnDialogReport${LapId}`)
-            console.log("inputHtmlReport", inputHtmlReport);
-            let inputReport = `
-                <div class="modal fade" id="reportModal" aria-labelledby="exampleModalLabel" >
-                    <div class="modal-dialog" style="margin-top: 100px">
+            return `
+                <div id="returnDialogReport${LapId}" aria-labelledby="exampleModalLabel" >
+                    <div>
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Report</h5>
@@ -466,7 +458,6 @@
                     </div>
                 </div>
             `
-            inputHtmlReport.appendChild(inputReport);
         }
 
         function submitReport(LapId){
@@ -506,14 +497,13 @@
                     let inputHtml = document.getElementById(`returnDialogDetails${LapId}`)
                     let data = await response.json()
                     console.log("MASUK KESINI", data);
-                    data.forEach(item => {
-                        console.log(item, "item");
-                        if (item == 0) {
+                    if (!data || data.length == 0) {
                         var detailSementara = document.createElement("div");
-                        detailSementara.innerHTML += `<h4>-- No Post --</h4>`
+                        detailSementara.innerHTML += `<h4>-- No Activity --</h4>`
                         inputHtml.appendChild(detailSementara);
-                        }
-
+                        return true
+                    }
+                    data.forEach(item => {
                         if (item) {
                             let detailSementara = document.createElement("div");
                             let getCatatan = '';
@@ -596,7 +586,6 @@
             </div>
             `
         }
-
        
 
         function approveButton(lapId) {
