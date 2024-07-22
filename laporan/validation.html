@@ -442,17 +442,19 @@
         function returnDialogReport(LapId) {
             console.log("MASUK SEKALI", LapId);
             let inputHtmlReport = document.getElementById(`returnDialogReport${LapId}`)
-            console.log("inputHtmlReport", inputHtmlReport);
-            let inputReport = `
-                <div class="modal fade" id="reportModal" aria-labelledby="exampleModalLabel" >
+            var detailSementara = document.createElement("div");
+
+            console.log("detailSementara", detailSementara);
+            detailSementara.innerHTML += `
+                <div class="modal fade" id="reportModal" aria-labelledby="exampleModal" >
                     <div class="modal-dialog" style="margin-top: 100px">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Report</h5>
+                                <h5 class="modal-title" id="exampleModal">Report</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan report?</h5>
+                                <h5 class="modal-title" id="exampleModal">Anda yakin ingin melakukan report?</h5>
                             </div>
                             <div class="modal-body">
                                 <label for="exampleFormControlTextarea1">Catatan</label>
@@ -466,7 +468,8 @@
                     </div>
                 </div>
             `
-            inputHtmlReport.appendChild(inputReport);
+            // inputHtmlReport.appendChild(detailSementara);
+            return ``
         }
 
         function submitReport(LapId){
@@ -596,8 +599,6 @@
             </div>
             `
         }
-
-       
 
         function approveButton(lapId) {
             let getCatatan = document.getElementById('approve').value
