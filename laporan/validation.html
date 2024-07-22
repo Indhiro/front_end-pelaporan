@@ -314,7 +314,7 @@
                                             <div class="modal-dialog" style="margin-top: 100px;">
                                                 <div class="modal-content" style="width: 120%;">
                                                     <div class="modal-body">
-                                                        <form id="formPostLaporan" style="margin-top: 10px;">
+                                                        <form id="formReportLaporan" style="margin-top: 10px;">
                                                             <h3 style="margin-top: -10px;">Report</h3>
                                                             <div id="returnDialogReport${item.id_laporan}"></div>
                                                             ${returnDialogReport(item.id_laporan)}
@@ -440,31 +440,63 @@
         }
 
         function returnDialogReport(LapId) {
-            return `
+            console.log("MASUK SEKALI", LapId);
+            let inputHtmlReport = document.getElementById(`returnDialogReport${LapId}`)
+            console.log("inputHtmlReport", inputHtmlReport);
+            let inputReport = `
                 <div class="modal fade" id="reportModal" aria-labelledby="exampleModalLabel" >
                     <div class="modal-dialog" style="margin-top: 100px">
                         <div class="modal-content">
-                        <div class="modal-header">
-                            
-                            <h5 class="modal-title" id="exampleModalLabel">Report</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan report?</h5>
-                        </div>
-                        <div class="modal-body">
-                            <label for="exampleFormControlTextarea1">Catatan</label>
-                            <textarea class="form-control" id="textReport" rows="3" required></textarea>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" onclick="${words == 'approve' ? buttonApprove : buttonReject}">${buttonLabel}</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Report</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan report?</h5>
+                            </div>
+                            <div class="modal-body">
+                                <label for="exampleFormControlTextarea1">Catatan</label>
+                                <textarea class="form-control" id="textReport" rows="3" required></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick="submitReport(${LapId})">Report</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                `
+            `
+            inputHtmlReport.appendChild(inputReport);
+        }
+
+        function submitReport(LapId){
+            console.log("INI SUBMIT REPORT");
+            let getCatatan = document.getElementById('textReport').value
+            let getUserPenerima = document.getElementById('selectKepadaApprove').value
+            let uploadData = {
+                userlogin: userIdLogin,
+                id_laporan: lapId,
+                catatan: getCatatan
+            }
+            
+            var insertApi = 'http://localhost:3000/report/upload-report';
+            fetch(insertApi, {
+                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(uploadData), // body data type must match "Content-Type" header
+            }).then( async (response) => {
+                location.reload();
+            }).catch(err => {
+                console.log(err);
+                // Do something for an error here
+            });
         }
 
         function returnDialogDetails(LapId) {
@@ -502,7 +534,6 @@
                 });
                 return ``
         }
-
 
         function returnDialog(item,type) {
             let userRoleLogin = localStorage.getItem("role") // SAMPLE FOR LOGIN
@@ -565,6 +596,8 @@
             </div>
             `
         }
+
+       
 
         function approveButton(lapId) {
             let getCatatan = document.getElementById('approve').value
