@@ -234,7 +234,6 @@
             fetch(apiUrl)
                 .then(async (response) => {
                     let data = await response.json()
-                    console.log("data laporan", data);
                     // Mendapatkan elemen container
                     var likeDislikeButton = document.getElementById("get");
 
@@ -249,7 +248,6 @@
                         card.style = ""
                         card.innerHTML += cardFormater(card, item)
                         cardContainer.appendChild(card);
-                        console.log("testitem", item);
                     });
                 }).catch(err => {
                     var card = document.createElement("div");
@@ -307,9 +305,28 @@
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Comments</p>
                                         </div>
 
-                                        <div class="d-flex">
+                                        <div class="d-flex" data-bs-toggle="modal" data-bs-target="#modalReport${item.id_laporan}">
                                             <i style="margin-left: 20px; font-size:24px" class="bi bi-flag"></i>
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Report</p>
+                                        </div>
+
+                                        <div class="modal fade" id="modalReport${item.id_laporan}">
+                                            <div class="modal-dialog" style="margin-top: 100px;">
+                                                <div class="modal-content" style="width: 120%;">
+                                                    <div class="modal-body">
+                                                        <form id="formPostLaporan" style="margin-top: 10px;">
+                                                            <h3 style="margin-top: -10px;">Report</h3>
+                                                            <div id="returnDialogReport${item.id_laporan}"></div>
+                                                            ${returnDialogReport(item.id_laporan)}
+                                                            <div style="margin-top: 10px; margin-left:-10px">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="d-flex" style=" margin-left: 450px;" 
                                         data-bs-toggle="modal" data-bs-target="#modalLaporanDetails${item.id_laporan}">
                                             <i style="font-size:24px;" class="bi bi-list-ul"></i>
@@ -422,6 +439,34 @@
             }
         }
 
+        function returnDialogReport(LapId) {
+            return `
+                <div class="modal fade" id="reportModal" aria-labelledby="exampleModalLabel" >
+                    <div class="modal-dialog" style="margin-top: 100px">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            
+                            <h5 class="modal-title" id="exampleModalLabel">Report</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan report?</h5>
+                        </div>
+                        <div class="modal-body">
+                            <label for="exampleFormControlTextarea1">Catatan</label>
+                            <textarea class="form-control" id="textReport" rows="3" required></textarea>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="${words == 'approve' ? buttonApprove : buttonReject}">${buttonLabel}</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                `
+        }
+
         function returnDialogDetails(LapId) {
             var insertApi = `http://localhost:3000/laporan/get-approve?LapId=${LapId}`;
             fetch(insertApi)
@@ -439,27 +484,28 @@
 
                         if (item) {
                             let detailSementara = document.createElement("div");
+                            let getCatatan = '';
+                            if (item.catatan) getCatatan = item.catatan;
+                            else getCatatan = '-'
                             detailSementara.innerHTML += `
                             <div class="form-group">
-                                <label>${item.nama}</label>
-                                <p class="form-control" style="padding:10px; block-size: fit-content" id="keterangan">TEST DOANG</p>
+                                <label>${item.status} by ${item.nama} (${item.role})</label>
+                                <p class="form-control" style="padding:10px; block-size: fit-content" id="keterangan">${getCatatan}</p>
                             </div>
                             `
                             inputHtml.appendChild(detailSementara);
                         }
                     })
-                    
-                    // console.log(inputHtml);
-                    // location.reload();
                 }).catch(err => {
                     console.log("ini error", err);
                     // Do something for an error here
                 });
-                return ''
+                return ``
         }
 
 
         function returnDialog(item,type) {
+            let userRoleLogin = localStorage.getItem("role") // SAMPLE FOR LOGIN
             let buttonTittle = ''
             let buttonLabel = ''
             let idModal = ''
@@ -474,23 +520,16 @@
                 idModal = `exampleModalApprove${item.id_laporan}`
                 words = 'approve'
                 buttonApprove = `approveButton(${item.id_laporan})`
-                console.log("item.role", item);
-                kepadaCard = `
+                if (userRoleLogin == 'pengawas') {
+                    kepadaCard = `
                     <div class="modal-body">
                         <label for="selectUserfor">Kepada</label>
                         <select id="selectKepadaApprove" class="form-select" aria-label="Default select example">
                         ${userKepada}
                         </select>
                     </div>`
-                // if (item.role == 'pengawas') {
-                //     kepadaCard = `
-                //     <div class="modal-body">
-                //         <label for="selectUserfor">Kepada</label>
-                //         <select id="selectKepadaApprove" class="form-select" aria-label="Default select example">
-                //         ${userKepada}
-                //         </select>
-                //     </div>`
-                // }
+                }
+                
             } else if (type == 'reject') {
                 buttonTittle = 'Reject'
                 buttonLabel = 'Reject(Tolak)'
@@ -552,7 +591,7 @@
             }).then( async (response) => {
                 console.log('success approve',response);
                 console.log('updateData',updateData);
-                // location.reload();
+                location.reload();
             }).catch(err => {
                 console.log(err);
                 // Do something for an error here

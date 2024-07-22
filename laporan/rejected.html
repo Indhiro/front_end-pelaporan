@@ -388,18 +388,18 @@
 
                         if (item) {
                             let detailSementara = document.createElement("div");
+                            let getCatatan = '';
+                            if (item.catatan) getCatatan = item.catatan;
+                            else getCatatan = '-'
                             detailSementara.innerHTML += `
                             <div class="form-group">
-                                <label>${item.nama}</label>
-                                <p class="form-control" style="padding:10px; block-size: fit-content" id="keterangan">TEST DOANG</p>
+                                <label>${item.status} by ${item.nama} (${item.role})</label>
+                                <p class="form-control" style="padding:10px; block-size: fit-content" id="keterangan">${getCatatan}</p>
                             </div>
                             `
                             inputHtml.appendChild(detailSementara);
                         }
                     })
-                    
-                    // console.log(inputHtml);
-                    // location.reload();
                 }).catch(err => {
                     console.log("ini error", err);
                     // Do something for an error here
