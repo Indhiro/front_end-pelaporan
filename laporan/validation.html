@@ -248,6 +248,7 @@
                         card.style = ""
                         card.innerHTML += cardFormater(card, item)
                         cardContainer.appendChild(card);
+                        console.log("testitem", item);
                     });
                 }).catch(err => {
                     var card = document.createElement("div");
@@ -264,7 +265,7 @@
                         <div>
                             <div class="d-flex justify-content-between">
                                 <div class="text-start">
-                                    <h5 class="card-tex">${item.nama} ${item.point_rank}</h5>
+                                    <h5 class="card-tex">${item.nama} ${item.point_role}</h5>
                                     <p class="card-tex">Kepada: ${item.nama_penerima} --${item.role}--</p>
                                 </div>
                                 <div class="text-end">
@@ -295,39 +296,54 @@
                             ${returnDialog(item,'reject')}
 
                             <div class="d-flex" style="margin-top: 20px">
-                                <i onclick="buttonLike(${item.id_laporan}, 'up')" id="buttonlike${item.id_laporan}" class="fa fa-thumbs-o-up" style="font-size:24px"></i>
+                                <i onclick="buttonLike(${item.id_laporan}, 'up')" id="buttonlike${item.id_laporan}" class="fa fa-thumbs-o-up" style="font-size:24px; cursor:pointer;"></i>
                                 <h6 title="false" id="like${item.id_laporan}" style="margin-left: 12px">${item.countLike ? item.countLike : 0}</h6>
-                                <i onclick="buttonLike(${item.id_laporan}, 'down')" id="dislike${item.id_laporan}" class="fa fa-thumbs-o-down" style="font-size:24px; margin-left: 15px"></i>
+                                <i onclick="buttonLike(${item.id_laporan}, 'down')" id="dislike${item.id_laporan}" class="fa fa-thumbs-o-down" style="font-size:24px; cursor:pointer; margin-left: 15px"></i>
                                 <div class="col-md-6" style="padding: 0px; margin-top: -10px">
                                     <div class="d-flex">
-                                        <div class="d-flex">
-                                            <i style="margin-left: 30px; font-size:24px" class="bi bi-chat"></i>
+                                        <div style="cursor:pointer; margin-left: 30px;" class="d-flex" data-bs-toggle="modal" data-bs-target="#modalComment${item.id_laporan}">
+                                            <i style="font-size:24px" class="bi bi-chat"></i>
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Comments</p>
                                         </div>
 
-                                        <div class="d-flex" data-bs-toggle="modal" data-bs-target="#modalReport${item.id_laporan}">
-                                            <i style="margin-left: 20px; font-size:24px" class="bi bi-flag"></i>
+                                        <div class="modal fade" id="modalComment${item.id_laporan}">
+                                            <div class="modal-dialog" style="margin-top: 100px;">
+                                                <div class="modal-content" style="width: 120%;">
+                                                    <form id="formCommentLaporan" style="margin-top: 10px;">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModal">Comment</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div id="returnDialogComment${item.id_laporan}"></div>
+                                                    ${returnDialogComment(item.id_laporan)}
+                                                    <div class="modal-body">
+                                                        <textarea class="form-control" id="textComment" rows="3" required></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" onclick="submitComment(${item.id_laporan})">Comment</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style="cursor:pointer; margin-left: 25px;" class="d-flex" data-bs-toggle="modal" data-bs-target="#modalReport${item.id_laporan}">
+                                            <i style="font-size:24px" class="bi bi-flag"></i>
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Report</p>
                                         </div>
 
                                         <div class="modal fade" id="modalReport${item.id_laporan}">
                                             <div class="modal-dialog" style="margin-top: 100px;">
                                                 <div class="modal-content" style="width: 120%;">
-                                                    <div class="modal-body">
-                                                        <form id="formReportLaporan" style="margin-top: 10px;">
-                                                            <h3 style="margin-top: -10px;">Report</h3>
-                                                            <div id="returnDialogReport${item.id_laporan}"></div>
-                                                            ${returnDialogReport(item.id_laporan)}
-                                                            <div style="margin-top: 10px; margin-left:-10px">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
+                                                    <form id="formReportLaporan">
+                                                        ${returnDialogReport(item.id_laporan)}
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="d-flex" style=" margin-left: 450px;" 
+                                        <div class="d-flex" style=" margin-left: 450px; cursor:pointer;" 
                                         data-bs-toggle="modal" data-bs-target="#modalLaporanDetails${item.id_laporan}">
                                             <i style="font-size:24px;" class="bi bi-list-ul"></i>
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Show Details</p>
@@ -399,7 +415,7 @@
             let titleTag = document.getElementById(`like${laporanId}`).title;
             let totalLikes = document.getElementById(`like${laporanId}`).innerHTML;
             totalLikes = Number(totalLikes)
-            console.log(    titleTag, status);
+            submitLike(laporanId, status)
             if (status == 'up') {
                 if (titleTag == 'onUp') {
                     document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-o-up"
@@ -439,15 +455,101 @@
             }
         }
 
-        function returnDialogReport(LapId) {
-            console.log("MASUK SEKALI", LapId);
-            let inputHtmlReport = document.getElementById(`returnDialogReport${LapId}`)
-            var detailSementara = document.createElement("div");
+        function submitLike(LapId, status) {
+            let uploadData = {
+                id_user: userIdLogin,
+                id_laporan: LapId,
+                status: status
+            }
+            
+            var insertApi = 'http://localhost:3000/like-dislike/upload-like-dislike';
+            fetch(insertApi, {
+                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(uploadData), // body data type must match "Content-Type" header
+            }).then( async (response) => {
+                // location.reload();
+            }).catch(err => {
+                console.log(err);
+                // Do something for an error here
+            });
+        }
 
-            console.log("detailSementara", detailSementara);
-            detailSementara.innerHTML += `
-                <div class="modal fade" id="reportModal" aria-labelledby="exampleModal" >
-                    <div class="modal-dialog" style="margin-top: 100px">
+        function returnDialogComment(LapId) {
+            var insertApi = `http://localhost:3000/comment/get-comment?LapId=${LapId}`;
+            fetch(insertApi)
+                .then(async (response) => {
+                    
+                    let inputHtml = document.getElementById(`returnDialogComment${LapId}`)
+                    let data = await response.json()
+                    if (!data || data.length == 0) {
+                        var commentSementara = document.createElement("div");
+                        commentSementara.innerHTML += `<h4 style="margin-left:15px">-- No Comment --</h4>`
+                        inputHtml.appendChild(commentSementara);
+                        return true
+                    }
+                    data.forEach(item => {
+                        if (item) {
+                            let commentSementara = document.createElement("div");
+                            let getCatatan = '';
+                            if (item.catatan) getCatatan = item.catatan;
+                            else getCatatan = '-'
+                            commentSementara.innerHTML += `
+                            <div class="form-group" >
+                                <div style="display: flex; margin-top: 10px; margin-left: 15px">
+                                <h5 style="margin-right: 5px">${item.nama}</h5> <h5 style="font-weight:normal">${item.text}</h5>
+                                </div>
+                            </div>
+                            `
+                            inputHtml.appendChild(commentSementara);
+                        }
+                    })
+                }).catch(err => {
+                    console.log("ini error", err);
+                    // Do something for an error here
+                });
+            return ``
+        }
+        
+        function submitComment(LapId) {
+            let getCatatan = document.getElementById('textComment').value
+            let uploadData = {
+                id_user: userIdLogin,
+                id_laporan: LapId,
+                text: getCatatan
+            }
+            
+            var insertApi = 'http://localhost:3000/comment/upload-comment';
+            fetch(insertApi, {
+                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(uploadData), // body data type must match "Content-Type" header
+            }).then( async (response) => {
+                location.reload();
+            }).catch(err => {
+                console.log(err);
+                // Do something for an error here
+            });
+        }
+
+        function returnDialogReport(LapId) {
+            return `
+                <div id="returnDialogReport${LapId}" aria-labelledby="exampleModalLabel" >
+                    <div>
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModal">Report</h5>
@@ -468,18 +570,14 @@
                     </div>
                 </div>
             `
-            // inputHtmlReport.appendChild(detailSementara);
-            return ``
         }
 
         function submitReport(LapId){
-            console.log("INI SUBMIT REPORT");
             let getCatatan = document.getElementById('textReport').value
-            let getUserPenerima = document.getElementById('selectKepadaApprove').value
             let uploadData = {
-                userlogin: userIdLogin,
-                id_laporan: lapId,
-                catatan: getCatatan
+                id_user: userIdLogin,
+                id_laporan: LapId,
+                text: getCatatan
             }
             
             var insertApi = 'http://localhost:3000/report/upload-report';
@@ -508,15 +606,13 @@
                 .then(async (response) => {
                     let inputHtml = document.getElementById(`returnDialogDetails${LapId}`)
                     let data = await response.json()
-                    console.log("MASUK KESINI", data);
-                    data.forEach(item => {
-                        console.log(item, "item");
-                        if (item == 0) {
+                    if (!data || data.length == 0) {
                         var detailSementara = document.createElement("div");
-                        detailSementara.innerHTML += `<h4>-- No Post --</h4>`
+                        detailSementara.innerHTML += `<h4>-- No Activity --</h4>`
                         inputHtml.appendChild(detailSementara);
-                        }
-
+                        return true
+                    }
+                    data.forEach(item => {
                         if (item) {
                             let detailSementara = document.createElement("div");
                             let getCatatan = '';
@@ -571,7 +667,6 @@
                 words = 'reject' //SEBELUMNYA 'tolak'
                 buttonReject = `rejectButton(${item.id_laporan})`
             }
-            // console.log("idModal",idModal, type);
             return `
             <div class="modal fade" id="${idModal}" aria-labelledby="exampleModalLabel" >
                 <div class="modal-dialog" style="margin-top: 100px">
@@ -599,37 +694,39 @@
             </div>
             `
         }
-
+       
         function approveButton(lapId) {
-            let getCatatan = document.getElementById('approve').value
-            let getUserPenerima = document.getElementById('selectKepadaApprove').value
-            let updateData = {
-                id_laporan: lapId,
-                userlogin: userIdLogin,
-                catatan: getCatatan,
-                user_penerima: getUserPenerima
+            try {
+                let getCatatan = document.getElementById('approve').value
+                let userPenerima = document.getElementById('selectKepadaApprove');
+                let getUserPenerima = userPenerima ? userPenerima.value : null
+                let updateData = {
+                    id_laporan: lapId,
+                    userlogin: userIdLogin,
+                    catatan: getCatatan,
+                    user_penerima: getUserPenerima
+                }
+                var insertApi = 'http://localhost:3000/laporan/approve';
+                fetch(insertApi, {
+                    method: "PUT", // *GET, POST, PUT, DELETE, etc.
+                    mode: "cors", // no-cors, *cors, same-origin
+                    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: "same-origin", // include, *same-origin, omit
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    redirect: "follow", // manual, *follow, error
+                    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    body: JSON.stringify(updateData), // body data type must match "Content-Type" header
+                }).then( async (response) => {
+                    location.reload();
+                }).catch(err => {
+                    console.log(err);
+                    // Do something for an error here
+                });
+            } catch (error) {
+                console.log(error);
             }
-            
-            var insertApi = 'http://localhost:3000/laporan/approve';
-            fetch(insertApi, {
-                method: "PUT", // *GET, POST, PUT, DELETE, etc.
-                mode: "cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify(updateData), // body data type must match "Content-Type" header
-            }).then( async (response) => {
-                console.log('success approve',response);
-                console.log('updateData',updateData);
-                location.reload();
-            }).catch(err => {
-                console.log(err);
-                // Do something for an error here
-            });
         }
 
         function rejectButton(lapId) {
@@ -639,7 +736,6 @@
                 userlogin: userIdLogin,
                 catatan: getCatatan
             }
-            console.log("updateData", updateData);
             var insertApi = 'http://localhost:3000/laporan/rejected';
             fetch(insertApi, {
                 method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -653,14 +749,12 @@
                 referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 body: JSON.stringify(updateData), // body data type must match "Content-Type" header
             }).then( async (response) => {
-                console.log('succes reject',response);
                 location.reload();
             }).catch(err => {
                 console.log(err);
                 // Do something for an error here
             });
         }
-
 
         function logOut() {
             localStorage.removeItem("id_user")
