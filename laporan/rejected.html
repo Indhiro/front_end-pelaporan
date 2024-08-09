@@ -107,39 +107,12 @@
                                             alt=""><span id="nameUser" style="margin-left: 20px;"></span></span>
                                         </div>
                                     </div>
-                                    <div tabindex="-1" role="menu" aria-hidden="true"
-                                        class="dropdown-menu dropdown-menu-right">
-                                        <div class="user-email">
-                                            <div class="user">
-                                                <span class="thumb">
-                                                    <img src="images/profile/3.png" alt="">
-                                                </span>
-                                                <div class="user-info">
-                                                    <h5>Jannatul Maowa</h5>
-                                                    <span>imsaifun@gmail.com</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <a class="dropdown-item" href="profile.html">
-                                            <span><i class="ri-user-line"></i></span>Profile
-                                        </a>
-                                        <a class="dropdown-item" href="wallet.html">
-                                            <span><i class="ri-wallet-line"></i></span>Wallet
-                                        </a>
-                                        <a class="dropdown-item" href="settings-profile.html">
-                                            <span><i class="ri-settings-3-line"></i></span>Settings
-                                        </a>
-                                        <a class="dropdown-item" href="settings-activity.html">
-                                            <span><i class="ri-time-line"></i></span>Activity
-                                        </a>
-                                        <a class="dropdown-item" href="lock.html">
-                                            <span><i class="ri-lock-line"></i></span>Lock
-                                        </a>
-                                        <a onclick="logout()" class="dropdown-item logout" href="signin.html">
-                                            <i class="ri-logout-circle-line"></i>Logout
-                                        </a>
-                                    </div>
                                 </div>
+                                <a onclick="logoutButton()" style="margin-top: -10px;">
+                                    <div style="cursor:pointer;">
+                                        <i class="bi bi-box-arrow-right h3" ></i>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -178,7 +151,6 @@
         // localStorage.setItem("userId", 3) // set manually ke browser localstorage (nanti kau ambil dari userId mereka/kampus)
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
-        let currentLocation = {}
         validationLogin() // call function
         getLaporan() // call function
         getUsers()
@@ -233,7 +205,7 @@
                             <div class="d-flex justify-content-between">
                                 <div class="text-start">
                                     <h5 class="card-tex">${item.nama} ${item.point_role}</h5>
-                                    <p class="card-tex">Kepada: ${item.nama_penerima} --${item.role}--</p>
+                                    <p class="card-tex">To: ${item.nama_penerima} --${item.role}--</p>
                                 </div>
                                 <div class="text-end">
                                     <p class="card-tex">Status: ${statusColor(item.status_laporan, item.nama_petugas)}</p>
@@ -246,7 +218,7 @@
                             
                             <div class="col-md-6" style="padding: 10px;">
                                 <h5 class="card-title">${item.title}</h5>
-                                <p class="card-text">Kategori: ${item.category}</p>
+                                <p class="card-text">Category: ${item.category}</p>
                                 <p class="card-text">${item.text}</p>
                             </div>
 
@@ -581,10 +553,11 @@
                 return ''
         }
 
-        function logOut() {
+        function logoutButton() {
             localStorage.removeItem("id_user")
             localStorage.removeItem("role")
             localStorage.removeItem("nameUser")
+            window.location.replace("signin.html")
         }
 
         function statusColor(status, nama_petugas) {

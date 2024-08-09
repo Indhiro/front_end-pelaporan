@@ -33,7 +33,7 @@ let navbar = `
                         <span class="nav-text">Settings</span></a>
                 </li>
                 <li class="logout" style="margin-top: -20px;">
-                    <a onclick="logOut()" href="signin.html">
+                    <a onclick="logoutButton()" href="signin.html">
                         <span><i style="font-size: 30px;" class="ri-logout-circle-line"></i></span>
                         <span class="nav-text">Signout</span>
                     </a>
