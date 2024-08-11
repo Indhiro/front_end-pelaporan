@@ -2,16 +2,16 @@
 <html lang="en">
 
 
-<!-- Mirrored from enftx-html.vercel.app/settings-security.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:43 GMT -->
+<!-- Mirrored from enftx-html.vercel.app/settings-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:29 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!---- Website Information ---->
-    <title>ENFTX - NFT Dashboard HTML Template</title>
+    <title>Pelaporan</title>
     <meta name="description"
-        content="ENFTX is the complete UX & UI dashboard for NFT. Here included bids, collection, wallet, and all user setting pages including profile, application, activity, payment method, api, sign in & sign up etc.">
+        content="Pelaporan Teknologi Informasi Universitas Udayana">
 
 
     <!-- Favicon icon -->
@@ -135,48 +135,33 @@
         </div>
     </div>
 </div>
-    <div class="sidebar">
-    <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt="" width="30"></a></div>
+<div class="sidebar">
+    <!-- <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt="" width="30"></a></div> -->
     <div class="menu">
         <ul>
-            <li>
-                <a href="index-2.html">
-                    <span><i class="ri-layout-grid-fill"></i></span>
+            <li style="margin-top: -20px;">
+                <a href="index.html">
+                    <span><i style="font-size: 30px;" class="ri-layout-grid-fill"></i></span>
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-            <li class="">
-                <a href="bids.html">
-                    <span><i class="ri-briefcase-line"></i></span>
-                    <span class="nav-text">Bids</span></a>
+            <li style="margin-top: -5px;">
+                <a href="validation.html">
+                    <span><i style="font-size: 30px;" class="bi bi-check2-square"></i></span>
+                    <span class="nav-text">Validation</span></a>
             </li>
-            <li class="">
-                <a href="saved.html">
-                    <span><i class="ri-heart-line"></i></span>
-                    <span class="nav-text">Saved</span></a>
+            <li style="margin-top: -10px;">
+                <a href="rejected.html">
+                    <span><i style="font-size: 30px;" class="bi bi-file-earmark-excel"></i></span>
+                    <span class="nav-text">Rejected</span></a>
             </li>
-            <li class="">
-                <a href="collection.html">
-                    <span><i class="ri-star-line"></i></span>
-                    <span class="nav-text">Collection</span></a>
-            </li>
-            <li class="">
-                <a href="wallet.html">
-                    <span><i class="ri-wallet-line"></i></span>
-                    <span class="nav-text">Wallet</span></a>
-            </li>
-            <li class="">
-                <a href="profile.html">
-                    <span><i class="ri-account-box-line"></i></span>
-                    <span class="nav-text">Profile</span></a>
-            </li>
-            <li class="">
+            <li style="margin-top: 0px;">
                 <a href="settings-profile.html">
-                    <span><i class="ri-settings-3-line"></i></span>
+                    <span><i style="font-size: 30px;" class="ri-settings-3-line"></i></span>
                     <span class="nav-text">Settings</span></a>
             </li>
-            <li class=" logout"><a href="signin.html">
-                    <span><i class="ri-logout-circle-line"></i></span>
+            <li class="logout" style="margin-top: -20px;"><a href="signin.html">
+                    <span><i style="font-size: 30px;" class="ri-logout-circle-line"></i></span>
                     <span class="nav-text">Signout</span>
                 </a>
             </li>
@@ -184,20 +169,19 @@
     </div>
 </div>
 
-
     <div class="content-body">
         <div class="container">
             <div class="page-title">
                 <div class="row align-items-center justify-content-between">
                     <div class="col-6">
                         <div class="page-title-content">
-                            <h3>Security</h3>
-                            <p class="mb-2">Welcome ENFTX Settings Security page</p>
+                            <h3>Profile</h3>
+                            <p class="mb-2">Welcome ENFTX Settings Profile page</p>
                         </div>
                     </div>
                     <div class="col-auto">
                         <div class="breadcrumbs"><a href="#">Settings </a><span><i
-                                    class="ri-arrow-right-s-line"></i></span><a href="#">Security</a></div>
+                                    class="ri-arrow-right-s-line"></i></span><a href="#">Profile</a></div>
                     </div>
                 </div>
             </div>
@@ -210,70 +194,91 @@
                 <li class=""><a href="settings-api.html">API</a></li>
             </ul>
             <div class="row">
-                <div class="col-xxl-12">
+                <div class="col-xxl-6 col-xl-6 col-lg-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">2-step verification </h4>
+                            <h4 class="card-title">User Profile</h4>
                         </div>
                         <div class="card-body">
-                            <div class="verify-content ">
-                                <div class="d-flex align-items-center"><span
-                                        class="me-3 icon-circle bg-primary text-white"><i
-                                            class="ri-smartxs-line"></i></span>
-                                    <div class="primary-number">
-                                        <p class="mb-0"><strong>+xxx xxxxxxxx60</strong></p><small>Keep your primary xs
-                                            number up-to-date</small><br><span class="text-success">Required</span>
+                            <form action="#">
+                                <div class="row">
+                                    <div class="col-12 mb-3"><label class="form-label">Full Name</label><input
+                                            name="fullName" type="text" class="form-control" value=""></div>
+                                    <div class="col-xxl-12">
+                                        <div class="d-flex align-items-center mb-3"><img
+                                                class="me-3 rounded-circle me-0 me-sm-3" src="images/profile/3.png"
+                                                width="55" height="55" alt="">
+                                            <div class="media-body">
+                                                <h4 class="mb-0">Jannatul Maowa</h4>
+                                                <p class="mb-0">Max file size is 20mb</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div><button class=" btn btn-primary">Manage</button>
-                            </div>
-                            <hr class="dropdown-divider my-4">
-                            <div class="verify-content">
-                                <div class="d-flex align-items-center"><span
-                                        class="me-3 icon-circle bg-primary text-white"><i
-                                            class="ri-mail-line"></i></span>
-                                    <div class="primary-number">
-                                        <p class="mb-0"><strong>hello@example.com</strong></p><small>Keep your primary
-                                            email up-to-date</small><br><span class="text-success">Required</span>
-                                    </div>
-                                </div><button class=" btn btn-primary">Manage</button>
-                            </div>
-                            <hr class="dropdown-divider my-4">
-                            <div class="verify-content">
-                                <div class="d-flex align-items-center"><span
-                                        class="me-3 icon-circle bg-primary text-white"><i
-                                            class="ri-key-line"></i></span>
-                                    <div class="primary-number">
-                                        <p class="mb-0"><strong>*************</strong></p><small>You can change your
-                                            password</small><br><span class="text-success">Required</span>
-                                    </div>
-                                </div><button class=" btn btn-primary">Manage</button>
-                            </div>
+                                    <div class="col-12"><input name="photo" type="file" class="" value=""></div>
+                                </div>
+                                <div class="mt-3"><button type="submit" class="btn btn-primary mr-2">Save</button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 col-xl-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Update Profile</h4>
+                        </div>
+                        <div class="card-body">
+                            <form action="#">
+                                <div class="row">
+                                    <div class="col-12 mb-3"><label class="form-label">Email</label><input name="email"
+                                            type="text" class="form-control" value=""></div>
+                                    <div class="col-12 mb-3"><label class="form-label">Password</label><input
+                                            name="password" type="text" class="form-control" value=""></div>
+                                </div>
+                                <div class="mt-3"><button type="submit" class="btn btn-primary mr-2">Save</button></div>
+                            </form>
                         </div>
                     </div>
                 </div>
                 <div class="col-xxl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Identity verification </h4>
+                            <h4 class="card-title">Personal Information</h4>
                         </div>
                         <div class="card-body">
-                            <div class="verify-content">
-                                <div class="d-flex align-items-center"><span
-                                        class="me-3 icon-circle bg-primary text-white"><i
-                                            class="ri-lock-password-line"></i></span>
-                                    <div class="primary-number">
-                                        <p class="mb-0">xxx xxxxx xxx40</p><small>Social Security
-                                            Number</small><br><span class="text-success">Verified</span>
+                            <form action="#">
+                                <div class="row">
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3"><label class="form-label">Full
+                                            Name</label><input name="fullName" type="text" class="form-control"
+                                            value=""></div>
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3"><label
+                                            class="form-label">Email</label><input name="email" type="text"
+                                            class="form-control" value=""></div>
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3"><label
+                                            class="form-label">Address</label><input name="address" type="text"
+                                            class="form-control" value=""></div>
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3"><label
+                                            class="form-label">City</label><input name="city" type="text"
+                                            class="form-control" value=""></div>
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3"><label class="form-label">Post
+                                            Code</label><input name="postal" type="text" class="form-control" value="">
                                     </div>
-                                </div><button class=" btn btn-primary" data-toggle="modal"
-                                    data-target="#idCardModal">Manage</button>
-                            </div>
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3"><label
+                                            class="form-label">Country</label><select name="country"
+                                            class="form-control">
+                                            <option value="Bangladesh">Bangladesh</option>
+                                            <option value="United States">United States</option>
+                                            <option value="United Kingdom">United Kingdom</option>
+                                        </select></div>
+                                </div>
+                                <div class="mt-3"><button type="submit" class="btn btn-primary mr-2">Save</button></div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 
 </div>
 
@@ -301,5 +306,5 @@
 </body>
 
 
-<!-- Mirrored from enftx-html.vercel.app/settings-security.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:43 GMT -->
+<!-- Mirrored from enftx-html.vercel.app/settings-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:32 GMT -->
 </html>
