@@ -37,8 +37,8 @@
 
         <div class="content-body">
             <div class="container">
+                <button class="btn btn-dark" onclick="buttonSortByDate()">Sory By Date</button>
                 <div class="row">
-
                     <!-- LIST LAPORAN -->
                     <div class="col-xxl-8" style="margin-top: 20px;">
                         <div id="myList"></div>
@@ -65,6 +65,7 @@
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
         let userKepada = '';
+        let sortType = null;
         getUsers()
         getLaporan() // call function
 
@@ -78,18 +79,18 @@
             });
         }
 
-        function getLaporan(param) {
+        function getLaporan(param, sortBy) {
             var apiUrl = `http://localhost:3000/laporan/get-laporan-validation?userId=${userIdLogin}`;
             if (param) apiUrl += `&search=${param}`
+            if (sortBy) apiUrl += `&sortBy=${sortBy}`
             var cardContainer = document.getElementById("myList");
             cardContainer.innerHTML = ''
             fetch(apiUrl)
                 .then(async (response) => {
                     let data = await response.json()
-                    // Mendapatkan elemen container
                     var likeDislikeButton = document.getElementById("get");
 
-                    if (data && data.length == 0) {
+                    if (data && data.length == 0) { // NODATA
                         var card = document.createElement("div");
                         card.innerHTML += `<h4>-- No Post --</h4>`
                         cardContainer.appendChild(card);
@@ -664,6 +665,16 @@
             if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${rejected}</span>`;
         }
  
+        function buttonSortByDate() {
+            if (sortType == 'asc') {
+                sortType = 'desc'
+            } else if (sortType == 'desc') {
+                sortType = 'asc'
+            } else {
+                sortType = 'asc'
+            }
+            return getLaporan(null, `date,${sortType}`)
+        }
     </script>
 
     <script src="./js/header.js"></script>
