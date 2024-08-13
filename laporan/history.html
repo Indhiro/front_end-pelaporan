@@ -23,7 +23,8 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <script src="./component/navbar.js" type="text/javascript" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="./component/navbar.js" type="text/javascript"></script>
     <script src="./component/header.js" type="text/javascript"></script>
 </head>
 
@@ -57,15 +58,15 @@
             </div>
         </div>
     </div>
-
+   
     <script type="text/javascript">
         window.scrollTo(0, 0);
         // localStorage.setItem("userId", 3) // set manually ke browser localstorage (nanti kau ambil dari userId mereka/kampus)
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
-        validationLogin() // call function
-        getLaporan() // call function
+        let userKepada = '';
         getUsers()
+        getLaporan() // call function
 
         function getAllByStatus() { // INI BUAT APA?
             var apiUrl = `http://localhost:3000/laporan/get-all-user?userId=${userIdLogin}`;
@@ -73,12 +74,12 @@
             .then(async (response) => {
                 if (userIdLogin ) return true
             }).catch(err => {
-
+                console.log('getAllByStatus', err);
             });
         }
 
         function getLaporan(param) {
-            var apiUrl = `http://localhost:3000/laporan/get-laporan-rejected?userId=${userIdLogin}`;
+            var apiUrl = `http://localhost:3000/laporan/get-laporan-history?userId=${userIdLogin}`;
             if (param) apiUrl += `&search=${param}`
             var cardContainer = document.getElementById("myList");
             cardContainer.innerHTML = ''
@@ -134,10 +135,20 @@
                                 <p class="card-text">${item.text}</p>
                             </div>
 
+                            <div>
+                                <!-- Button trigger modal -->
+                                <button id="buttonApprove" type="button" style="background-color: #008CBA;" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalApprove${item.id_laporan}">
+                                    Approve
+                                </button>
+                                <button id="buttonReject" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalReject${item.id_laporan}">
+                                    Reject
+                                </button>
+                            </div>
+                            ${returnDialog(item,'approve')}
+                            ${returnDialog(item,'reject')}
+
                             <div class="d-flex" style="margin-top: 20px">
-                                <i onclick="buttonLike(${item.id_laporan}, 'up')" id="buttonlike${item.id_laporan}" class="fa fa-thumbs-o-up" style="font-size:24px; cursor:pointer;"></i>
-                                <h6 title="false" id="like${item.id_laporan}" style="margin-left: 12px">${item.countLike ? item.countLike : 0}</h6>
-                                <i onclick="buttonLike(${item.id_laporan}, 'down')" id="dislike${item.id_laporan}" class="fa fa-thumbs-o-down" style="font-size:24px; margin-left: 15px; cursor:pointer;"></i>
+                                ${showButtonLike(item)}
                                 <div class="col-md-6" style="padding: 0px; margin-top: -10px">
                                     <div class="d-flex">
                                         <div style="cursor:pointer; margin-left: 30px;" class="d-flex" data-bs-toggle="modal" data-bs-target="#modalComment${item.id_laporan}">
@@ -213,33 +224,68 @@
             return sample
         }
 
-        function validationLogin() {
-            console.log(nameUser,'nameUser');
-            document.getElementById('nameUser').innerHTML = nameUser ? nameUser : 'not login yet'
-            if (!userIdLogin) return window.location.replace('signIn.html')
-        }
-
         function getUsers(userId) {
             var apiUrl = `http://localhost:3000/user/get-user${userId ? `?userId=${userId}` : ''}`;
             fetch(apiUrl).then(response => {
                 return response.json();
             }).then(data => {
-                let pengawas = ''
+                // let pengawas = ''
                 let kepada = ''
                 for (var i = 0; i < data.length; i++) {
                     let user = data[i]
-                    if (user.role == 'pengawas') {
-                        pengawas += "<option value=" + user.id_user + ">" + user.nama + " (" + user.role + ") " + "</option>"
-                    } else {
-                        if (user.role != 'dosen') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
+                    
+                    if (user.role != 'dosen' && user.role != 'mahasiswa' && user.role != 'pengawas' && user.role != 'petugas') {
+                        kepada += `<option value = '${user.id_user}'>  ${user.nama} ( ${user.role} ) </option>`
+                        // console.log("useruseruser", user.id_user);
                     }
+                    // if (user.role == 'pengawas') {
+                    //     pengawas += "<option value=" + user.id_user + ">" + user.nama + " (" + user.role + ") " + "</option>"
+                    // } else {
+                    //     if (user.role != 'dosen') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
+                    //     // console.log("user", kepada);
+                    // }
                 }
                 if (userId) return data // KALO MAU RESULTNYA 1 USER AJA
-                document.getElementById("selectPengawas").innerHTML = pengawas;
-                document.getElementById("selectKepada").innerHTML = kepada;
+                // document.getElementById("selectPengawas").innerHTML = pengawas;
+                // console.log('kepada', kepada);
+                // document.getElementById("selectKepadaApprove").innerHTML = kepada;
+                userKepada = kepada
             }).catch(err => {
                 console.log('getusererr', err);
             });
+        }
+
+        function showButtonLike(item) {
+            let htmlLike = `
+                        <i onclick="buttonLike(${item.id_laporan}, 'up')" id="buttonlike${item.id_laporan}" class="fa fa-thumbs-o-up" style="font-size:24px; cursor:pointer;"></i>
+                        <h6 title="false" id="like${item.id_laporan}" style="margin-left: 12px">${item.countLike ? item.countLike : 0}</h6>
+                        <i onclick="buttonLike(${item.id_laporan}, 'down')" id="dislike${item.id_laporan}" class="fa fa-thumbs-o-down" style="font-size:24px; cursor:pointer; margin-left: 15px"></i>
+                        `
+
+            var getApi = `http://localhost:3000/like-dislike/get-like-dislike?LapId=${item.id_laporan}`;
+            fetch(getApi)
+                .then(async (response) => {
+                    let data = await response.json()
+                    data.forEach(item => {
+                        if (item.id_user == userIdLogin) {
+                            console.log("LIKEDISLIKE", item);
+
+                            if(item.status_like_dislike == 'like') {
+                                document.getElementById(`buttonlike${item.id_laporan}`).className = "fa fa-thumbs-up"
+                                document.getElementById(`like${item.id_laporan}`).title = 'onUp'
+                            }
+                            if(item.status_like_dislike == 'dislike') {
+                                document.getElementById(`dislike${item.id_laporan}`).className = "fa fa-thumbs-down"
+                                document.getElementById(`like${item.id_laporan}`).title = 'onDown'
+                            }
+                        }
+                    })
+                }).catch(err => {
+                    console.log("ini error", err);
+                    // Do something for an error here
+                });
+
+            return htmlLike
         }
 
         function buttonLike(laporanId, status) {
@@ -249,16 +295,19 @@
             submitLike(laporanId, status)
             if (status == 'up') {
                 if (titleTag == 'onUp') {
+                    console.log('onUp');
                     document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-o-up"
                     document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 1
                     document.getElementById(`like${laporanId}`).title = 'offUp'
                 }
                 if (titleTag == 'offUp' || titleTag == 'false' || titleTag == 'offDown') {
+                    console.log('offUp');
                     document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-up"
                     document.getElementById(`like${laporanId}`).title = 'onUp'
                     return document.getElementById(`like${laporanId}`).innerHTML = totalLikes + 1
                 }
                 if (titleTag == 'onDown') {
+                    console.log('onDown');
                     document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-up"
                     document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-o-down"
                     document.getElementById(`like${laporanId}`).title = 'onUp'
@@ -286,10 +335,10 @@
             }
         }
 
-        function submitLike(laporanId, status) {
+        function submitLike(LapId, status) {
             let uploadData = {
                 id_user: userIdLogin,
-                id_laporan: laporanId,
+                id_laporan: LapId,
                 status: status
             }
             
@@ -314,8 +363,8 @@
         }
 
         function returnDialogComment(LapId) {
-            var insertApi = `http://localhost:3000/comment/get-comment?LapId=${LapId}`;
-            fetch(insertApi)
+            var getApi = `http://localhost:3000/comment/get-comment?LapId=${LapId}`;
+            fetch(getApi)
                 .then(async (response) => {
                     
                     let inputHtml = document.getElementById(`returnDialogComment${LapId}`)
@@ -432,18 +481,18 @@
         }
 
         function returnDialogDetails(LapId) {
-            var insertApi = `http://localhost:3000/laporan/get-approve?LapId=${LapId}`;
-            fetch(insertApi)
+            var getApi = `http://localhost:3000/laporan/get-approve?LapId=${LapId}`;
+            fetch(getApi)
                 .then(async (response) => {
                     let inputHtml = document.getElementById(`returnDialogDetails${LapId}`)
                     let data = await response.json()
-                    data.forEach(item => {
-                        if (item == 0) {
+                    if (!data || data.length == 0) {
                         var detailSementara = document.createElement("div");
-                        detailSementara.innerHTML += `<h4>-- No Post --</h4>`
+                        detailSementara.innerHTML += `<h4>-- No Activity --</h4>`
                         inputHtml.appendChild(detailSementara);
-                        }
-
+                        return true
+                    }
+                    data.forEach(item => {
                         if (item) {
                             let detailSementara = document.createElement("div");
                             let getCatatan = '';
@@ -462,7 +511,129 @@
                     console.log("ini error", err);
                     // Do something for an error here
                 });
-                return ''
+                return ``
+        }
+
+        function returnDialog(item,type) {
+            let userRoleLogin = localStorage.getItem("role") // SAMPLE FOR LOGIN
+            let buttonTittle = ''
+            let buttonLabel = ''
+            let idModal = ''
+            let words = ''
+            let buttonApprove = ''
+            let buttonReject = ''
+            let kepadaCard = ''
+            if (!type) return false;
+            if (type == 'approve') {
+                buttonTittle = 'Approve'
+                buttonLabel = 'Approve(Setujui)'
+                idModal = `exampleModalApprove${item.id_laporan}`
+                words = 'approve'
+                buttonApprove = `approveButton(${item.id_laporan})`
+                if (userRoleLogin == 'pengawas') {
+                    kepadaCard = `
+                    <div class="modal-body">
+                        <label for="selectUserfor">Kepada</label>
+                        <select id="selectKepadaApprove" class="form-select" aria-label="Default select example">
+                        ${userKepada}
+                        </select>
+                    </div>`
+                }
+                
+            } else if (type == 'reject') {
+                buttonTittle = 'Reject'
+                buttonLabel = 'Reject(Tolak)'
+                idModal = `exampleModalReject${item.id_laporan}`
+                words = 'reject' //SEBELUMNYA 'tolak'
+                buttonReject = `rejectButton(${item.id_laporan})`
+            }
+            return `
+            <div class="modal fade" id="${idModal}" aria-labelledby="exampleModalLabel" >
+                <div class="modal-dialog" style="margin-top: 100px">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        
+                        <h5 class="modal-title" id="exampleModalLabel">${buttonTittle}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan ${words}?</h5>
+                    </div>
+                    ${kepadaCard}
+                    <div class="modal-body">
+                        <label for="exampleFormControlTextarea1">Catatan</label>
+                        <textarea class="form-control" id="${words}" rows="3" required></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn" style="background-color: #008CBA;" onclick="${words == 'approve' ? buttonApprove : buttonReject}">${buttonLabel}</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            `
+        }
+       
+        function approveButton(lapId) {
+            try {
+                let getCatatan = document.getElementById('approve').value
+                let userPenerima = document.getElementById('selectKepadaApprove');
+                let getUserPenerima = userPenerima ? userPenerima.value : null
+                let updateData = {
+                    id_laporan: lapId,
+                    userlogin: userIdLogin,
+                    catatan: getCatatan,
+                    user_penerima: getUserPenerima
+                }
+                var insertApi = 'http://localhost:3000/laporan/approve';
+                fetch(insertApi, {
+                    method: "PUT", // *GET, POST, PUT, DELETE, etc.
+                    mode: "cors", // no-cors, *cors, same-origin
+                    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: "same-origin", // include, *same-origin, omit
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    redirect: "follow", // manual, *follow, error
+                    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    body: JSON.stringify(updateData), // body data type must match "Content-Type" header
+                }).then( async (response) => {
+                    location.reload();
+                }).catch(err => {
+                    console.log(err);
+                    // Do something for an error here
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        function rejectButton(lapId) {
+            let getCatatan = document.getElementById('reject').value
+            let updateData = {
+                id_laporan: lapId,
+                userlogin: userIdLogin,
+                catatan: getCatatan
+            }
+            var insertApi = 'http://localhost:3000/laporan/rejected';
+            fetch(insertApi, {
+                method: "PUT", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(updateData), // body data type must match "Content-Type" header
+            }).then( async (response) => {
+                location.reload();
+            }).catch(err => {
+                console.log(err);
+                // Do something for an error here
+            });
         }
 
         function logoutButton() {
@@ -486,7 +657,7 @@
             if (status == 'approve_pengawas') return `<span style="background: #2E86C1" class="badge">${approve_pengawas_rename}</span>`;
             if (status == 'approve_kepala_prodi') return `<span style="background: #17A589" class="badge">${approve_kepala_prodi_rename}</span>`;
             if (status == 'approve_wakil_dekan_2') return `<span style="background: #F39C12" class="badge">${approve_wakil_dekan_2_rename}</span>`;
-            if (status == 'final_approve') return `<span style="background: #884EA0" class="badge">${final_approve_rename}</span>`;
+            if (status == 'approve_wakil_rektor_2') return `<span style="background: #884EA0" class="badge">${final_approve_rename}</span>`;
             if (status == 'progress') return `<span style="background: #F1C40F" class="badge">${progress}</span>`;
             if (status == 'check') return `<span style="background: #A6ACAF" class="badge">${check}</span>`;
             if (status == 'done') return `<span class="badge bg-primary">${done} by ${nama_petugas}</span>` 

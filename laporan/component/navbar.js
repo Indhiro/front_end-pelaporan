@@ -27,6 +27,11 @@ let navbar = `
                         <span><i style="font-size: 30px;" class="bi bi-file-earmark-excel"></i></span>
                         <span class="nav-text">Rejected</span></a>
                 </li>
+                <li style="margin-top: -10px;">
+                    <a href="history.html">
+                        <span><i style="font-size: 30px;" class="bi bi-clock-history"></i></span>
+                        <span class="nav-text">History</span></a>
+                </li>
                 <li style="margin-top: 0px;">
                     <a href="settings-profile.html">
                         <span><i style="font-size: 30px;" class="ri-settings-3-line"></i></span>
