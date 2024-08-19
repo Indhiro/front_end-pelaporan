@@ -258,7 +258,7 @@
         function showButtonLike(item) {
             let htmlLike = `
                         <i onclick="buttonLike(${item.id_laporan}, 'up')" id="buttonlike${item.id_laporan}" class="fa fa-thumbs-o-up" style="font-size:24px; cursor:pointer;"></i>
-                        <h6 title="false" id="like${item.id_laporan}" style="margin-left: 12px">${item.countLike ? item.countLike : 0}</h6>
+                        <h6 title="false" id="like${item.id_laporan}" style="margin-left: 12px">${item.countLikeDislike ? item.countLikeDislike : 0}</h6>
                         <i onclick="buttonLike(${item.id_laporan}, 'down')" id="dislike${item.id_laporan}" class="fa fa-thumbs-o-down" style="font-size:24px; cursor:pointer; margin-left: 15px"></i>
                         `
 
