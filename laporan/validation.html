@@ -265,7 +265,7 @@
         function showButtonLike(item) {
             let htmlLike = `
                         <i onclick="buttonLike(${item.id_laporan}, 'up')" id="buttonlike${item.id_laporan}" class="fa fa-thumbs-o-up" style="font-size:24px; cursor:pointer;"></i>
-                        <h6 title="false" id="like${item.id_laporan}" style="margin-left: 12px">${item.countLike ? item.countLike : 0}</h6>
+                        <h6 title="false" id="like${item.id_laporan}" style="margin-left: 12px">${item.countLikeDislike ? item.countLikeDislike : 0}</h6>
                         <i onclick="buttonLike(${item.id_laporan}, 'down')" id="dislike${item.id_laporan}" class="fa fa-thumbs-o-down" style="font-size:24px; cursor:pointer; margin-left: 15px"></i>
                         `
 
@@ -299,22 +299,24 @@
             let titleTag = document.getElementById(`like${laporanId}`).title;
             let totalLikes = document.getElementById(`like${laporanId}`).innerHTML;
             totalLikes = Number(totalLikes)
-            submitLike(laporanId, status)
             if (status == 'up') {
                 if (titleTag == 'onUp') {
                     console.log('onUp');
                     document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-o-up"
                     document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 1
                     document.getElementById(`like${laporanId}`).title = 'offUp'
+                    deleteLike(laporanId)
                 }
                 if (titleTag == 'offUp' || titleTag == 'false' || titleTag == 'offDown') {
                     console.log('offUp');
+                    submitLike(laporanId, status)
                     document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-up"
                     document.getElementById(`like${laporanId}`).title = 'onUp'
                     return document.getElementById(`like${laporanId}`).innerHTML = totalLikes + 1
                 }
                 if (titleTag == 'onDown') {
                     console.log('onDown');
+                    submitLike(laporanId, status)
                     document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-up"
                     document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-o-down"
                     document.getElementById(`like${laporanId}`).title = 'onUp'
@@ -327,19 +329,50 @@
                     document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-o-down"
                     document.getElementById(`like${laporanId}`).innerHTML = totalLikes + 1
                     document.getElementById(`like${laporanId}`).title = 'offDown'
+                    deleteLike(laporanId)
                 }
                 if (titleTag == 'offDown' || titleTag == 'false' || titleTag == 'offUp') {
+                    submitLike(laporanId, status)
                     document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-down"
                     document.getElementById(`like${laporanId}`).title = 'onDown'
                     return document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 1
                 }
                 if (titleTag == 'onUp') {
+                    submitLike(laporanId, status)
                     document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-down"
                     document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-o-up"
                     document.getElementById(`like${laporanId}`).title = 'onDown'
                     return document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 2
                 }
             }
+        }
+
+        function deleteLike(LapId) {
+            let deleteData = {
+                id_user: userIdLogin,
+                id_laporan: LapId
+            }
+            console.log("MASUK DELETE LIKE", deleteData );
+            
+            
+            var insertApi = 'http://localhost:3000/like-dislike/delete-like-dislike';
+            fetch(insertApi, {
+                method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(deleteData), // body data type must match "Content-Type" header
+            }).then( async (response) => {
+                // location.reload();
+            }).catch(err => {
+                console.log(err);
+                // Do something for an error here
+            });
         }
 
         function submitLike(LapId, status) {
