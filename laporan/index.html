@@ -134,8 +134,10 @@
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
         // validationLogin() // call function
-        getLaporan() // call function
-        getUsers()
+        window.onload = function () {
+            getUsers()
+            getLaporan() // call function
+        }
         // getLocation()
 
         function getAllByStatus() { // INI BUAT APA?

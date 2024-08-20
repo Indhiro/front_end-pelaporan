@@ -3,111 +3,115 @@
 
 
 <!-- Mirrored from enftx-html.vercel.app/signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:32 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!---- Website Information ---->
-    <title>ENFTX - NFT Dashboard HTML Template</title>
-    <meta name="description"
-        content="Pelaporan Teknologi Informasi Universitas Udayana">
-
-
+    <title>Login Pelaporan</title>
+    <meta name="description" content="Pelaporan Teknologi Informasi Universitas">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
+    <script src="./component/popUpModal.js" type="text/javascript"></script>
 </head>
 
 <body class="@@dashboard">
-
-<div id="preloader"><i>.</i><i>.</i><i>.</i></div>
-
-<div class="authincation section-padding">
-    <div class="container h-100">
-        <div class="row justify-content-center h-100 align-items-center">
-            <div class="col-xl-5 col-md-6">
-                <div class="mini-logo text-center my-4">
-                    <h4 class="card-title mt-5">Sign in to Pelaporan</h4>
-                </div>
-                <div class="auth-form card">
-                    <div class="card-body">
-                        <form onsubmit="signIn(); return false;">
-                            <div class="row">
-                                <div class="col-12 mb-3"><label class="form-label">Username</label><input
-                                    id="username" type="text" class="form-control" required></div>
-                                <div class="col-12 mb-3"><label class="form-label">Password</label><input
-                                    id="password" type="password" class="form-control" required></div>
-                                <!-- <div class="col-12 mb-3"><label class="form-label" for="exampleFormControlInput1">Username</label><input 
+    <div class="authincation section-padding">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-xl-5 col-md-6">
+                    <div class="mini-logo text-center my-4">
+                        <h4 class="card-title mt-5">Sign in to Pelaporan</h4>
+                    </div>
+                    <div class="auth-form card">
+                        <div class="card-body">
+                            <form onsubmit="signIn(); return false;" id="loginForm">
+                                <div class="row">
+                                    <div class="col-12 mb-3"><label class="form-label">Username</label><input
+                                            id="username" type="text" class="form-control" required></div>
+                                    <div class="col-12 mb-3"><label class="form-label">Password</label><input
+                                            id="password" type="password" class="form-control" required></div>
+                                    <!-- <div class="col-12 mb-3"><label class="form-label" for="exampleFormControlInput1">Username</label><input 
                                     type="text" class="form-control" id="username"></div>
                                 <div class="col-12 mb-3"><label class="form-label" for="exampleFormControlInput1">Password</label><input
                                     type="password" class="form-control" id="password"></div> -->
-                                <div class="col-6">
-                                    <div class="form-check"><input name="acceptTerms" type="checkbox"
-                                            class="form-check-input " value=""><label class="form-check-label">Remember
-                                            me</label></div>
+                                    <div class="col-6">
+                                        <div class="form-check"><input name="acceptTerms" type="checkbox"class="form-check-input" value="">
+                                            <label class="form-check-label">Remember me</label></div>
+                                    </div>
+                                    <div class="col-6 text-end"><a href="reset.html">Forgot Password?</a></div>
                                 </div>
-                                <div class="col-6 text-end"><a href="reset.html">Forgot Password?</a></div>
-                            </div>
-                            <div class="mt-3 d-grid gap-2"><button type="submit" class="btn btn-primary mr-2">Sign
-                                    In</button></div>
-                        </form>
-                        <p class="mt-3 mb-0">Don't have an account?<a class="text-primary" href="signup.html">Sign
-                                up</a>
-                        </p>
+                                <div class="mt-3 d-grid gap-2"><button type="submit" class="btn btn-primary mr-2">Sign In</button></div>
+                            </form>
+                            <p class="mt-3 mb-0">Don't have an account?<a class="text-primary" href="signup.html"> >> Sign up</a></p>
+                            <modal-component></modal-component>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    function signIn() {
-        let username = document.getElementById("username").value
-        let password = document.getElementById("password").value
+    <script>
+        var form = document.getElementById("loginForm");
+        function handleForm(event) {
+            event.preventDefault();
+        } 
+        form.addEventListener('submit', handleForm)
 
-        let insertData = {
-            username: username,
-            password: password
+        function signIn() {
+            // warnDialog('Account not found')
+            let username = document.getElementById("username").value
+            let password = document.getElementById("password").value
+            let insertData = { username, password }
+    
+            var insertApi = 'http://localhost:3000/user/login';
+            fetch(insertApi, {
+                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(insertData)
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                if (data) {
+                    var isArr = data instanceof Array;
+                    if (isArr === false) return warnDialog(data.msg)
+                    localStorage.setItem("id_user", data[0].id_user)
+                    localStorage.setItem("role", data[0].role)
+                    localStorage.setItem("nameUser", data[0].nama)
+                    localStorage.setItem("imageUser", data[0].image)
+                    return window.location.assign("index.html");
+                }
+                // SUCCESS MESSAGE
+            }).catch(err => {
+                console.log(err);
+                // Do something for an error here
+                return warnDialog(err.message)
+            });
         }
-        console.log(insertData);
-        var insertApi = 'http://localhost:3000/user/login';
-        fetch(insertApi, {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-                "Content-Type": "application/json",
-            },
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(insertData)
-        }).then(response => {
-            return response.json();
-        }).then(data => {
-            if (data) {
-                console.log(data);
-                localStorage.setItem("id_user", data[0].id_user)
-                localStorage.setItem("role", data[0].role)
-                localStorage.setItem("nameUser", data[0].nama)
-                localStorage.setItem("imageUser", data[0].image)
-                // localStorage.removeItem("role", data[0].role)
-                return window.location.assign("index.html");
-            }
-            console.log('Account not found');
-            // SUCCESS MESSAGE
-        }).catch(err => {
-            console.log(err);
-            // Do something for an error here
-        });
-    }
-</script>
+
+        function warnDialog(text) {
+            var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
+            let modalNotes = document.getElementById('modalNotes');
+            modalNotes.innerHTML = text;
+            myModal.show();
+        }
+    </script>
 
 
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
 
@@ -122,11 +126,12 @@
 
 
 
-<script src="js/scripts.js"></script>
+    <script src="js/scripts.js"></script>
 
 
 </body>
 
 
 <!-- Mirrored from enftx-html.vercel.app/signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:33 GMT -->
+
 </html>
