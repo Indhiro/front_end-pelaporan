@@ -14,6 +14,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
+    <script src="./component/navbar.js" type="text/javascript"></script>
     <script src="./component/header.js" type="text/javascript"></script>
 </head>
 
@@ -24,41 +25,8 @@
     <div id="main-wrapper">
         <!-- TOPBAR/HEADER (ADD SCRIPT HEADER) -->
         <header-component></header-component>
-    </div>
-
-    <div class="sidebar">
-        <!-- <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt="" width="30"></a></div> -->
-        <div class="menu">
-            <ul>
-                <li style="margin-top: -20px;">
-                    <a href="index.html">
-                        <span><i style="font-size: 30px;" class="ri-layout-grid-fill"></i></span>
-                        <span class="nav-text">Dashboard</span>
-                    </a>
-                </li>
-                <li style="margin-top: -5px;">
-                    <a href="validation.html">
-                        <span><i style="font-size: 30px;" class="bi bi-check2-square"></i></span>
-                        <span class="nav-text">Validation</span></a>
-                </li>
-                <li style="margin-top: -10px;">
-                    <a href="rejected.html">
-                        <span><i style="font-size: 30px;" class="bi bi-file-earmark-excel"></i></span>
-                        <span class="nav-text">Rejected</span></a>
-                </li>
-                <li style="margin-top: 0px;">
-                    <a href="settings-profile.html">
-                        <span><i style="font-size: 30px;" class="ri-settings-3-line"></i></span>
-                        <span class="nav-text">Settings</span></a>
-                </li>
-                <li class="logout" style="margin-top: -20px;">
-                    <a onclick="logoutButton()" href="signin.html">
-                        <span><i style="font-size: 30px;" class="ri-logout-circle-line"></i></span>
-                        <span class="nav-text">Signout</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <!-- SIDE BAR DISEBELAH KIRI -->
+        <navbar-component></navbar-component>
     </div>
 
     <div class="content-body">
@@ -196,7 +164,7 @@
                                         <input class="form-control" id="inputPhoneNumber" type="number" placeholder="Enter your phone number" value="${item.no_telp}">
                                     </div>
                                     <!-- Save changes button-->
-                                    <button onclick="updateProfile()" class="btn btn-primary" type="button">Save Changes</button>
+                                    <button type="submit" onclick="updateProfile()" class="btn btn-primary" type="button">Save Changes</button>
                                 </form>
                             </div>
                         </div>
