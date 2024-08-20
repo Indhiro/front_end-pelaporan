@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="./component/navbar.js" type="text/javascript"></script>
     <script src="./component/header.js" type="text/javascript"></script>
+    <script src="./component/filterBar.js" type="text/javascript"></script>
 </head>
 
 <body class="@@dashboard">
@@ -34,10 +35,12 @@
         <header-component></header-component>
         <!-- SIDE BAR DISEBELAH KIRI -->
         <navbar-component></navbar-component>
-
+        
         <div class="content-body">
             <div class="container">
-                <button class="btn btn-dark" onclick="buttonSortByDate()">Sory By Date</button>
+                <!-- FILTER BAR -->
+                <filterbar-component></filterbar-component>
+
                 <div class="row">
                     <!-- LIST LAPORAN -->
                     <div class="col-xxl-8" style="margin-top: 20px;">
@@ -65,9 +68,10 @@
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
         let userKepada = '';
-        let sortType = null;
-        getUsers()
-        getLaporan() // call function
+        window.onload = function () {
+            getUsers()
+            getLaporan() // call function
+        }
 
         function getAllByStatus() { // INI BUAT APA?
             var apiUrl = `http://localhost:3000/laporan/get-all-user?userId=${userIdLogin}`;
@@ -79,10 +83,12 @@
             });
         }
 
-        function getLaporan(param, sortBy) {
+        function getLaporan(param, sortBy, type, status) {
             var apiUrl = `http://localhost:3000/laporan/get-laporan-validation?userId=${userIdLogin}`;
             if (param) apiUrl += `&search=${param}`
             if (sortBy) apiUrl += `&sortBy=${sortBy}`
+            if (type) apiUrl += `&type=${type}`
+            if (status) apiUrl += `&status=${status}`
             var cardContainer = document.getElementById("myList");
             cardContainer.innerHTML = ''
             fetch(apiUrl)
@@ -664,19 +670,10 @@
             if (status == 'done') return `<span class="badge bg-primary">${done} by ${nama_petugas}</span>` 
             if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${rejected}</span>`;
         }
- 
-        function buttonSortByDate() {
-            if (sortType == 'asc') {
-                sortType = 'desc'
-            } else if (sortType == 'desc') {
-                sortType = 'asc'
-            } else {
-                sortType = 'asc'
-            }
-            return getLaporan(null, `date,${sortType}`)
-        }
+
     </script>
 
+    <script src="./js/filterBar.js"></script>
     <script src="./js/header.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

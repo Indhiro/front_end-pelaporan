@@ -39,55 +39,17 @@ let header = `<!DOCTYPE html>
                                 <span class="dark"><i class="ri-moon-line"></i></span>
                                 <span class="light"><i class="ri-sun-line"></i></span>
                             </div>
-
-                            <div class="nav-item dropdown notification dropdown">
-                                <div data-bs-toggle="dropdown" aria-haspopup="true" class="" aria-expanded="false">
-                                    <div class="notify-bell icon-menu"><span><i class="ri-notification-2-line"></i></span>
-                                    </div>
-                                </div>
-                                <div tabindex="-1" role="menu" aria-hidden="true"
-                                    class="dropdown-menu notification-list dropdown-menu dropdown-menu-right">
-                                    <h4>Recent Notification</h4>
-                                    <div class="lists">
-                                        <a class="" href="index.html#">
-                                            <div class="d-flex align-items-center"><span
-                                                    class="me-3 icon success"><i class="ri-check-line"></i></span>
-                                                <div>
-                                                    <p>Account created successfully</p><span>2020-11-04
-                                                        12:00:23</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a class="" href="index.html#">
-                                            <div class="d-flex align-items-center"><span class="me-3 icon fail"><i
-                                                        class="ri-close-line"></i></span>
-                                                <div>
-                                                    <p>2FA verification failed</p><span>2020-11-04 12:00:23</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a class="" href="index.html#">
-                                            <div class="d-flex align-items-center"><span
-                                                    class="me-3 icon success"><i class="ri-check-line"></i></span>
-                                                <div>
-                                                    <p>Device confirmation completed</p><span>2020-11-04
-                                                        12:00:23</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a class="" href="index.html#">
-                                            <div class="d-flex align-items-center"><span
-                                                    class="me-3 icon pending"><i
-                                                        class="ri-question-mark"></i></span>
-                                                <div>
-                                                    <p>xs verification pending</p><span>2020-11-04 12:00:23</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#">More<i class="ri-arrow-right-s-line"></i></a>
-                                    </div>
+                            
+                            <div class="dropdown" style="margin-right: 20px;">
+                              <div class="notify-bell icon-menu">
+                                <span><i class="ri-notification-2-line">
+                                <div class="notificationNumber" id="notificationNumber" role="status">0</div></i></span>
+                              </div>
+                                <div class="dropdown-content" id="dropdown-content">
+                                    <a href="#">Link 3</a>
                                 </div>
                             </div>
+
                             <div class="dropdown profile_log dropdown" onclick="profileSetting()">
                                 <div data-bs-toggle="dropdown" aria-haspopup="true" class="" aria-expanded="false">
                                     <div class="user icon-menu active">

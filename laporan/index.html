@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="./component/navbar.js" type="text/javascript"></script>
     <script src="./component/header.js" type="text/javascript"></script>
+    <script src="./component/uploadDrop.js" type="text/javascript"></script>
+    <script src="./component/filterBar.js" type="text/javascript"></script>
 </head>
 
 <body class="@@dashboard">
@@ -38,6 +40,8 @@
 
         <div class="content-body">
             <div class="container">
+                <!-- FILTER BAR -->
+                <filterbar-component></filterbar-component>
                 <div class="row">
                     <div style="margin-top: 10px;">
                         <!-- Post Activity -->  
@@ -88,6 +92,7 @@
                                                         <label for="exampleFormControlTextarea1">Photo</label>
                                                         <input type="file" id="foto" style="margin-left: 100px;"
                                                             accept="application/pdf,image/jpeg">
+                                                        <!-- <uploaddrop-component></uploaddrop-component> -->
                                                     </div>
                                                     <div style="margin-top: 10px;">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -122,38 +127,6 @@
             </div>
         </div>
     </div>
-    <!-- explore -->
-    <!-- <script>
-    document.getElementById().onload = async function() {
-        await getInfo()
-    }
-    const getBtn = document.getElementById('get')
-    const postBtn = document.getElementById('post')
-    const input = document.getElementById('input')
-
-    const baseUrl = 'http://localhost:3000/laporan/get-laporan'
-
-    getBtn.onloadstart(getInfo)
-    // await getInfo()
-    async function getInfo() {
-        console.log('masuk');
-        // e.preventDefault()
-        const res = await fetch(baseUrl,
-        {
-            method: 'GET'
-        }).then(res => {
-            console.log(res);
-        //     data.forEach(item => {
-        //     const listItem = document.createElement('li');
-        //     const getData = document.createTextNode(item.title)
-        //     listItem.appendChild(getData)
-        //     console.log(listItem);
-        //     document.getElementById("myList").appendChild(listItem);
-        // });
-        })
-        // const data = await res.json()
-    }
-</script> -->
 
     <script type="text/javascript">
         window.scrollTo(0, 0);
@@ -175,9 +148,12 @@
             });
         }
 
-        function getLaporan(param) {
+        function getLaporan(param, sortBy, type, status) {
             var apiUrl = `http://localhost:3000/laporan/get-laporan-dashboard?userId=${userIdLogin}`;
             if (param) apiUrl += `&search=${param}`
+            if (sortBy) apiUrl += `&sortBy=${sortBy}`
+            if (type) apiUrl += `&type=${type}`
+            if (status) apiUrl += `&status=${status}`
             var cardContainer = document.getElementById("myList");
             cardContainer.innerHTML = ''
             fetch(apiUrl)
@@ -329,76 +305,6 @@
             // if (getStatusForm == 'none') document.getElementById("postForm").style.display = 'block'
             // if (getStatusForm == 'block') document.getElementById("postForm").style.display = 'none'
         }
-
-//         function postSubmit() {
-//             // console.log(currentLocation); // mau cek lokasi lan/lon
-//             let keterangan = document.getElementById("keterangan").value
-//             let judul = document.getElementById("judul").value
-//             let kategori = document.getElementById("kategori").value
-//             let foto = document.getElementById("foto").files[0]
-//             let selectPengawas = document.getElementById("selectPengawas").value
-//             let selectKepada = document.getElementById("selectKepada").value
-//             let layer = 0
-
-//             if(selectKepada == 'kepala prodi') layer = 2
-//             if(selectKepada == 'wakil dekan 2') layer = 3
-//             if(selectKepada == 'wakil rektor 2') layer = 4
-// // DEV
-// const form = new FormData()
-// form.append('name', "test")
-// form.append('image', foto)
-// let reader = new FileReader();
-// reader.onload = function() {
-//     // send_off_to_other_clients(reader.result);
-//     let insertData = {
-//                 id_user_pelapor: userIdLogin,
-//                 id_user_approver1: selectPengawas,
-//                 category: kategori,
-//                 text: keterangan,
-//                 title: judul,
-//                 layer: layer,
-//                 image: form
-//                 // image: convertFileToJson(foto),
-//                 // lokasi_latitude: currentLocation.latitude,
-//                 // lokasi_longitude: currentLocation.longitude
-//             }
-//             console.log(insertData);
-//     console.log(reader.result,'asda');
-//     var insertApi = 'http://localhost:3000/laporan/upload-laporan';
-//             fetch(insertApi, {
-//                 method: "POST", // *GET, POST, PUT, DELETE, etc.
-//                 mode: "cors", // no-cors, *cors, same-origin
-//                 cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-//                 credentials: "same-origin", // include, *same-origin, omit
-//                 headers: {
-//                     "Content-Type": "application/json",
-//                     // "Content-Type": "multipart/form-data",
-//                     // 'Content-Type': 'application/x-www-form-urlencoded',
-//                 },
-//                 redirect: "follow", // manual, *follow, error
-//                 referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-//                 // body: JSON.stringify(insertData), // body data type must match "Content-Type" header
-//                 body: JSON.stringify(insertData)
-//             }).then(response => {
-//                 return response.json();
-//             }).then(data => {
-//                 window.location.assign("index.html")
-//                 console.log(data);
-//                 // SUCCESS MESSAGE
-//             }).catch(err => {
-//                 console.log(err);
-//                 // Do something for an error here
-//             });
-// }
-// reader.readAsArrayBuffer(foto);
-
-//         }
-
-        // function validationLogin() {
-        //     console.log(nameUser,'nameUser');
-        //     document.getElementById('nameUser').innerHTML = nameUser ? nameUser : 'not login yet'
-        //     if (!userIdLogin) return window.location.replace('signIn.html')
-        // }
 
         function getUsers(userId) {
             var apiUrl = `http://localhost:3000/user/get-user${userId ? `?userId=${userId}` : ''}`;
@@ -850,6 +756,7 @@
 
     </script>
     
+    <script src="./js/filterBar.js"></script>
     <script src="./js/header.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
