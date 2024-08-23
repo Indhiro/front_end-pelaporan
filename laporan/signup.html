@@ -3,7 +3,9 @@
 
 
 <!-- Mirrored from enftx-html.vercel.app/signup.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:43 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +15,6 @@
     <meta name="description"
         content="ENFTX is the complete UX & UI dashboard for NFT. Here included bids, collection, wallet, and all user setting pages including profile, application, activity, payment method, api, sign in & sign up etc.">
 
-
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
@@ -21,6 +22,7 @@
 </head>
 
 <body class="@@dashboard">
+<<<<<<< HEAD
 
 <div id="preloader"><i>.</i><i>.</i><i>.</i></div>
 
@@ -78,21 +80,81 @@
                                     <div class="form-check"><input id="acceptTerms" type="checkbox">
                                         <label class="form-check-label">Agree to the <a href="#"class="text-primary"> User Agreement</a> and <a href="#"
                                         class="text-primary">Privacy Policy</a>.</label></div>
+=======
+    <div id="preloader"><i>.</i><i>.</i><i>.</i></div>
+    <div class="authincation section-padding">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-xl-5 col-md-6">
+                    <div class="mini-logo text-center my-4">
+                        <h4 class="card-title mt-5">Sign up to Pelaporan</h4>
+                    </div>
+                    <div class="auth-form card">
+                        <div class="card-body">
+                            <form id="registerForm">
+                                <div class="row">
+                                    <div class="col-12 mb-3"><label class="form-label">Full Name</label><input
+                                            id="fullName" type="text" class="form-control" required></div>
+                                    <div class="col-12 mb-3"><label class="form-label">NIM/NIP/NUPTK</label>
+                                        <div>
+                                            <span style="font-size: 12px; color: red;">Please input correct number, this
+                                                will be check/validate</span>
+                                        </div>
+                                        <input id="no_unik" type="number" class="form-control" required>
+                                    </div>
+                                    <div class="col-12 mb-3"><label class="form-label">Username</label><input
+                                            id="username" type="text" class="form-control" required></div>
+                                    <div class="col-12 mb-3"><label class="form-label">Password</label><input
+                                            id="password" type="password" class="form-control" required></div>
+                                    <div class="col-12">
+                                        <label for="cars" class="form-label">Role:</label>
+                                        <select class="form-select" aria-label="Default select example" id="role">
+                                            <option selected>Select Role</option>
+                                            <option value="mahasiswa">Mahasiswa</option>
+                                            <option value="pengawas">Pengawas</option>
+                                            <option value="dosen">Dosen</option>
+                                            <option value="petugas">Petugas</option>
+                                            <option value="kepala prodi">Kepala Prodi</option>
+                                            <option value="wakil dekan 2">Wakil Dekan 2</option>
+                                            <option value="wakil rektor 2">Wakil Rektor 2</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12" style="margin-top:15px">
+                                        <label for="cars" class="form-label">Gender:</label>
+                                        <select class="form-select" aria-label="Default select example" id="gender">
+                                            <option selected>Select Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 mb-3" style="margin-top:15px"><label class="form-label">Phone
+                                            Number</label><input id="no_telp" type="number" class="form-control"
+                                            required></div>
+                                    <div class="col-12" style="margin-top: 15px;">
+                                        <div class="form-check"><input id="acceptTerms" type="checkbox">
+                                            <label class="form-check-label">Agree to the <a href="#"
+                                                    class="text-primary"> User Agreement</a> and <a href="#"
+                                                    class="text-primary">Privacy Policy</a>.</label>
+                                        </div>
+                                    </div>
+>>>>>>> 67ec3f9380d27a7c5afef3a11948580c8fa86bd6
                                 </div>
+                                <div class="mt-3 d-grid gap-2"><button type="submit" class="btn btn-primary mr-2"
+                                        onclick="signUp()">Sign Up</button></div>
+                            </form>
+                            <div class="text-center">
+                                <p class="mt-3 mb-0"><a class="text-primary" href="signin.html">Sign in </a>to your
+                                    account</p>
                             </div>
-                            <div class="mt-3 d-grid gap-2"><button type="submit" class="btn btn-primary mr-2" onclick="signUp()">Sign Up</button></div>
-                        </form>
-                        <div class="text-center">
-                            <p class="mt-3 mb-0"><a class="text-primary" href="signin.html">Sign in </a>to your account</p>
                         </div>
                     </div>
+                    <modal-component></modal-component>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-
+<<<<<<< HEAD
 <script>
     function signUp() {
         let fullName = document.getElementById("fullName").value;
@@ -141,9 +203,59 @@
     }
 
 </script>
+=======
 
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var form = document.getElementById("registerForm");
+        function handleForm(event) {
+            event.preventDefault();
+        }
+        form.addEventListener('submit', handleForm)
+        function signUp() {
+            let fullName = document.getElementById("fullName").value;
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let no_unik = document.getElementById("no_unik").value;
+            let role = document.getElementById("role").value;
+            let gender = document.getElementById("gender").value;
+            let no_telp = document.getElementById("no_telp").value;
+            let acceptTerms = document.getElementById("acceptTerms").checked;
+            var insertApi = 'http://localhost:3000/user/register';
+            fetch(insertApi, {
+                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "same-origin", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow", // manual, *follow, error
+                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify({ fullName, no_unik, username, password, acceptTerms, role, gender, no_telp })
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                if (data.flag) {
+                    window.location.assign("signin.html");
+                } else {
+                    warnDialog(data.msg)
+                }
+            }).catch(err => {
+                warnDialog(err)
+            });
+        }
+        
+        function warnDialog(text) {
+            var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
+            let modalNotes = document.getElementById('modalNotes');
+            modalNotes.innerHTML = text;
+            myModal.show();
+        }
+    </script>
+>>>>>>> 67ec3f9380d27a7c5afef3a11948580c8fa86bd6
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
 
@@ -158,11 +270,12 @@
 
 
 
-<script src="js/scripts.js"></script>
+    <script src="js/scripts.js"></script>
 
 
 </body>
 
 
 <!-- Mirrored from enftx-html.vercel.app/signup.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:43 GMT -->
+
 </html>

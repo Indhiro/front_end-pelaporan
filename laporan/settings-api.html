@@ -19,12 +19,15 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
     <script src="./component/header.js" type="text/javascript"></script>
+    <script src="./component/confirmModal.js" type="text/javascript"></script>
+    <script src="./component/setting-header.js" type="text/javascript"></script>
 </head>
 
 <body class="@@dashboard">
     <div id="main-wrapper">
         <!-- TOPBAR/HEADER (ADD SCRIPT HEADER) -->
         <header-component></header-component>
+        <confirm-component></confirm-component>
       
         <div class="sidebar">
             <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt=""
@@ -88,20 +91,15 @@
                         </div>
                         <div class="col-auto">
                             <div class="breadcrumbs"><a href="#">Settings </a><span><i
-                                        class="ri-arrow-right-s-line"></i></span><a href="#">User Management</a></div>
+                                class="ri-arrow-right-s-line"></i></span><a href="#">User Management</a></div>
                         </div>
                     </div>
                 </div>
-                <ul class="settings-menu">
-                    <li><a href="settings-profile.html">Profile</a></li>
-                    <li class=""><a href="settings-application.html">Application</a></li>
-                    <li class=""><a href="settings-security.html">Security</a></li>
-                    <li class=""><a href="settings-activity.html">Activity</a></li>
-                    <li class=""><a href="settings-payment-method.html">Payment Method</a></li>
-                    <li class=""><a href="settings-api.html">User Management</a></li>
-                </ul>
+                <!-- SETTING HEADER -->
+                <setheader-component></setheader-component>
+
                 <div class="row">
-                    <div class="col-xxl-12">
+                    <!-- <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Create API Key</h4>
@@ -122,7 +120,7 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
@@ -160,6 +158,9 @@
     <script>
         let userIdLogin = localStorage.getItem("id_user");
         let userLoginRole = localStorage.getItem("role");
+        let deleteUserId = null;
+        let updateUser = {};
+        let currentButton = null;
         window.onload = function () {
             getAllUser()
         }
@@ -203,30 +204,63 @@
         }
 
         function activateSwitch(userid, userLogin, elementId) {
-            let htmlEl = document.getElementById(elementId)
-            var apiUrl = `http://localhost:3000/user/validate-user?userId=${userid}&userlogin=${userLogin}&status=${htmlEl.checked}`;
+            confirmValidateBtn(userid, userLogin, elementId)
+        }
+
+        function deleteUser(userId) { // delete-user
+            confirmDialogBtn(userId)
+        }
+        
+        function deleteUserHtml(userId) {
+            return `<span><i class="ri-delete-bin-line" onclick="deleteUser(${userId})"></i></span>`
+        }
+    
+        function confirmDialogBtn(id) {
+            var myModal = new bootstrap.Modal(document.getElementById('confirmModal'), {})
+            let modalNotes = document.getElementById('confirmModalNotes');
+            modalNotes.innerHTML = `Are you sure to delete this User?`;
+            myModal.show();
+            deleteUserId = id;
+            currentButton = 'delete user'
+        }
+
+        function confirmValidateBtn(userid, userLogin, elementId) {
+            var myModal = new bootstrap.Modal(document.getElementById('confirmModal'), {})
+            let modalNotes = document.getElementById('confirmModalNotes');
+            modalNotes.innerHTML = `Are you sure to update this User?`;
+            myModal.show();
+            updateUser.userid = userid
+            updateUser.userLogin = userLogin
+            updateUser.elementId = elementId
+            currentButton = 'update user'
+        }
+
+        function sureDelete() {
+            if (currentButton == 'update user') return confirmUpdateValidate();
+            if (currentButton == 'delete user') return confirmDeleteUser();
+        }
+
+        function confirmUpdateValidate() {
+            let htmlEl = document.getElementById(updateUser.elementId)
+            var apiUrl = `http://localhost:3000/user/validate-user?userId=${updateUser.userid}&userlogin=${updateUser.userLogin}&status=${htmlEl.checked}`;
             fetch(apiUrl).then(response => {
                 return response.json();
             }).then(data => {
-                console.log(data);
+                return getAllUser()
             }).catch(err => {
                 console.log('activateSwitch', err);
             });
         }
 
-        function deleteUser(userId) { // delete-user
-            var apiUrl = `http://localhost:3000/user/delete-user?id_user=${userId}`;
+        function confirmDeleteUser() {
+            var apiUrl = `http://localhost:3000/user/delete-user?id_user=${deleteUserId}`;
             fetch(apiUrl, { method: 'PUT' }).then(response => {
                 return response.json();
             }).then(data => {
                 return getAllUser()
             }).catch(err => {
-                console.log('deleteUser', err);
+                console.log('sureDelete', err);
             });
-        }
-        
-        function deleteUserHtml(userId) {
-            return `<span><i class="ri-delete-bin-line" onclick="deleteUser(${userId})"></i></span>`
         }
     </script>
 
