@@ -17,11 +17,14 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
+    <script src="./component/popUpModal.js" type="text/javascript"></script>
 </head>
 
 <body class="@@dashboard">
 
 <div id="preloader"><i>.</i><i>.</i><i>.</i></div>
+
+<modal-component></modal-component>
 
 <div class="authincation section-padding">
     <div class="container h-100">
@@ -40,7 +43,10 @@
                                     <div>
                                         <span style="font-size: 12px; color: red;">Please input correct number, this will be check/validate</span>
                                     </div>
-                                    <input id="no_unik" type="number" class="form-control" required></div>
+                                    <input id="no_unik" type="number" class="form-control" required>
+                                </div>
+                                <div class="col-12 mb-3"><label class="form-label">Email</label><input
+                                    id="email" type="email" class="form-control" required></div>
                                 <div class="col-12 mb-3"><label class="form-label">Username</label><input 
                                     id="username" type="text" class="form-control" required></div>
                                 <div class="col-12 mb-3"><label class="form-label">Password</label><input
@@ -113,8 +119,11 @@
             return response.json();
         }).then(data => {
             if (data) {
+                console.log("data", data);
                 // if (data) return window.location.assign("signin.html");
                 // window.location.reload();
+                if(data.flag == false) return warnDialog(data.msg)
+                if(data.flag == true) return warnDialog(data.msg)
                 window.location.assign("signin.html");
             }
         }).catch(err => {
@@ -123,6 +132,14 @@
         });
 
     }
+
+    function warnDialog(text) {
+        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
+        let modalNotes = document.getElementById('modalNotes');
+        modalNotes.innerHTML = text;
+        myModal.show();
+    }
+
 </script>
 
 <script src="vendor/jquery/jquery.min.js"></script>
