@@ -35,8 +35,14 @@
             <div class="page-title">
                 <div class="row align-items-center justify-content-between">
                     <div class="col-6">
-                        <div class="page-title-content" id="getProfile">
+                        <div class="page-title-content">
+                            <h3>Profile</h3>
+                            <p class="mb-2">Here you can manage your profile</p>
                         </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="breadcrumbs"><a href="settings-profile.html">Settings </a><span><i
+                            class="ri-arrow-right-s-line"></i></span><a href="settings-profile.html">Profile</a></div>
                     </div>
                 </div>
             </div>
@@ -55,7 +61,7 @@
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
         let roleUser = localStorage.getItem("role")
         validationLogin() // call function
-        getProfile()
+        // getProfile()
         getUser(userIdLogin)
 
         function validationLogin() {
@@ -77,18 +83,18 @@
             localStorage.removeItem("nameUser")
         }
 
-        function getProfile() {
-            let inputHtml = document.getElementById("getProfile")
-            let dataSementara = document.createElement("div");
-            inputHtml.innerHTML = ''
+        // function getProfile() {
+        //     let inputHtml = document.getElementById("getProfile")
+        //     let dataSementara = document.createElement("div");
+        //     inputHtml.innerHTML = ''
 
-            dataSementara.style = "text-transform:capitalize"
-            dataSementara.innerHTML += `                            
-                <h3>${nameUser}</h3>
-                <p class="mb-2">Welcome ${nameUser} (${roleUser})</p>
-                `
-            inputHtml.appendChild(dataSementara);
-        }
+        //     dataSementara.style = "text-transform:capitalize"
+        //     dataSementara.innerHTML += `                            
+        //         <h3>${nameUser}</h3>
+        //         <p class="mb-2">Welcome ${nameUser} (${roleUser})</p>
+        //         `
+        //     inputHtml.appendChild(dataSementara);
+        // }
 
         function getUser(userId) {
             var apiUrl = `http://localhost:3000/user/get-user${userId ? `?userId=${userId}` : ''}`;
@@ -141,7 +147,7 @@
                                         <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="${item.username}" readonly>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="small mb-1" for="inputNIMNIP">NIM/NIP</label>
+                                        <label class="small mb-1" for="inputNIMNIP">NIM/NIP/NUPTK</label>
                                         <input class="form-control" id="inputNIMNIP" type="number" placeholder="Enter your NIM/NIP" value="${item.no_unik}" readonly>
                                     </div>
                                     <div class="mb-3">
@@ -151,6 +157,10 @@
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputFullName">Full Name</label>
                                         <input class="form-control" id="inputFullName" type="text" placeholder="Enter your full name" value="${item.nama}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="inputEmail">Email</label>
+                                        <input class="form-control" id="inputEmail" type="text" placeholder="Enter your email" value="${item.email}">
                                     </div>
                                     <div class="mb-3" id="getGender">
                                     </div>

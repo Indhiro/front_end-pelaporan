@@ -43,6 +43,8 @@
                                         </div>
                                         <input id="no_unik" type="number" class="form-control" required>
                                     </div>
+                                    <div class="col-12 mb-3"><label class="form-label">Email</label><input
+                                        id="email" type="email" class="form-control" required></div>
                                     <div class="col-12 mb-3"><label class="form-label">Username</label><input
                                             id="username" type="text" class="form-control" required></div>
                                     <div class="col-12 mb-3"><label class="form-label">Password</label><input
@@ -103,6 +105,7 @@
         form.addEventListener('submit', handleForm)
         function signUp() {
             let fullName = document.getElementById("fullName").value;
+            let email = document.getElementById("email").value;
             let username = document.getElementById("username").value;
             let password = document.getElementById("password").value;
             let no_unik = document.getElementById("no_unik").value;
@@ -121,7 +124,7 @@
                 },
                 redirect: "follow", // manual, *follow, error
                 referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify({ fullName, no_unik, username, password, acceptTerms, role, gender, no_telp })
+                body: JSON.stringify({ fullName, email, no_unik, username, password, acceptTerms, role, gender, no_telp })
             }).then(response => {
                 return response.json();
             }).then(data => {

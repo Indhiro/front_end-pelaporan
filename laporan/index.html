@@ -221,18 +221,6 @@
                                 <p class="card-text">${item.text}</p>
                             </div>
 
-                            <div>
-                                <!-- Button trigger modal -->
-                                <button hidden id="buttonApprove" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalApprove${item.id_laporan}">
-                                    Approve
-                                </button>
-                                <button hidden id="buttonReject" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalReject${item.id_laporan}">
-                                    Reject
-                                </button>
-                            </div>
-                            ${returnDialog(item.id_laporan,'approve')}
-                            ${returnDialog(item.id_laporan,'reject')}
-
                             <div class="d-flex" style="margin-top: 20px">
                                 <i onclick="buttonLike(${item.id_laporan}, 'up')" id="buttonlike${item.id_laporan}" class="fa fa-thumbs-o-up" style="font-size:24px; cursor:pointer;"></i>
                                 <h6 title="false" id="like${item.id_laporan}" style="margin-left: 12px">${item.countLikeDislike ? item.countLikeDislike : 0}</h6>
@@ -566,113 +554,6 @@
                 });
                 return ''
         }
-
-        function returnDialog(lapId,type) {
-            let buttonTittle = ''
-            let buttonLabel = ''
-            let idModal = ''
-            let words = ''
-            let buttonApprove = ''
-            if (!type) return false;
-            if (type == 'approve') {
-                buttonTittle = 'Approve'
-                buttonLabel = 'Approve(Setujui)'
-                idModal = `exampleModalApprove${lapId}`
-                words = 'approve'
-                buttonApprove = `approveButton(${lapId})`
-            } else if (type == 'reject') {
-                buttonTittle = 'Reject'
-                buttonLabel = 'Reject(Tolak)'
-                idModal = `exampleModalReject${lapId}`
-                words = 'reject' //SEBELUMNYA 'tolak'
-                buttonApprove = `rejectButton(${lapId})`
-            }
-            return `
-            <div class="modal fade" id="${idModal}" aria-labelledby="exampleModalLabel" >
-                <div class="modal-dialog" style="margin-top: 100px">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">${buttonTittle}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin melakukan ${words}?</h5>
-                    </div>
-                    <div class="modal-body">
-                        <label for="exampleFormControlTextarea1">Catatan</label>
-                        <textarea class="form-control" id="catatan" rows="3" required></textarea>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="${words == 'approve' ? buttonApprove : buttonApprove}">${buttonLabel}</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                    </div>
-                </div>
-            </div>`
-        }
-
-        function approveButton(lapId) {
-            let getCatatan = document.getElementById('catatan').value
-            let updateData = {
-                id_laporan: lapId,
-                userlogin: userIdLogin,
-                catatan: getCatatan
-            }
-            var insertApi = 'http://localhost:3000/laporan/approve';
-            fetch(insertApi, {
-                method: "PUT", // *GET, POST, PUT, DELETE, etc.
-                mode: "cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify(updateData), // body data type must match "Content-Type" header
-            }).then( async (response) => {
-                location.reload();
-            }).catch(err => {
-                console.log(err);
-                // Do something for an error here
-            });
-        }
-
-        function rejectButton(lapId) {
-            let getCatatan = document.getElementById('catatan').value
-            let updateData = {
-                id_laporan: lapId,
-                userlogin: userIdLogin,
-                catatan: getCatatan
-            }
-            var insertApi = 'http://localhost:3000/laporan/rejected';
-            fetch(insertApi, {
-                method: "PUT", // *GET, POST, PUT, DELETE, etc.
-                mode: "cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify(updateData), // body data type must match "Content-Type" header
-            }).then( async (response) => {
-                location.reload();
-            }).catch(err => {
-                console.log(err);
-                // Do something for an error here
-            });
-        }
-
-        // function getLocation() {
-        //     if (navigator.geolocation) {
-        //         navigator.geolocation.getCurrentPosition(showPosition);
-        //     } else {
-        //         console.log('browser no support location');
-        //     }
-        // }
 
         function showPosition(position) {
             currentLocation = {
