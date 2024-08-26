@@ -27,8 +27,10 @@ let header = `<!DOCTYPE html>
                             <div class="brand-logo"><a class="mini-logo" href="index.html"><img
                                         src="images/logoi.png" alt="" width="40"></a></div>
                             <div class="search">
-                                <form action="#"><span><i class="ri-search-line"></i></span><input type="text"
-                                    placeholder="Search Here" onchange="getLaporan(this.value)"></form>
+                                <form onsubmit="getLaporan(); return false;">
+                                    <span><i class="ri-search-line"></i></span>
+                                    <input type="text"placeholder="Search Here" id="inputSearch">
+                                </form>
                             </div>
                             <h1 style="position: absolute; margin-top: 50px; left: 50%; margin-left: -50px; width: 100px; height: 100px;
                         font-style: italic; font-family: Monospace; color: gray">Pelaporan</h1>

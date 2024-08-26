@@ -18,8 +18,8 @@ let confirmModal = `
                 <p id="confirmModalNotes"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="sureDelete()">Sure</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="revertUpdate()">No</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="sureUpdate()">Sure</button>
             </div>
             </div>
         </div>

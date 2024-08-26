@@ -23,7 +23,8 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <script src="./component/navbar.js" type="text/javascript" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
+    <script src="./component/navbar.js" type="text/javascript"></script>
     <script src="./component/header.js" type="text/javascript"></script>
 </head>
 
@@ -63,9 +64,13 @@
         // localStorage.setItem("userId", 3) // set manually ke browser localstorage (nanti kau ambil dari userId mereka/kampus)
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
-        validationLogin() // call function
-        getLaporan() // call function
-        getUsers()
+        let userLoginRole = localStorage.getItem("role");
+        window.onload = function () {
+            if (!(userLoginRole == 'pengawas' || userLoginRole == 'admin')) history.back()
+            validationLogin() // call function
+            getUsers()
+            getLaporan() // call function
+        }
 
         function getAllByStatus() { // INI BUAT APA?
             var apiUrl = `http://localhost:3000/laporan/get-all-user?userId=${userIdLogin}`;
@@ -77,9 +82,10 @@
             });
         }
 
-        function getLaporan(param) {
+        function getLaporan() {
+            let inputSearch = document.getElementById('inputSearch')
             var apiUrl = `http://localhost:3000/laporan/get-laporan-rejected?userId=${userIdLogin}`;
-            if (param) apiUrl += `&search=${param}`
+            if (inputSearch.value) apiUrl += `&search=${inputSearch.value}`
             var cardContainer = document.getElementById("myList");
             cardContainer.innerHTML = ''
             fetch(apiUrl)
@@ -235,8 +241,8 @@
                     }
                 }
                 if (userId) return data // KALO MAU RESULTNYA 1 USER AJA
-                document.getElementById("selectPengawas").innerHTML = pengawas;
-                document.getElementById("selectKepada").innerHTML = kepada;
+                if (document.getElementById("selectPengawas")) document.getElementById("selectPengawas").innerHTML = pengawas;
+                if (document.getElementById("selectKepada")) document.getElementById("selectKepada").innerHTML = kepada;
             }).catch(err => {
                 console.log('getusererr', err);
             });
@@ -496,6 +502,7 @@
     </script>
 
     <script src="./js/header.js"></script>
+    <script src="./js/navbar.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/chartjs/chart.bundle.min.js"></script>

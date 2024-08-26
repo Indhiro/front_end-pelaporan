@@ -78,9 +78,10 @@
             });
         }
 
-        function getLaporan(param) {
+        function getLaporan() {
+            let inputSearch = document.getElementById('inputSearch')
             var apiUrl = `http://localhost:3000/laporan/get-laporan-history?userId=${userIdLogin}`;
-            if (param) apiUrl += `&search=${param}`
+            if (inputSearch.value) apiUrl += `&search=${inputSearch.value}`
             var cardContainer = document.getElementById("myList");
             cardContainer.innerHTML = ''
             fetch(apiUrl)
@@ -667,6 +668,7 @@
     </script>
 
     <script src="./js/header.js"></script>
+    <script src="./js/navbar.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/chartjs/chart.bundle.min.js"></script>

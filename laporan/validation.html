@@ -67,8 +67,10 @@
         // localStorage.setItem("userId", 3) // set manually ke browser localstorage (nanti kau ambil dari userId mereka/kampus)
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
+        let userLoginRole = localStorage.getItem("role");
         let userKepada = '';
         window.onload = function () {
+            if (!(userLoginRole == 'pengawas' || userLoginRole == 'admin')) history.back()
             getUsers()
             getLaporan() // call function
         }
@@ -84,8 +86,9 @@
         }
 
         function getLaporan(param, sortBy, type, status) {
+            let inputSearch = document.getElementById('inputSearch')
             var apiUrl = `http://localhost:3000/laporan/get-laporan-validation?userId=${userIdLogin}`;
-            if (param) apiUrl += `&search=${param}`
+            if (inputSearch.value) apiUrl += `&search=${inputSearch.value}`
             if (sortBy) apiUrl += `&sortBy=${sortBy}`
             if (type) apiUrl += `&type=${type}`
             if (status) apiUrl += `&status=${status}`
@@ -707,6 +710,7 @@
     </script>
 
     <script src="./js/filterBar.js"></script>
+    <script src="./js/navbar.js"></script>
     <script src="./js/header.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

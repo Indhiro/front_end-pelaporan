@@ -17,16 +17,8 @@ let navbar = `
                         <span class="nav-text">Dashboard</span>
                     </a>
                 </li>
-                <li style="margin-top: -5px;">
-                    <a href="validation.html">
-                        <span><i style="font-size: 30px;" class="bi bi-check2-square"></i></span>
-                        <span class="nav-text">Validation</span></a>
-                </li>
-                <li style="margin-top: -10px;">
-                    <a href="rejected.html">
-                        <span><i style="font-size: 30px;" class="bi bi-file-earmark-excel"></i></span>
-                        <span class="nav-text">Rejected</span></a>
-                </li>
+                <div id="validationFilterId">
+                </div>
                 <li style="margin-top: -10px;">
                     <a href="history.html">
                         <span><i style="font-size: 30px;" class="bi bi-clock-history"></i></span>
@@ -47,6 +39,7 @@ let navbar = `
         </div>
     </div>
 </body>
+
 </html>
 `
 

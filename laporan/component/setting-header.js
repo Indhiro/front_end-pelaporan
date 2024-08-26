@@ -10,9 +10,9 @@ let setHeader = `
     <ul class="settings-menu">
         <li><a href="settings-profile.html">Profile</a></li>
         <li class=""><a href="settings-application.html">Security</a></li>
-    <!--     <li class=""><a href="settings-security.html">Application</a></li>
-    <li class=""><a href="settings-activity.html">Activity</a></li>
-    <li class=""><a href="settings-payment-method.html">Payment Method</a></li> -->
+        <!--     <li class=""><a href="settings-security.html">Application</a></li>
+        <li class=""><a href="settings-activity.html">Activity</a></li>
+        <li class=""><a href="settings-payment-method.html">Payment Method</a></li> -->
         <li class=""><a href="settings-api.html">User Management</a></li>
     </ul>
 </body>
