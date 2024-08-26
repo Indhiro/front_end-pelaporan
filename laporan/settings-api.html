@@ -19,6 +19,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
     <script src="./component/header.js" type="text/javascript"></script>
+    <script src="./component/navbar.js" type="text/javascript"></script>
     <script src="./component/confirmModal.js" type="text/javascript"></script>
     <script src="./component/setting-header.js" type="text/javascript"></script>
 </head>
@@ -27,57 +28,9 @@
     <div id="main-wrapper">
         <!-- TOPBAR/HEADER (ADD SCRIPT HEADER) -->
         <header-component></header-component>
+        <!-- SIDE BAR DISEBELAH KIRI -->
+        <navbar-component></navbar-component>
         <confirm-component></confirm-component>
-      
-        <div class="sidebar">
-            <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt=""
-                        width="30"></a></div>
-            <div class="menu">
-                <ul>
-                    <li>
-                        <a href="index-2.html">
-                            <span><i class="ri-layout-grid-fill"></i></span>
-                            <span class="nav-text">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="bids.html">
-                            <span><i class="ri-briefcase-line"></i></span>
-                            <span class="nav-text">Bids</span></a>
-                    </li>
-                    <li class="">
-                        <a href="saved.html">
-                            <span><i class="ri-heart-line"></i></span>
-                            <span class="nav-text">Saved</span></a>
-                    </li>
-                    <li class="">
-                        <a href="collection.html">
-                            <span><i class="ri-star-line"></i></span>
-                            <span class="nav-text">Collection</span></a>
-                    </li>
-                    <li class="">
-                        <a href="wallet.html">
-                            <span><i class="ri-wallet-line"></i></span>
-                            <span class="nav-text">Wallet</span></a>
-                    </li>
-                    <li class="">
-                        <a href="profile.html">
-                            <span><i class="ri-account-box-line"></i></span>
-                            <span class="nav-text">Profile</span></a>
-                    </li>
-                    <li class="">
-                        <a href="settings-profile.html">
-                            <span><i class="ri-settings-3-line"></i></span>
-                            <span class="nav-text">Settings</span></a>
-                    </li>
-                    <li class=" logout"><a href="signin.html">
-                            <span><i class="ri-logout-circle-line"></i></span>
-                            <span class="nav-text">Signout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
 
         <div class="content-body">
             <div class="container">
@@ -90,8 +43,8 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <div class="breadcrumbs"><a href="#">Settings </a><span><i
-                                class="ri-arrow-right-s-line"></i></span><a href="#">User Management</a></div>
+                            <div class="breadcrumbs"><a href="settings-api.html">Settings </a><span><i
+                                class="ri-arrow-right-s-line"></i></span><a href="settings-api.html">User Management</a></div>
                         </div>
                     </div>
                 </div>
@@ -135,6 +88,7 @@
                                                 <th>No.</th>
                                                 <th>Name</th>
                                                 <th>Username</th>
+                                                <th>Email</th>
                                                 <th>Role</th>
                                                 <th>NIM/NIP/NUPTK</th>
                                                 <th>Point Role</th>
@@ -182,17 +136,18 @@
                         <td>${count}</td>
                         <td>${user.nama}</td>
                         <td>${user.username}</td>
+                        <td>${user.email}</td>
                         <td>${user.role}</td>
-                        <td><span style="font-weight: bold;">${user.no_unik}</span></td>
-                        <td>${user.point_role}</td>
-                        <td>${user.total_laporan}</td>
+                        <td style="text-align:center"><span style="font-weight: bold;">${user.no_unik}</span></td>
+                        <td style="text-align:center">${user.point_role}</td>
+                        <td style="text-align:center">${user.total_laporan}</td>
                         <td>${user.dateformated}</td>
-                        <td>
-                            <div class="form-check form-switch"><input class="form-check-input" id="inputCheck${user.id_user}"
+                        <td  >
+                            <div style="text-align:center; justify-content: center; display: flex;" class="form-check form-switch"><input class="form-check-input" id="inputCheck${user.id_user}"
                                 ${(userLoginRole == 'admin' || userLoginRole == 'pengawas') ? '' : 'disabled'}
                                     type="checkbox" ${user.is_validate ? 'checked=""' : ''} onchange="activateSwitch(${user.id_user}, ${userIdLogin}, 'inputCheck${user.id_user}')"></div>
                         </td>
-                        <td>
+                        <td style="text-align:center">
                             ${userLoginRole == 'admin' ? deleteUserHtml(user.id_user) : ''}
                         </td>
                     </tr>`

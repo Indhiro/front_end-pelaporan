@@ -241,7 +241,7 @@
                 for (var i = 0; i < data.length; i++) {
                     let user = data[i]
                     
-                    if (user.role != 'dosen' && user.role != 'mahasiswa' && user.role != 'pengawas' && user.role != 'petugas') {
+                    if (user.role != 'dosen' && user.role != 'mahasiswa' && user.role != 'pengawas' && user.role != 'petugas' && user.role != 'admin') {
                         kepada += `<option value = '${user.id_user}'>  ${user.nama} ( ${user.role} ) </option>`
                         // console.log("useruseruser", user.id_user);
                     }
@@ -570,7 +570,7 @@
                 idModal = `exampleModalApprove${item.id_laporan}`
                 words = 'approve'
                 buttonApprove = `approveButton(${item.id_laporan})`
-                if (userRoleLogin == 'pengawas') {
+                if (userRoleLogin == 'pengawas' && item.status_laporan == 'submitted') {
                     kepadaCard = `
                     <div class="modal-body">
                         <label for="selectUserfor">Kepada</label>
