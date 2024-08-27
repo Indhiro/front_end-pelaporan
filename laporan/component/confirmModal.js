@@ -12,11 +12,12 @@ let confirmModal = `
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Warning</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="revertUpdate()"></button>
             </div>
             <div class="modal-body">
                 <p id="confirmModalNotes"></p>
             </div>
+            <div class="container" id="resetPasswordField"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="revertUpdate()">No</button>
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="sureUpdate()">Sure</button>

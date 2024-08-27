@@ -15,6 +15,11 @@ if (validationFilter) {
             <a href="rejected.html">
                 <span><i style="font-size: 30px;" class="bi bi-file-earmark-excel"></i></span>
                 <span class="nav-text">Rejected</span></a>
+        </li>
+        <li style="margin-top: -10px;">
+            <a href="report.html">
+                <span><i style="font-size: 30px;" class="bi bi-flag"></i></span>
+                <span class="nav-text">Report</span></a>
         </li>`
     }
 }

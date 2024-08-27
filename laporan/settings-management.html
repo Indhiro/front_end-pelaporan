@@ -18,7 +18,6 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
-    <script src="./component/navbar.js" type="text/javascript"></script>
     <script src="./component/header.js" type="text/javascript"></script>
     <script src="./component/navbar.js" type="text/javascript"></script>
     <script src="./component/confirmModal.js" type="text/javascript"></script>
@@ -153,7 +152,7 @@
                         </td>
                         <td style="text-align:center">
                             ${userLoginRole == 'admin' ? deleteUserHtml(user.id_user) : ''}
-                            <i class="col-6 " href="go" style="height: 4vh; color: blue; cursor: pointer;">
+                            <i class="col-6 " href="go" style="height: 4vh; color: blue; cursor: pointer;" onclick="resetPasswordBtn(${user.id_user})">
                                 <span style="font-size: 12px">Reset Password</span> 
                             </i>
                         </td>
@@ -180,6 +179,8 @@
         function confirmDialogBtn(id) {
             var myModal = new bootstrap.Modal(document.getElementById('confirmModal'), {})
             let modalNotes = document.getElementById('confirmModalNotes');
+            let inputFieldEl = document.getElementById('resetPasswordField');
+            inputFieldEl.innerHTML = ``;
             modalNotes.innerHTML = `Are you sure to delete this User?`;
             myModal.show();
             deleteUserId = id;
@@ -189,6 +190,8 @@
         function confirmValidateBtn(userid, userLogin, elementId) {
             var myModal = new bootstrap.Modal(document.getElementById('confirmModal'), {})
             let modalNotes = document.getElementById('confirmModalNotes');
+            let inputFieldEl = document.getElementById('resetPasswordField');
+            inputFieldEl.innerHTML = ``;
             modalNotes.innerHTML = `Are you sure to update this User?`;
             myModal.show();
             updateUser.userid = userid
@@ -200,6 +203,7 @@
         function sureUpdate() {
             if (currentButton == 'update user') return confirmUpdateValidate();
             if (currentButton == 'delete user') return confirmDeleteUser();
+            if (currentButton == 'reset password user') return confirmResetPassword();
         }
 
         function confirmUpdateValidate() {
@@ -227,8 +231,57 @@
     
         function revertUpdate() {
             let revertData = document.getElementById(`${updateUser.elementId}`)
-            if (revertData.checked) revertData.checked = false
-            else revertData.checked = true
+            if (currentButton == 'update user' && (revertData.checked == true || revertData.checked == false)) {
+                if (revertData.checked) revertData.checked = false
+                else revertData.checked = true
+            }
+        }
+
+        function resetPasswordBtn(userId) {
+            var myModal = new bootstrap.Modal(document.getElementById('confirmModal'), {})
+            let modalNotes = document.getElementById('confirmModalNotes');
+            let inputFieldEl = document.getElementById('resetPasswordField');
+            modalNotes.innerHTML = `Are you sure to update this User?`;
+            currentButton = `reset password user`
+            updateUser.userid = userId
+            updateUser.userLogin = userIdLogin
+            inputFieldEl.innerHTML = `
+            <label for="">New Password</label>
+            <input type="text" class="form-control" id="resetPasswordInput${userId}" aria-describedby="emailHelp" placeholder="Type the new password for user">
+            <small style="color: blue" class="form-text text-muted">Example: User123!@</small>`
+            myModal.show();
+        }
+
+        function confirmResetPassword() {
+            let resetPwInput = document.getElementById(`resetPasswordInput${updateUser.userid}`);
+            let valueResetPw = resetPwInput.value
+            let updateData = {
+                id_user: updateUser.userid,
+                new_pass: valueResetPw,
+            }
+            if (valueResetPw) {
+                var insertApi = 'http://localhost:3000/user/update-user';
+                fetch(insertApi, {
+                    method: "PUT", // *GET, POST, PUT, DELETE, etc.
+                    mode: "cors", // no-cors, *cors, same-origin
+                    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: "same-origin", // include, *same-origin, omit
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    redirect: "follow", // manual, *follow, error
+                    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    body: JSON.stringify(updateData), // body data type must match "Content-Type" header
+                }).then( async (response) => {
+                    return response.json();
+                }).then(data => {
+                    console.log(data);
+
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            }
         }
 
     </script>

@@ -3,7 +3,6 @@ jQuery(window).on("load", function () {
     $('#main-wrapper').addClass('show');
 });
 
-
 jQuery(document).ready(function () {
     $(function () {
         for (var nk = window.location,
@@ -16,7 +15,6 @@ jQuery(document).ready(function () {
         }
     });
 });
-
 
 (function () {
     let onpageLoad = localStorage.getItem("theme") || "";
@@ -36,9 +34,3 @@ function themeToggle() {
         localStorage.setItem("theme", "dark-theme");
     }
 }
-
-// //ripple effect on button
-// Waves.init();
-// Waves.attach('.wave-effect');
-// Waves.attach('.btn');
-// Waves.attach('button');

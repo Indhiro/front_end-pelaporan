@@ -64,7 +64,6 @@
    
     <script type="text/javascript">
         window.scrollTo(0, 0);
-        // localStorage.setItem("userId", 3) // set manually ke browser localstorage (nanti kau ambil dari userId mereka/kampus)
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
         let userLoginRole = localStorage.getItem("role");
@@ -107,10 +106,9 @@
                     data.forEach(item => { // loop masing2 data
                         var card = document.createElement("div");
                         card.className = "promotion d-flex justify-content-between align-items-center";
-                        card.style = ""
+                        card.style = "width: 125%" // LEBAR CARD
                         card.innerHTML += cardFormater(card, item)
                         cardContainer.appendChild(card);
-                        console.log("testitem", item);
                     });
                 }).catch(err => {
                     var card = document.createElement("div");
@@ -243,22 +241,11 @@
                 let kepada = ''
                 for (var i = 0; i < data.length; i++) {
                     let user = data[i]
-                    
                     if (user.role != 'dosen' && user.role != 'mahasiswa' && user.role != 'pengawas' && user.role != 'petugas' && user.role != 'admin') {
                         kepada += `<option value = '${user.id_user}'>  ${user.nama} ( ${user.role} ) </option>`
-                        // console.log("useruseruser", user.id_user);
                     }
-                    // if (user.role == 'pengawas') {
-                    //     pengawas += "<option value=" + user.id_user + ">" + user.nama + " (" + user.role + ") " + "</option>"
-                    // } else {
-                    //     if (user.role != 'dosen') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
-                    //     // console.log("user", kepada);
-                    // }
                 }
                 if (userId) return data // KALO MAU RESULTNYA 1 USER AJA
-                // document.getElementById("selectPengawas").innerHTML = pengawas;
-                // console.log('kepada', kepada);
-                // document.getElementById("selectKepadaApprove").innerHTML = kepada;
                 userKepada = kepada
             }).catch(err => {
                 console.log('getusererr', err);
@@ -483,7 +470,7 @@
                             </div>
                             <div class="modal-body">
                                 <label for="exampleFormControlTextarea1">Catatan</label>
-                                <textarea class="form-control" id="textReport" rows="3" required></textarea>
+                                <textarea class="form-control" id="textReport${LapId}" rows="3" required></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" onclick="submitReport(${LapId})">Report</button>
@@ -496,7 +483,7 @@
         }
 
         function submitReport(LapId){
-            let getCatatan = document.getElementById('textReport').value
+            let getCatatan = document.getElementById(`textReport${LapId}`).value
             let uploadData = {
                 id_user: userIdLogin,
                 id_laporan: LapId,
@@ -713,10 +700,6 @@
     <script src="./js/navbar.js"></script>
     <script src="./js/header.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/chartjs/chart.bundle.min.js"></script>
-    <script src="js/plugins/chartjs-line-init.js"></script>
-    <script src="js/plugins/chartjs-donut.js"></script>
     <script src="js/scripts.js"></script>
 </body>
 <!-- Mirrored from enftx-html.vercel.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:27 GMT -->

@@ -104,10 +104,9 @@
                     data.forEach(item => { // loop masing2 data
                         var card = document.createElement("div");
                         card.className = "promotion d-flex justify-content-between align-items-center";
-                        card.style = ""
+                        card.style = "width: 125%" // LEBAR CARD
                         card.innerHTML += cardFormater(card, item)
                         cardContainer.appendChild(card);
-                        console.log("testitem", item);
                     });
                 }).catch(err => {
                     var card = document.createElement("div");
@@ -222,7 +221,6 @@
         }
 
         function validationLogin() {
-            console.log(nameUser,'nameUser');
             document.getElementById('nameUser').innerHTML = nameUser ? nameUser : 'not login yet'
             if (!userIdLogin) return window.location.replace('signIn.html')
         }
@@ -506,10 +504,6 @@
     <script src="./js/header.js"></script>
     <script src="./js/navbar.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/chartjs/chart.bundle.min.js"></script>
-    <script src="js/plugins/chartjs-line-init.js"></script>
-    <script src="js/plugins/chartjs-donut.js"></script>
     <script src="js/scripts.js"></script>
 </body>
 <!-- Mirrored from enftx-html.vercel.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:27 GMT -->

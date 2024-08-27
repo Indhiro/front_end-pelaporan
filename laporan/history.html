@@ -64,8 +64,6 @@
         // localStorage.setItem("userId", 3) // set manually ke browser localstorage (nanti kau ambil dari userId mereka/kampus)
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
-        let userKepada = '';
-        getUsers()
         getLaporan() // call function
 
         function getAllByStatus() { // INI BUAT APA?
@@ -98,7 +96,7 @@
                     data.forEach(item => { // loop masing2 data
                         var card = document.createElement("div");
                         card.className = "promotion d-flex justify-content-between align-items-center";
-                        card.style = ""
+                        card.style = "width: 125%" // LEBAR CARD
                         card.innerHTML += cardFormater(card, item)
                         cardContainer.appendChild(card);
                         console.log("testitem", item);
@@ -211,37 +209,6 @@
                     </div>
                 </div>`
             return sample
-        }
-
-        function getUsers(userId) {
-            var apiUrl = `http://localhost:3000/user/get-user${userId ? `?userId=${userId}` : ''}`;
-            fetch(apiUrl).then(response => {
-                return response.json();
-            }).then(data => {
-                // let pengawas = ''
-                let kepada = ''
-                for (var i = 0; i < data.length; i++) {
-                    let user = data[i]
-                    
-                    if (user.role != 'dosen' && user.role != 'mahasiswa' && user.role != 'pengawas' && user.role != 'petugas') {
-                        kepada += `<option value = '${user.id_user}'>  ${user.nama} ( ${user.role} ) </option>`
-                        // console.log("useruseruser", user.id_user);
-                    }
-                    // if (user.role == 'pengawas') {
-                    //     pengawas += "<option value=" + user.id_user + ">" + user.nama + " (" + user.role + ") " + "</option>"
-                    // } else {
-                    //     if (user.role != 'dosen') kepada += `<option value = '${user.role}'>  ${user.nama} ( ${user.role} ) </option>`
-                    //     // console.log("user", kepada);
-                    // }
-                }
-                if (userId) return data // KALO MAU RESULTNYA 1 USER AJA
-                // document.getElementById("selectPengawas").innerHTML = pengawas;
-                // console.log('kepada', kepada);
-                // document.getElementById("selectKepadaApprove").innerHTML = kepada;
-                userKepada = kepada
-            }).catch(err => {
-                console.log('getusererr', err);
-            });
         }
 
         function showButtonLike(item) {
@@ -536,10 +503,6 @@
     <script src="./js/header.js"></script>
     <script src="./js/navbar.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/chartjs/chart.bundle.min.js"></script>
-    <script src="js/plugins/chartjs-line-init.js"></script>
-    <script src="js/plugins/chartjs-donut.js"></script>
     <script src="js/scripts.js"></script>
 </body>
 <!-- Mirrored from enftx-html.vercel.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:27 GMT -->
