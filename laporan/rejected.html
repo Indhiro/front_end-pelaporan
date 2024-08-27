@@ -84,10 +84,13 @@
             });
         }
 
-        function getLaporan() {
+        function getLaporan(param, sortBy, type, status) {
             let inputSearch = document.getElementById('inputSearch')
             var apiUrl = `http://localhost:3000/laporan/get-laporan-rejected?userId=${userIdLogin}`;
             if (inputSearch.value) apiUrl += `&search=${inputSearch.value}`
+            if (sortBy) apiUrl += `&sortBy=${sortBy}`
+            if (type) apiUrl += `&type=${type}`
+            if (status) apiUrl += `&status=${status}`
             var cardContainer = document.getElementById("myList");
             cardContainer.innerHTML = ''
             fetch(apiUrl)
@@ -501,6 +504,7 @@
  
     </script>
 
+    <script src="./js/filterBar.js"></script>
     <script src="./js/header.js"></script>
     <script src="./js/navbar.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
