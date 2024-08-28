@@ -10,6 +10,7 @@ let setHeader = `
     <ul class="settings-menu">
         <li><a href="settings-profile.html">Profile</a></li>
         <li class=""><a href="settings-security.html">Security</a></li>
+        <li class=""><a href="settings-rekap.html">Recapitulation</a></li>
         <li class=""><a href="settings-management.html">User Management</a></li>
     </ul>
 </body>
