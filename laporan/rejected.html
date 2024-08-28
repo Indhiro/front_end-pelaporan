@@ -46,15 +46,8 @@
                         <div id="myList"></div>
                     </div>
 
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+                    <!-- PAGINATION -->
+                    <nav aria-label="Page navigation example" id="navPagination"></nav>
                     <!-- BATAS PROJECT  -->
                 </div>
             </div>
@@ -74,37 +67,32 @@
             getLaporan() // call function
         }
 
-        function getAllByStatus() { // INI BUAT APA?
-            var apiUrl = `http://localhost:3000/laporan/get-all-user?userId=${userIdLogin}`;
-            fetch(apiUrl)
-            .then(async (response) => {
-                if (userIdLogin ) return true
-            }).catch(err => {
-
-            });
-        }
-
-        function getLaporan(param, sortBy, type, status) {
+        function getLaporan(param, sortBy, type, status, event, page) {
             let inputSearch = document.getElementById('inputSearch')
             var apiUrl = `http://localhost:3000/laporan/get-laporan-rejected?userId=${userIdLogin}`;
             if (inputSearch.value) apiUrl += `&search=${inputSearch.value}`
             if (sortBy) apiUrl += `&sortBy=${sortBy}`
             if (type) apiUrl += `&type=${type}`
             if (status) apiUrl += `&status=${status}`
+            if (page) apiUrl += `&page=${page}`
+            if (pageSize) apiUrl += `&pageSize=${pageSize}`
             var cardContainer = document.getElementById("myList");
             cardContainer.innerHTML = ''
             fetch(apiUrl)
                 .then(async (response) => {
                     let data = await response.json()
-                    // Mendapatkan elemen container
+                    let laporans = data.data.result;
+                    let totalLp = data.data.totalLp;
+                    totalLaporan = totalLp
+                    paginationGenerator() // pagination
                     var likeDislikeButton = document.getElementById("get");
 
-                    if (data && data.length == 0) {
+                    if (laporans && laporans.length == 0) {
                         var card = document.createElement("div");
                         card.innerHTML += `<h4>-- No Post --</h4>`
                         cardContainer.appendChild(card);
                     }
-                    data.forEach(item => { // loop masing2 data
+                    laporans.forEach(item => { // loop masing2 data
                         var card = document.createElement("div");
                         card.className = "promotion d-flex justify-content-between align-items-center";
                         card.style = "width: 125%" // LEBAR CARD
@@ -481,27 +469,6 @@
             window.location.replace("signin.html")
         }
 
-        function statusColor(status, nama_petugas) {
-            let submitted = 'Submitted'
-            let approve_pengawas_rename = 'Approve Pengawas'
-            let approve_kepala_prodi_rename = 'Approve Kepala Prodi'
-            let approve_wakil_dekan_2_rename = 'Approve Wakil Dekan 2'
-            let final_approve_rename = 'Approve Wakil Rektor 2'
-            let progress = 'Progress'
-            let check = 'Check'
-            let done = 'Done'
-            let rejected = 'Rejected'
-            if (status == 'submitted') return `<span class="badge bg-secondary">${submitted}</span>`;
-            if (status == 'approve_pengawas') return `<span style="background: #2E86C1" class="badge">${approve_pengawas_rename}</span>`;
-            if (status == 'approve_kepala_prodi') return `<span style="background: #17A589" class="badge">${approve_kepala_prodi_rename}</span>`;
-            if (status == 'approve_wakil_dekan_2') return `<span style="background: #F39C12" class="badge">${approve_wakil_dekan_2_rename}</span>`;
-            if (status == 'final_approve') return `<span style="background: #884EA0" class="badge">${final_approve_rename}</span>`;
-            if (status == 'progress') return `<span style="background: #F1C40F" class="badge">${progress}</span>`;
-            if (status == 'check') return `<span style="background: #A6ACAF" class="badge">${check}</span>`;
-            if (status == 'done') return `<span class="badge bg-primary">${done} by ${nama_petugas}</span>` 
-            if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${rejected}</span>`;
-        }
- 
     </script>
 
     <script src="./js/filterBar.js"></script>
