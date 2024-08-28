@@ -6,7 +6,7 @@ if (validationFilter) {
         validationFilter.innerHTML = ''
     } else {
         validationFilter.innerHTML += `
-        <li style="margin-top: -5px;">
+        <li style="margin-top: -20px;">
             <a href="validation.html">
             <span><i style="font-size: 30px;" class="bi bi-check2-square"></i></span>
             <span class="nav-text">Validation</span></a>
