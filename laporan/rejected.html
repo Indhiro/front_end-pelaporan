@@ -133,9 +133,9 @@
                             </div>
 
                             <div class="d-flex" style="margin-top: 20px">
-                                <i onclick="buttonLike(${item.id_laporan}, 'up')" id="buttonlike${item.id_laporan}" class="fa fa-thumbs-o-up" style="font-size:24px; cursor:pointer;"></i>
+                                <i id="buttonlike${item.id_laporan}" class="fa fa-thumbs-o-up" style="font-size:24px;"></i>
                                 <h6 title="false" id="like${item.id_laporan}" style="margin-left: 12px">${item.countLikeDislike ? item.countLikeDislike : 0}</h6>
-                                <i onclick="buttonLike(${item.id_laporan}, 'down')" id="dislike${item.id_laporan}" class="fa fa-thumbs-o-down" style="font-size:24px; margin-left: 15px; cursor:pointer;"></i>
+                                <i id="dislike${item.id_laporan}" class="fa fa-thumbs-o-down" style="font-size:24px; margin-left: 15px;"></i>
                                 <div class="col-md-6" style="padding: 0px; margin-top: -10px">
                                     <div class="d-flex">
                                         <div style="cursor:pointer; margin-left: 30px;" class="d-flex" data-bs-toggle="modal" data-bs-target="#modalComment${item.id_laporan}">
@@ -153,11 +153,7 @@
                                                     </div>
                                                     <div id="returnDialogComment${item.id_laporan}"></div>
                                                     ${returnDialogComment(item.id_laporan)}
-                                                    <div class="modal-body">
-                                                        <textarea class="form-control" id="textComment" rows="3" required></textarea>
-                                                    </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" onclick="submitComment(${item.id_laporan})">Comment</button>
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                     </div>
                                                     </form>
@@ -165,22 +161,7 @@
                                             </div>
                                         </div>
 
-                                        <div style="cursor:pointer; margin-left: 25px;" class="d-flex" data-bs-toggle="modal" data-bs-target="#modalReport${item.id_laporan}">
-                                            <i style="font-size:24px" class="bi bi-flag"></i>
-                                            <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Report</p>
-                                        </div>
-
-                                        <div class="modal fade" id="modalReport${item.id_laporan}">
-                                            <div class="modal-dialog" style="margin-top: 100px;">
-                                                <div class="modal-content" style="width: 120%;">
-                                                    <form id="formReportLaporan">
-                                                        ${returnDialogReport(item.id_laporan)}
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex" style=" margin-left: 450px; cursor:pointer;" 
+                                        <div class="d-flex" style=" margin-left: 460px; cursor:pointer;" 
                                         data-bs-toggle="modal" data-bs-target="#modalLaporanDetails${item.id_laporan}">
                                             <i style="font-size:24px;" class="bi bi-list-ul"></i>
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Show Details</p>
@@ -239,77 +220,6 @@
             });
         }
 
-        function buttonLike(laporanId, status) {
-            let titleTag = document.getElementById(`like${laporanId}`).title;
-            let totalLikes = document.getElementById(`like${laporanId}`).innerHTML;
-            totalLikes = Number(totalLikes)
-            submitLike(laporanId, status)
-            if (status == 'up') {
-                if (titleTag == 'onUp') {
-                    document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-o-up"
-                    document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 1
-                    document.getElementById(`like${laporanId}`).title = 'offUp'
-                }
-                if (titleTag == 'offUp' || titleTag == 'false' || titleTag == 'offDown') {
-                    document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-up"
-                    document.getElementById(`like${laporanId}`).title = 'onUp'
-                    return document.getElementById(`like${laporanId}`).innerHTML = totalLikes + 1
-                }
-                if (titleTag == 'onDown') {
-                    document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-up"
-                    document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-o-down"
-                    document.getElementById(`like${laporanId}`).title = 'onUp'
-                    return document.getElementById(`like${laporanId}`).innerHTML = totalLikes + 2
-                }
-            }
-            // if (status == 'down') return document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 1 // CASE 0
-            if (status == 'down') {
-                if (titleTag == 'onDown') {
-                    document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-o-down"
-                    document.getElementById(`like${laporanId}`).innerHTML = totalLikes + 1
-                    document.getElementById(`like${laporanId}`).title = 'offDown'
-                }
-                if (titleTag == 'offDown' || titleTag == 'false' || titleTag == 'offUp') {
-                    document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-down"
-                    document.getElementById(`like${laporanId}`).title = 'onDown'
-                    return document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 1
-                }
-                if (titleTag == 'onUp') {
-                    document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-down"
-                    document.getElementById(`buttonlike${laporanId}`).className = "fa fa-thumbs-o-up"
-                    document.getElementById(`like${laporanId}`).title = 'onDown'
-                    return document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 2
-                }
-            }
-        }
-
-        function submitLike(laporanId, status) {
-            let uploadData = {
-                id_user: userIdLogin,
-                id_laporan: laporanId,
-                status: status
-            }
-            
-            var insertApi = 'http://localhost:3000/like-dislike/upload-like-dislike';
-            fetch(insertApi, {
-                method: "POST", // *GET, POST, PUT, DELETE, etc.
-                mode: "cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify(uploadData), // body data type must match "Content-Type" header
-            }).then( async (response) => {
-                // location.reload();
-            }).catch(err => {
-                console.log(err);
-                // Do something for an error here
-            });
-        }
-
         function returnDialogComment(LapId) {
             var insertApi = `http://localhost:3000/comment/get-comment?LapId=${LapId}`;
             fetch(insertApi)
@@ -344,88 +254,6 @@
                     // Do something for an error here
                 });
             return ``
-        }
-        
-        function submitComment(LapId) {
-            let getCatatan = document.getElementById('textComment').value
-            let uploadData = {
-                id_user: userIdLogin,
-                id_laporan: LapId,
-                text: getCatatan
-            }
-            
-            var insertApi = 'http://localhost:3000/comment/upload-comment';
-            fetch(insertApi, {
-                method: "POST", // *GET, POST, PUT, DELETE, etc.
-                mode: "cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify(uploadData), // body data type must match "Content-Type" header
-            }).then( async (response) => {
-                location.reload();
-            }).catch(err => {
-                console.log(err);
-                // Do something for an error here
-            });
-        }
-
-        function returnDialogReport(LapId) {
-            return `
-                <div id="returnDialogReport${LapId}" aria-labelledby="exampleModalLabel" >
-                    <div>
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModal">Report</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <h5 class="modal-title" id="exampleModal">Anda yakin ingin melakukan report?</h5>
-                            </div>
-                            <div class="modal-body">
-                                <label for="exampleFormControlTextarea1">Catatan</label>
-                                <textarea class="form-control" id="textReport" rows="3" required></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="submitReport(${LapId})">Report</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `
-        }
-
-        function submitReport(LapId){
-            let getCatatan = document.getElementById('textReport').value
-            let uploadData = {
-                id_user: userIdLogin,
-                id_laporan: LapId,
-                text: getCatatan
-            }
-            
-            var insertApi = 'http://localhost:3000/report/upload-report';
-            fetch(insertApi, {
-                method: "POST", // *GET, POST, PUT, DELETE, etc.
-                mode: "cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify(uploadData), // body data type must match "Content-Type" header
-            }).then( async (response) => {
-                location.reload();
-            }).catch(err => {
-                console.log(err);
-                // Do something for an error here
-            });
         }
 
         function returnDialogDetails(LapId) {
