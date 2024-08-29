@@ -97,3 +97,11 @@ function paginationNext(e) {
     getLaporan(null, null, null, null, null, defaultPage);
 }
 // PAGINATION --
+
+function logoutButton() {
+    localStorage.removeItem("id_user")
+    localStorage.removeItem("role")
+    localStorage.removeItem("nameUser")
+    window.location.replace("signin.html")
+}
+
