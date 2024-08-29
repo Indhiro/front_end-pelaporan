@@ -531,13 +531,6 @@
             return true
         }
 
-        function logoutButton() {
-            localStorage.removeItem("id_user")
-            localStorage.removeItem("role")
-            localStorage.removeItem("nameUser")
-            window.location.replace("signin.html")
-        }
-
         function checkInputLaporan() {
             try {
                 let photoo = document.getElementById('foto').value

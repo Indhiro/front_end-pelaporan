@@ -154,13 +154,6 @@
             </div>`
         }
 
-        function logoutButton() {
-            localStorage.removeItem("id_user")
-            localStorage.removeItem("role")
-            localStorage.removeItem("nameUser")
-            window.location.replace("signin.html")
-        }
-
         function statusColor(status, nama_petugas) {
             let submitted = 'Submitted'
             let approve_pengawas_rename = 'Approve Pengawas'
