@@ -17,7 +17,7 @@ let header = `<!DOCTYPE html>
 </head>
 
 <body>
-    <div class="header">
+    <div style="position: fixed; z-index: 100;" class="header">
         <div class="container">
             <div class="row">
                 <div class="col-xxl-12">

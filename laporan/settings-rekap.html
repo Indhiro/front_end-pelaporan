@@ -85,13 +85,13 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>No.</th>
+                                                <th style="text-align:center">No.</th>
                                                 <th>Month</th>
-                                                <th>Year</th>
-                                                <th>Total Done</th>
-                                                <th>Total Rejected</th>
-                                                <th>Total Laporan</th>
-                                                <th>Action</th>
+                                                <th style="text-align:center">Year</th>
+                                                <th style="text-align:center">Total Done</th>
+                                                <th style="text-align:center">Total Rejected</th>
+                                                <th style="text-align:center">Total Laporan</th>
+                                                <th style="text-align:center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody id="bindUserTable"></tbody>
@@ -131,13 +131,13 @@
                     count++
                     addToHtmlUserTable += `
                     <tr>
-                        <td>${count}</td>
+                        <td style="text-align:center">${count}</td>
                         <td>${month[count - 1]}</td>
-                        <td>${count}</td>
-                        <td>${data.data.recapDone[0][property]}</td>
-                        <td>${data.data.recapReject[0][property]}</td>
-                        <td>${data.data.recap[0][property]}</td>
-                        <td>-</td>
+                        <td style="text-align:center">${count}</td>
+                        <td style="text-align:center">${data.data.recapDone[0][property]}</td>
+                        <td style="text-align:center">${data.data.recapReject[0][property]}</td>
+                        <td style="text-align:center">${data.data.recap[0][property]}</td>
+                        <td style="text-align:center">-</td>
                     </tr>
                     `
                 }

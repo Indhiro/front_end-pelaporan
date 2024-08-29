@@ -21,8 +21,8 @@ let filterbar = `
             <option value="deleted">Deleted</option>
         </select>
     </div>
-    <button class="btn btn-outline-dark btn-sm" onclick="buttonSort('date')">Sory By Date</button>
-    <button class="btn btn-outline-dark btn-sm" onclick="buttonSort('point')">Sory By Point</button>
+    <button style="margin-left:21px" class="btn btn-outline-dark btn-sm" onclick="buttonSort('date')">Sort By Date</button>
+    <button class="btn btn-outline-dark btn-sm" onclick="buttonSort('point')">Sort By Point</button>
     <span id="sortLabel"></span>
 </body>
 </html>

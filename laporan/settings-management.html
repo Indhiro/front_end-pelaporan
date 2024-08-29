@@ -92,11 +92,12 @@
                                                 <th>Email</th>
                                                 <th>Role</th>
                                                 <th>NIM/NIP/NUPTK</th>
-                                                <th>Point Role</th>
-                                                <th>Total Laporan</th>
+                                                <th style="text-align:center">Point Role</th>
+                                                <th style="text-align:center">Total Laporan</th>
                                                 <th>Date Join</th>
-                                                <th>Validate Status(Active)</th>
-                                                <th>Action</th>
+                                                <th style="text-align:center">Validate Status(Active)</th>
+                                                <th style="text-align:center">Reset</th>
+                                                <th style="text-align:center">Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody id="bindUserTable"></tbody>
@@ -135,7 +136,7 @@
                     count++
                     addToHtmlUserTable += `
                     <tr>
-                        <td>${count}</td>
+                        <td style="text-align:center">${count}</td>
                         <td>${user.nama}</td>
                         <td>${user.username}</td>
                         <td>${user.email}</td>
@@ -144,16 +145,18 @@
                         <td style="text-align:center">${user.point_role}</td>
                         <td style="text-align:center">${user.total_laporan}</td>
                         <td>${user.dateformated}</td>
-                        <td  >
+                        <td>
                             <div style="text-align:center; justify-content: center; display: flex;" class="form-check form-switch"><input class="form-check-input" id="inputCheck${user.id_user}"
                                 ${(userLoginRole == 'admin' || userLoginRole == 'pengawas') ? '' : 'disabled'}
                                     type="checkbox" ${user.is_validate ? 'checked=""' : ''} onchange="activateSwitch(${user.id_user}, ${userIdLogin}, 'inputCheck${user.id_user}')"></div>
                         </td>
-                        <td style="text-align:center">
-                            ${userLoginRole == 'admin' ? deleteUserHtml(user.id_user) : ''}
+                        <td style="text-align:center;">
                             <i class="col-6 " href="go" style="height: 4vh; color: blue; cursor: pointer;" onclick="resetPasswordBtn(${user.id_user})">
                                 <span style="font-size: 12px">Reset Password</span> 
                             </i>
+                        </td>
+                        <td style="text-align:center">
+                            ${userLoginRole == 'admin' ? deleteUserHtml(user.id_user) : ''}
                         </td>
                     </tr>`
                 }
@@ -172,7 +175,7 @@
         }
         
         function deleteUserHtml(userId) {
-            return `<span class="col-6"><i class="ri-delete-bin-line" onclick="deleteUser(${userId})"></i></span>`
+            return `<span class="col-6"><i style="cursor: pointer;" class="ri-delete-bin-line" onclick="deleteUser(${userId})"></i></span>`
         }
     
         function confirmDialogBtn(id) {

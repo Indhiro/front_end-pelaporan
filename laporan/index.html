@@ -96,7 +96,7 @@
                                                     <span style="color:red; font-size: 12px;">Wajib melampirkan bukti/foto/pdf!</span>
                                                     <div style="margin-top: 10px;">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary" style="float: right;"
+                                                        <button type="button" class="btn" style="float: right; background-color: #008CBA;"
                                                             onclick="checkInputLaporan()">Post</button>
                                                     </div>
                                                 </form>
@@ -111,7 +111,7 @@
 
                     <!-- LIST LAPORAN -->
                     <div class="col-xxl-8" style="margin-top: 20px;">
-                        <div id="myList" style=" position: relative; z-index: 1;"></div>
+                        <div id="myList"></div>
                     </div>
 
                     <!-- PAGINATION -->
@@ -161,11 +161,15 @@
                         card.innerHTML += `<h4>-- No Post --</h4>`
                         cardContainer.appendChild(card);
                     }
+                    let indexs = laporans.length
                     laporans.forEach(item => { // loop masing2 data
+                        indexs--
                         var card = document.createElement("div");
                         card.className = "promotion d-flex justify-content-between align-items-center";
-                        card.style = "width: 125%;" // LEBAR CARD
-                        card.innerHTML += cardFormater(card, item)
+                        card.style = `width: 125%;` // LEBAR CARD
+                        console.log(indexs);
+                        
+                        card.innerHTML += cardFormater(card, item, indexs)
                         cardContainer.appendChild(card);
                     });
                 }).catch(err => {
@@ -178,7 +182,7 @@
 
         // style="position: fixed; z-index: -1;"
 
-        function cardFormater(card, item) { // add card each data
+        function cardFormater(card, item, indexs) { // add card each data
             let sample = `
                 <div class="col-md-6 col-sm-6">
                     <div class="card items">
@@ -229,7 +233,7 @@
                                                         <textarea class="form-control" id="textComment" rows="3" required></textarea>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" onclick="submitComment(${item.id_laporan})">Comment</button>
+                                                        <button  style="background-color: #008CBA;" type="button" class="btn" onclick="submitComment(${item.id_laporan})">Comment</button>
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                     </div>
                                                     </form>
@@ -448,7 +452,7 @@
                                 <textarea class="form-control" id="textReport${LapId}" rows="3" required></textarea>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="submitReport(${LapId})">Report</button>
+                                <button type="button" class="btn" style="background-color: #008CBA;" onclick="submitReport(${LapId})">Report</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
