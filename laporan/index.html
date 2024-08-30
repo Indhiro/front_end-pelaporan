@@ -161,15 +161,12 @@
                         card.innerHTML += `<h4>-- No Post --</h4>`
                         cardContainer.appendChild(card);
                     }
-                    let indexs = laporans.length
                     laporans.forEach(item => { // loop masing2 data
-                        indexs--
                         var card = document.createElement("div");
                         card.className = "promotion d-flex justify-content-between align-items-center";
                         card.style = `width: 125%;` // LEBAR CARD
-                        console.log(indexs);
                         
-                        card.innerHTML += cardFormater(card, item, indexs)
+                        card.innerHTML += cardFormater(card, item)
                         cardContainer.appendChild(card);
                     });
                 }).catch(err => {
@@ -182,7 +179,7 @@
 
         // style="position: fixed; z-index: -1;"
 
-        function cardFormater(card, item, indexs) { // add card each data
+        function cardFormater(card, item) { // add card each data
             let sample = `
                 <div class="col-md-6 col-sm-6">
                     <div class="card items">
@@ -221,7 +218,7 @@
 
                                         <div class="modal fade" id="modalComment${item.id_laporan}">
                                             <div class="modal-dialog" style="margin-top: 100px;">
-                                                <div style="position:relative; z-index:-1" class="modal-content" style="width: 120%;">
+                                                <div class="modal-content" style="width: 120%;">
                                                     <form id="formCommentLaporan" style="margin-top: 10px;">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModal">Comment</h5>

@@ -20,7 +20,7 @@ let confirmModal = `
             <div class="container" id="resetPasswordField"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="revertUpdate()">No</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="sureUpdate()">Sure</button>
+                <button style="background-color: #008CBA;" type="button" class="btn" data-bs-dismiss="modal" onclick="sureUpdate()">Sure</button>
             </div>
             </div>
         </div>
