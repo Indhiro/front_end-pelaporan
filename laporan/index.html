@@ -128,7 +128,6 @@
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
         let userLoginRole = localStorage.getItem("role");
         let deleteReportId = null;
-        // validationLogin() // call function
         window.onload = function () {
             getLaporan() // call function
         }
@@ -180,12 +179,10 @@
                 });
         }
 
-        // style="position: fixed; z-index: -1;"
-
         function cardFormater(card, item, indexs) { // add card each data
             let sample = `
                 <div class="col-md-6 col-sm-6">
-                    <div class="card items">
+                    <div class="card items" id="card${item.id_laporan}">
                         <div>
                             <div class="d-flex justify-content-between">
                                 <div class="text-start">
@@ -214,7 +211,8 @@
                                 <div class="col-md-6" style="padding: 0px; margin-top: -10px">
                                     <div class="d-flex">
                                         
-                                        <div style="cursor:pointer; margin-left: 30px;" class="d-flex" data-bs-toggle="modal" data-bs-target="#modalComment${item.id_laporan}">
+                                        <div style="cursor:pointer; margin-left: 30px;" class="d-flex" data-bs-toggle="modal" data-bs-target="#modalComment${item.id_laporan}"
+                                        onclick="showDialogComment(${item.id_laporan})">
                                             <i style="font-size:24px" class="bi bi-chat"></i>
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Comments</p>
                                         </div>
@@ -241,7 +239,8 @@
                                             </div>
                                         </div>
 
-                                        <div style="cursor:pointer; margin-left: 25px;" class="d-flex" data-bs-toggle="modal" data-bs-target="#modalReport${item.id_laporan}">
+                                        <div style="cursor:pointer; margin-left: 25px;" class="d-flex" data-bs-toggle="modal" data-bs-target="#modalReport${item.id_laporan}"
+                                        onclick="showDialogComment(${item.id_laporan})">
                                             <i style="font-size:24px" class="bi bi-flag"></i>
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Report</p>
                                         </div>
@@ -256,7 +255,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-flex" style=" margin-left: 280px; cursor:pointer;" 
+                                        <div class="d-flex" style=" margin-left: 280px; cursor:pointer;" onclick="showDialogComment(${item.id_laporan})"
                                         data-bs-toggle="modal" data-bs-target="#modalLaporanDetails${item.id_laporan}">
                                             <i style="font-size:24px;" class="bi bi-list-ul"></i>
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Show Details</p>
@@ -619,6 +618,10 @@
             let modalNotes = document.getElementById('modalNotes');
             modalNotes.innerHTML = text;
             myModal.show();
+        }
+
+        function showDialogComment(id) {
+            let explainCardEl = document.getElementById(`card${id}`).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
         }
 
     </script>
