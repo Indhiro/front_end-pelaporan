@@ -37,7 +37,7 @@ function themeToggle() {
 
 let defaultPage = 1; // pagination
 let totalLaporan = 0; // pagination
-let pageSize = 3; // pagination
+let pageSize = 10; // pagination
 
 function statusColor(status, nama_petugas) {
     let submitted = 'Submitted'
@@ -103,5 +103,9 @@ function logoutButton() {
     localStorage.removeItem("role")
     localStorage.removeItem("nameUser")
     window.location.replace("signin.html")
+}
+
+function showDialogComment(id) {
+    document.getElementById(`card${id}`).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
 }
 

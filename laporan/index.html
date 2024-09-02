@@ -110,7 +110,7 @@
                     <modal-component></modal-component>
 
                     <!-- LIST LAPORAN -->
-                    <div class="col-xxl-8" style="margin-top: 20px;">
+                    <div class="container col-xxl-8" style="margin-top: 20px;">
                         <div id="myList"></div>
                     </div>
 
@@ -176,7 +176,7 @@
                 });
         }
 
-        function cardFormater(card, item, indexs) { // add card each data
+        function cardFormater(card, item) { // add card each data
             let sample = `
                 <div class="col-md-6 col-sm-6">
                     <div class="card items" id="card${item.id_laporan}">
@@ -319,7 +319,6 @@
                     return document.getElementById(`like${laporanId}`).innerHTML = totalLikes + 2
                 }
             }
-            // if (status == 'down') return document.getElementById(`like${laporanId}`).innerHTML = totalLikes - 1 // CASE 0
             if (status == 'down') {
                 if (titleTag == 'onDown') {
                     document.getElementById(`dislike${laporanId}`).className = "fa fa-thumbs-o-down"
@@ -514,7 +513,6 @@
                     })
                 }).catch(err => {
                     console.log("ini error", err);
-                    // Do something for an error here
                 });
                 return ''
         }
@@ -553,8 +551,6 @@
             formData.append("kategori", document.getElementById("kategori").value); // BIND KE formData
             formData.append("judul", document.getElementById("judul").value); // BIND KE formData
             formData.append("keterangan", document.getElementById("keterangan").value); // BIND KE formData
-            // formData.append("selectKepada", document.getElementById("selectKepada").value); // BIND KE formData
-            // formData.append("selectPengawas", document.getElementById("selectPengawas").value); // BIND KE formData
             formData.append("userIdLogin", userIdLogin); // BIND KE formData
             // UNTUK LIHAT ISI FORMDATA (HARUS BEGINI)
             // for (var key of formData.entries()) {
@@ -579,14 +575,8 @@
         function deleteLaporanIcon(id) {
             return `
             <div style="margin-left: 40px; margin-top: -3px; cursor:pointer">
-                <span class="col-6"><i class="ri-delete-bin-line" style="width: 100px; font-size: 30px; color: red" onclick="deleteLaporan(${id})"></i></span>
-            </div>
-                `
-                // <button class="btn btn-danger btn-sm" style="width: 100px" onclick="deleteLaporan(${id})">DELETE</button>
-        }
-
-        function deleteLaporan(id) {
-            confirmDialogBtn(id)
+                <span class="col-6"><i class="ri-delete-bin-line" style="width: 100px; font-size: 30px; color: red" onclick="confirmDialogBtn(${id})"></i></span>
+            </div>`
         }
 
         function confirmDialogBtn(id) {
@@ -597,15 +587,20 @@
             deleteReportId = id;
         }
 
+<<<<<<< HEAD
         function sureDelete() {
             console.log('sureDelete');
             var apiUrl = `http://localhost:3000/laporan/delete-laporan?id_laporan=${deleteReportId}`;
+=======
+        function sureUpdate() {
+            var apiUrl = `http://localhost:3000/laporan/delete-laporan?id_laporan=${deleteReportId}`;            
+>>>>>>> 6b8ef82aedbf34c67e4c814e957010816b8993d1
             fetch(apiUrl, { method: 'PUT' }).then(response => {
                 return response.json();
             }).then(data => {
                 return getLaporan()
             }).catch(err => {
-                console.log('sureDelete', err);
+                console.log('sureUpdate', err);
             });
         }
     
@@ -618,20 +613,12 @@
             myModal.show();
         }
 
-        function showDialogComment(id) {
-            let explainCardEl = document.getElementById(`card${id}`).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
-        }
-
     </script>
     
     <script src="./js/filterBar.js"></script>
     <script src="./js/navbar.js"></script>
     <script src="./js/header.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
-    <!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/chartjs/chart.bundle.min.js"></script> -->
-    <!-- <script src="js/plugins/chartjs-line-init.js"></script> -->
-    <!-- <script src="js/plugins/chartjs-donut.js"></script> -->
     <script src="js/scripts.js"></script>
 </body>
 <!-- Mirrored from enftx-html.vercel.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 May 2023 13:13:27 GMT -->
