@@ -83,19 +83,6 @@
             localStorage.removeItem("nameUser")
         }
 
-        // function getProfile() {
-        //     let inputHtml = document.getElementById("getProfile")
-        //     let dataSementara = document.createElement("div");
-        //     inputHtml.innerHTML = ''
-
-        //     dataSementara.style = "text-transform:capitalize"
-        //     dataSementara.innerHTML += `                            
-        //         <h3>${nameUser}</h3>
-        //         <p class="mb-2">Welcome ${nameUser} (${roleUser})</p>
-        //         `
-        //     inputHtml.appendChild(dataSementara);
-        // }
-
         function getUser(userId) {
             var apiUrl = `http://localhost:3000/user/get-user${userId ? `?userId=${userId}` : ''}`;
             fetch(apiUrl).then(response => {
@@ -242,12 +229,13 @@
                 let getName = document.getElementById('inputFullName').value
                 let getGender = document.getElementById('inputGender').value
                 let getNumber = document.getElementById('inputPhoneNumber').value
-                let userPenerima = document.getElementById('selectKepadaApprove');
+                let getEmail = document.getElementById('inputEmail').value
                 let updateData = {
                     id_user: userIdLogin,
                     nama: getName,
                     gender: getGender,
-                    no_telp: getNumber
+                    no_telp: getNumber,
+                    email: getEmail
                 }
                 
                 var insertApi = 'http://localhost:3000/user/update-user';

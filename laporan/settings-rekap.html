@@ -77,7 +77,7 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Report Recapitulation</h4>
+                                <h4 class="card-title" id="reportTitle">Report Recapitulation</h4>
                             </div>
                             <span style="color: red">Report Recapitulation per month</span>
                             <div class="card-body">
@@ -99,6 +99,10 @@
                                 </div>
                             </div>
                         </div>
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#" onclick="previousYear(event)">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#" onclick="nextYear(event)">Next</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -108,20 +112,22 @@
     <script>
         let userIdLogin = localStorage.getItem("id_user");
         let userLoginRole = localStorage.getItem("role");
-        let deleteUserId = null;
-        var month= ["January","February","March","April","May","June","July",
-            "August","September","October","November","December"];
+        let reportTitle = document.getElementById('reportTitle');
+        var month= ["January","February","March","April","May","June","July","August","September","October","November","December"];
         let updateUser = {};
         let currentButton = null;
+        let nowYear = new Date().getFullYear();
         window.onload = function () {
             if (!(userLoginRole == 'pengawas' || userLoginRole == 'admin')) history.back()
-            getAllUser()
+            getAllUser(nowYear)
         }
 
-        function getAllUser() {
+        function getAllUser(year) {
             let htmlDataTable = document.getElementById('bindUserTable');
-            htmlDataTable.innerHTML = ``
-            var apiUrl = `http://localhost:3000/laporan/get-recapitulation`;
+            reportTitle.innerHTML = `Report Recapitulation ${year}`
+            htmlDataTable.innerHTML = ``;
+            
+            var apiUrl = `http://localhost:3000/laporan/get-recapitulation?year=${year}`;
             fetch(apiUrl).then(response => {
                 return response.json();
             }).then(data => {
@@ -133,7 +139,7 @@
                     <tr>
                         <td style="text-align:center">${count}</td>
                         <td style="text-align:center">${month[count - 1]}</td>
-                        <td style="text-align:center">${new Date().getFullYear()}</td>
+                        <td style="text-align:center">${nowYear}</td>
                         <td style="text-align:center">${data.data.recapDone[0][property]}</td>
                         <td style="text-align:center">${data.data.recapReject[0][property]}</td>
                         <td style="text-align:center">${data.data.recap[0][property]}</td>
@@ -146,6 +152,18 @@
             }).catch(err => {
                 console.log('getAllUser', err);
             });
+        }
+
+        function previousYear(e) {
+            e.preventDefault();
+            nowYear = nowYear - 1;
+            return getAllUser(nowYear)
+        }
+
+        function nextYear(e) {
+            e.preventDefault();
+            nowYear = nowYear + 1;
+            return getAllUser(nowYear)
         }
 
     </script>
