@@ -228,7 +228,7 @@
                                                         <textarea class="form-control" id="textComment" rows="3" required></textarea>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button  style="background-color: #008CBA;" type="button" class="btn" onclick="submitComment(${item.id_laporan})">Comment</button>
+                                                        <button style="background-color: #008CBA;" type="button" class="btn" onclick="submitComment(${item.id_laporan})">Comment</button>
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                     </div>
                                                     </form>
@@ -598,6 +598,7 @@
         }
 
         function sureDelete() {
+            console.log('sureDelete');
             var apiUrl = `http://localhost:3000/laporan/delete-laporan?id_laporan=${deleteReportId}`;
             fetch(apiUrl, { method: 'PUT' }).then(response => {
                 return response.json();
