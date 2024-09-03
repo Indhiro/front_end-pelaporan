@@ -26,13 +26,15 @@
                             <form onsubmit="resetEmail(); return false;" id="loginForm">
                                 <div class="row">
                                     <div class="col-12 mb-3"><label class="form-label">Password</label>
-                                        <input id="resetPassword" type="password" class="form-control" required placeholder="Type new password">
+                                        <input id="resetPassword"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" class="form-control" 
+                                        required placeholder="Enter your new password" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
                                     </div>
                                     <div class="col-12 mb-3"><label class="form-label">Confirm Password</label>
-                                        <input id="confirmResetPassword" type="password" class="form-control" required placeholder="Type the same password">
+                                        <input id="confirmResetPassword" type="password" class="form-control" required placeholder="Enter your new password">
                                     </div>
 
-                                    <div class="col-11 text-end"><a href="signin.html">Sign In</a></div>
+                                    <div style="margin-left:40px;" class="col-11 text-end"><a href="signin.html">Sign In</a> to your
+                                        account</div>
                                 </div>
                                 <div class="mt-3 d-grid gap-2"><button style="background-color: #008CBA;" type="submit" class="btn">Reset Password</button></div>
                             </form>
@@ -63,7 +65,7 @@
             const token = urlParams.get('token');
             let resetPassword = document.getElementById("resetPassword").value;
             let confirmResetPassword = document.getElementById("confirmResetPassword").value;
-            if (resetPassword != confirmResetPassword) return warnDialog(`Password does not match with confirm password!`);
+            if (resetPassword != confirmResetPassword) return warnDialog(`New password does not match with confirm password!`);
             let insertData = { resetPassword,confirmResetPassword,token };
     
             var insertApi = 'http://localhost:3000/user/reset-password';
@@ -80,6 +82,8 @@
                 return response.json();
             }).then(data => {
                 if (data) {
+                    document.getElementById("resetPassword").value = '';
+                    document.getElementById("confirmResetPassword").value = '';
                     if (data.flag && data.status == 200) return warnDialog('Success reset password!')
                     warnDialog(data.msg);
                 }

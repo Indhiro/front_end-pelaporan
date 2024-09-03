@@ -139,7 +139,7 @@
             let validatePass = document.getElementById('RetypeNewPassword')
             if(newPass.value != validatePass.value) {
                 console.log("salah");
-                validatePass.setCustomValidity("Passwords Don't Match");
+                validatePass.setCustomValidity("Passwords does not match");
             } else {
                 console.log("bener");
                 validatePass.setCustomValidity('');
@@ -174,6 +174,9 @@
                         // location.reload();
                     }).then(data => {
                         console.log(data);
+                        document.getElementById('inputPassword').value = '';
+                        document.getElementById('inputNewPassword').value = '';
+                        document.getElementById('RetypeNewPassword').value = '';
                         if(data.flag == false) return warnDialog(data.msg)
                         if(data.flag == true) return warnDialog(data.msg)
                         // location.reload();

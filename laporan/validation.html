@@ -134,10 +134,10 @@
 
                             <div>
                                 <!-- Button trigger modal -->
-                                <button id="buttonApprove" type="button" style="background-color: #008CBA;" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalApprove${item.id_laporan}">
+                                <button id="buttonApprove" onclick="showDialogComment(${item.id_laporan})" type="button" style="background-color: #008CBA;" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalApprove${item.id_laporan}">
                                     Approve
                                 </button>
-                                <button id="buttonReject" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalReject${item.id_laporan}">
+                                <button id="buttonReject" onclick="showDialogComment(${item.id_laporan})" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalReject${item.id_laporan}">
                                     Reject
                                 </button>
                             </div>
@@ -154,7 +154,7 @@
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Comments</p>
                                         </div>
 
-                                        <div class="modal fade" id="modalComment${item.id_laporan}">
+                                        <div class="modal fade" id="modalComment${item.id_laporan}" style="max-height: 550px;">
                                             <div class="modal-dialog" style="margin-top: 100px;">
                                                 <div class="modal-content" style="width: 120%;">
                                                     <form id="formCommentLaporan" style="margin-top: 10px;">
@@ -198,7 +198,7 @@
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Show Details</p>
                                         </div>
 
-                                        <div class="modal fade" id="modalLaporanDetails${item.id_laporan}">
+                                        <div class="modal fade" id="modalLaporanDetails${item.id_laporan}" style="max-height: 550px;">
                                             <div class="modal-dialog" style="margin-top: 100px;">
                                                 <div class="modal-content" style="width: 120%;">
                                                     <div class="modal-body">

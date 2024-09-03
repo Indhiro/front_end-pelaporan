@@ -110,7 +110,7 @@
                     <modal-component></modal-component>
 
                     <!-- LIST LAPORAN -->
-                    <div class="container col-xxl-8" style="margin-top: 20px;">
+                    <div class="col-xxl-8" style="margin-top: 20px;">
                         <div id="myList"></div>
                     </div>
 
@@ -214,7 +214,7 @@
                                             <p style="margin-left: 5px; font-size:14px; margin-top: 12px">Comments</p>
                                         </div>
 
-                                        <div class="modal fade" id="modalComment${item.id_laporan}">
+                                        <div class="modal fade" id="modalComment${item.id_laporan}" style="max-height: 550px;">
                                             <div class="modal-dialog" style="margin-top: 100px;">
                                                 <div class="modal-content" style="width: 120%;">
                                                     <form id="formCommentLaporan" style="margin-top: 10px;">
@@ -260,7 +260,7 @@
 
                                         ${userLoginRole == 'admin' ? deleteLaporanIcon(item.id_laporan) : ''}
 
-                                        <div class="modal fade" id="modalLaporanDetails${item.id_laporan}">
+                                        <div class="modal fade" id="modalLaporanDetails${item.id_laporan}" style="max-height: 550px;">
                                             <div class="modal-dialog" style="margin-top: 100px;">
                                                 <div class="modal-content" style="width: 120%;">
                                                     <div class="modal-body">
@@ -587,14 +587,8 @@
             deleteReportId = id;
         }
 
-<<<<<<< HEAD
-        function sureDelete() {
-            console.log('sureDelete');
-            var apiUrl = `http://localhost:3000/laporan/delete-laporan?id_laporan=${deleteReportId}`;
-=======
         function sureUpdate() {
             var apiUrl = `http://localhost:3000/laporan/delete-laporan?id_laporan=${deleteReportId}`;            
->>>>>>> 6b8ef82aedbf34c67e4c814e957010816b8993d1
             fetch(apiUrl, { method: 'PUT' }).then(response => {
                 return response.json();
             }).then(data => {
