@@ -60,15 +60,7 @@
         let userIdLogin = localStorage.getItem("id_user") // SAMPLE FOR LOGIN (userId = 1)
         let nameUser = localStorage.getItem("nameUser") // SAMPLE FOR LOGIN
         let roleUser = localStorage.getItem("role")
-        validationLogin() // call function
-        // getProfile()
         getUser(userIdLogin)
-
-        function validationLogin() {
-            console.log(nameUser,'nameUser');
-            document.getElementById('nameUser').innerHTML = nameUser ? nameUser : 'not login yet'
-            if (!userIdLogin) return window.location.replace('signIn.html')
-        }
     
         function logoutButton() {
             localStorage.removeItem("id_user")
@@ -88,13 +80,11 @@
             fetch(apiUrl).then(response => {
                 return response.json();
             }).then(data => {
-                console.log("data", data);
                 let item = data[0]
-                
                 let inputHtml = document.getElementById("getUser")
                 let dataSementara = document.createElement("div");
                 inputHtml.innerHTML = ''
-                
+                let imageTemp = (item.image && item.image != 'null') ? `data:image/png;base64,${item.image}` : "https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png"
                 dataSementara.innerHTML += `
                 <div class="row">
                     <div class="col-xl-4" style="padding:0%">
@@ -102,7 +92,7 @@
                         <div class="card mb-4 mb-xl-0">
                             <div class="card-body text-center">
                                 <!-- Profile picture image-->
-                                <img style="width: 100%;" class="img-account-profile rounded-circle mb-2" src="data:image/png;base64,${item.image}" alt="">
+                                <img style="width: 100%;" class="img-account-profile rounded-circle mb-2" src="${imageTemp}" alt="">
                                 <!-- Profile picture help block-->
                                 <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                 <!-- Profile picture upload button-->

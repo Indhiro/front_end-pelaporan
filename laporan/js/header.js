@@ -6,7 +6,7 @@ validationLogin()
 getNotification(userLogin);
 
 function validationLogin() {
-    document.getElementById('imageIcon').src = imageUser ? `data:image/png;base64,${imageUser}` : 'images/avatar/9.jpg';
+    document.getElementById('imageIcon').src = (imageUser && imageUser != 'null') ? `data:image/png;base64,${imageUser}` : 'https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png';
     document.getElementById('nameUser').innerHTML = nameUserLogin ? nameUserLogin : 'not login yet'
     document.getElementById('roleUser').innerHTML = roleUserLogin ? `(${roleUserLogin})` : ''
     if (!userLogin) return window.location.replace('signIn.html')

@@ -119,10 +119,10 @@
         let nowYear = new Date().getFullYear();
         window.onload = function () {
             if (!(userLoginRole == 'pengawas' || userLoginRole == 'admin')) history.back()
-            getAllUser(nowYear)
+            getRecapAll(nowYear)
         }
 
-        function getAllUser(year) {
+        function getRecapAll(year) {
             let htmlDataTable = document.getElementById('bindUserTable');
             reportTitle.innerHTML = `Report Recapitulation ${year}`
             htmlDataTable.innerHTML = ``;
@@ -143,27 +143,31 @@
                         <td style="text-align:center">${data.data.recapDone[0][property]}</td>
                         <td style="text-align:center">${data.data.recapReject[0][property]}</td>
                         <td style="text-align:center">${data.data.recap[0][property]}</td>
-                        <td style="text-align:center">-</td>
+                        <td style="text-align:center"><button class="btn btn-primary btn-sm" onclick="viewLaporan(${count},${nowYear})">View Laporan</button></td>
                     </tr>
                     `
                 }
 
                 htmlDataTable.innerHTML = addToHtmlUserTable
             }).catch(err => {
-                console.log('getAllUser', err);
+                console.log('getRecapAll', err);
             });
         }
 
         function previousYear(e) {
             e.preventDefault();
             nowYear = nowYear - 1;
-            return getAllUser(nowYear)
+            return getRecapAll(nowYear)
         }
 
         function nextYear(e) {
             e.preventDefault();
             nowYear = nowYear + 1;
-            return getAllUser(nowYear)
+            return getRecapAll(nowYear)
+        }
+
+        function viewLaporan(month, year) {
+            window.location.assign(`rekap-detail.html?month=${month}&year=${year}`)
         }
 
     </script>
