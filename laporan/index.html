@@ -572,14 +572,8 @@
             deleteReportId = id;
         }
 
-<<<<<<< HEAD
-        function sureDelete() {
-            console.log('sureDelete');
-            var apiUrl = `http://localhost:3000/laporan/delete-laporan?id_laporan=${deleteReportId}`;
-=======
         function sureUpdate() {
             var apiUrl = `http://localhost:3000/laporan/delete-laporan?id_laporan=${deleteReportId}`;            
->>>>>>> 6b8ef82aedbf34c67e4c814e957010816b8993d1
             fetch(apiUrl, { method: 'PUT' }).then(response => {
                 return response.json();
             }).then(data => {
