@@ -17,6 +17,7 @@
     <script src="./component/navbar.js" type="text/javascript"></script>
     <script src="./component/header.js" type="text/javascript"></script>
     <script src="./component/setting-header.js" type="text/javascript"></script>
+    <script src="./component/popUpModal.js" type="text/javascript"></script>
 </head>
 
 <body class="@@dashboard">
@@ -105,7 +106,7 @@
                                                 <div style="margin-top: 10px;">
                                                     <label for="exampleFormControlTextarea1">Photo</label>
                                                     <input type="file" id="foto" style="margin-left: 100px;"accept="application/pdf,image/jpeg">
-                                                    <button class="btn btn-primary" type="button" onclick="uploadUserImage()">Upload</button>
+                                                    <button style="background-color: #008CBA;" class="btn" type="button" onclick="uploadUserImage()">Upload</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -137,7 +138,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputEmail">Email</label>
-                                        <input class="form-control" id="inputEmail" type="text" placeholder="Enter your email" value="${item.email}">
+                                        <input class="form-control" id="inputEmail" type="email" placeholder="Enter your email" value="${item.email}">
                                     </div>
                                     <div class="mb-3" id="getGender">
                                     </div>
@@ -241,14 +242,22 @@
                     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     body: JSON.stringify(updateData), // body data type must match "Content-Type" header
                 }).then( async (response) => {
-                    // location.reload();
+                    if(response.flag == false) return warnDialog(response.msg)
+                    if(response.flag == true) return warnDialog(response.msg)
                 }).catch(err => {
-                    console.log(err);
+                    return warnDialog(err.msg)
                     // Do something for an error here
                 });
             } catch (error) {
                 console.log(error);
             }
+        }
+
+        function warnDialog(text) {
+            var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
+            let modalNotes = document.getElementById('modalNotes');
+            modalNotes.innerHTML = text;
+            myModal.show();
         }
 
 
