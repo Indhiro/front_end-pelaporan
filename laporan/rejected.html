@@ -62,7 +62,6 @@
         let userLoginRole = localStorage.getItem("role");
         window.onload = function () {
             if (!(userLoginRole == 'pengawas' || userLoginRole == 'admin')) history.back()
-            validationLogin() // call function
             getUsers()
             getLaporan() // call function
         }
@@ -191,11 +190,6 @@
                     </div>
                 </div>`
             return sample
-        }
-
-        function validationLogin() {
-            document.getElementById('nameUser').innerHTML = nameUser ? nameUser : 'not login yet'
-            if (!userIdLogin) return window.location.replace('signIn.html')
         }
 
         function getUsers(userId) {

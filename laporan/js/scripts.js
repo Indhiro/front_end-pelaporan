@@ -60,7 +60,6 @@ function statusColor(status, nama_petugas) {
     if (status == 'rejected') return `<span style="background: #CB4335" class="badge">${rejected}</span>`;
 }
 
-
 // PAGINATION --
 function paginationGenerator() {
     let navPagination = document.getElementById('navPagination');
@@ -109,3 +108,10 @@ function showDialogComment(id) {
     document.getElementById(`card${id}`).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
 }
 
+// function showPosition(position) {
+//     currentLocation = {
+//         latitude : position.coords.latitude,
+//         longitude : position.coords.longitude
+//     }
+//     return true
+// }

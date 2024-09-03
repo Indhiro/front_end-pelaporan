@@ -96,8 +96,8 @@
                                                     <span style="color:red; font-size: 12px;">Wajib melampirkan bukti/foto/pdf!</span>
                                                     <div style="margin-top: 10px;">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn" style="float: right; background-color: #008CBA;"
-                                                            onclick="checkInputLaporan()">Post</button>
+                                                        <button type="button" class="btn" style="float: right; background-color: #008CBA;" id="postBtnId"
+                                                            onclick="checkInputLaporan(event)">Post</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -164,7 +164,6 @@
                         var card = document.createElement("div");
                         card.className = "promotion d-flex justify-content-between align-items-center";
                         card.style = `width: 125%;` // LEBAR CARD
-                        
                         card.innerHTML += cardFormater(card, item)
                         cardContainer.appendChild(card);
                     });
@@ -517,32 +516,21 @@
                 return ''
         }
 
-        function showPosition(position) {
-            currentLocation = {
-                latitude : position.coords.latitude,
-                longitude : position.coords.longitude
-            }
-            return true
-        }
-
-        function checkInputLaporan() {
-            try {
-                let photoo = document.getElementById('foto').value
-                let keterangan = document.getElementById("keterangan").value
-                let judul = document.getElementById("judul").value
-                if (judul && keterangan && photoo) {
-                    postSubmit()
-                } else {
-                    warnDialog('Category, Keterangan, Judul dan Photo wajib diisi!')
-                    document.getElementById(`judul`).className = "form-control is-invalid"
-                    document.getElementById(`keterangan`).className = "form-control is-invalid"
-                }
-            } catch (error) {
-                console.log(error);
+        function checkInputLaporan(event) {
+            event.preventDefault()
+            let photoo = document.getElementById('foto').value;
+            let keterangan = document.getElementById("keterangan").value;
+            let judul = document.getElementById("judul").value;
+            if (judul && keterangan && photoo) {
+                return postSubmit(event)
+            } else {
+                warnDialog('Category, Keterangan, Judul dan Photo wajib diisi!')
+                document.getElementById(`judul`).className = "form-control is-invalid"
+                document.getElementById(`keterangan`).className = "form-control is-invalid"
             }
         }
  
-        function postSubmit() {
+        function postSubmit(event) {
             const files = document.getElementById("foto");
             let file = files.files[0];
             const formData = new FormData();
@@ -552,11 +540,7 @@
             formData.append("judul", document.getElementById("judul").value); // BIND KE formData
             formData.append("keterangan", document.getElementById("keterangan").value); // BIND KE formData
             formData.append("userIdLogin", userIdLogin); // BIND KE formData
-            // UNTUK LIHAT ISI FORMDATA (HARUS BEGINI)
-            // for (var key of formData.entries()) {
-            //     console.log(key[0] + ', ' + key[1]);
-            // }
-            fetch("http://localhost:3000/laporan/upload-laporan", {
+            return fetch("http://localhost:3000/laporan/upload-laporan", {
                 method: 'POST',
                 mode: "cors", // no-cors, *cors, same-origin
                 cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -566,9 +550,10 @@
                 body: formData,
                 data: formData
             }).then((res) => { 
-                window.location.assign("index.html")
+                return getLaporan()
+                // warnDialog('Your report already posted! Wait for validation, it will be displayed and processed');
             }).catch((err) => {
-                ("Error occured", err)
+                console.log(err);
             });
         }
 
